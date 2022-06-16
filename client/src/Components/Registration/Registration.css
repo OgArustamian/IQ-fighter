@@ -1,0 +1,16 @@
+.BlizBtn {
+  background-color: rgb(43,116,224)!important;
+  width: 416px;
+    margin: 0 auto;
+}
+
+.login-form {
+  width: 416px;
+    margin: 0 auto; 
+}
+
+.auth-size-woindow {
+  width: 1200px;
+  height: 520px;
+    margin: 0 auto;
+}
