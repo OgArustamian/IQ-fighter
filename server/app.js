@@ -1,22 +1,35 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT ?? 3001;
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
+app.use(session({
+  name: 'sessionID',
+  store: new FileStore({}),
+  secret: process.env.SESSION,
+  resave: true,
+  saveUninitialized: false,
+}));
+
+// app.use(checkSession);
+
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
