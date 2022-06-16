@@ -37,5 +37,6 @@ a {
 }
 
 .nav-item {
-    
+    padding: 0 25px;
+    letter-spacing: 2px;
 }
