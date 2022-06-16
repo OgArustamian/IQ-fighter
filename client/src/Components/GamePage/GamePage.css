@@ -1,0 +1,8 @@
+.game-page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 50px;
+    width: 80%;
+    margin: 0 auto;
+}
