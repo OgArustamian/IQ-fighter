@@ -1,12 +1,22 @@
+body {
+    background-image: url('https://img2.goodfon.ru/original/1920x1080/4/a8/muzhchina-zhenschina-mag-magiya-boy.jpg');
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
+
 .start-title {
     font-weight: bold;
     color: #f8b700;
     font-size: 2.5rem;
+    margin: 0;
+    line-height: 74px;
+    padding: 0 12px;
   }
   
   .start-title:hover {
     color: #fff1a3;
   }
+
   .page-container {
     min-height: 80vh;
     display: flex;
@@ -24,10 +34,10 @@
     cursor: pointer;
     background-color: #731705;
     border: 1px solid #ae230b;
-    padding: 12px 30px;
   }
   
   .start-btn:hover {
     background-color: #ae230b;
     cursor: url('./img/swords-cursor.svg'), auto;
+    box-shadow: 10px 5px 2em gold;
   }

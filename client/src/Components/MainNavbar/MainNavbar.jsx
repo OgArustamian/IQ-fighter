@@ -14,7 +14,7 @@ function MainNavbar() {
             <Link to="/ladderboard">
               <li className="nav-item">LADDERBOARD</li>
             </Link>
-            <Link to="/login">
+            <Link to="/signin">
               <li className="nav-item">LOGIN</li>
             </Link>
           </ul>
