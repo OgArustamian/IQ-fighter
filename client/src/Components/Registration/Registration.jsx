@@ -7,30 +7,31 @@ import './Registration.css';
 import { regUser } from '../../Redux/Actions/userAction';
 
 export default function Registration() {
-  const [inputs, setInputs] = useState();
-  const dispatch = useDispatch;
+  const [inputs, setInputs] = useState({});
+  const dispatch = useDispatch();
   const inputHandler = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log(inputs);
     dispatch(regUser(inputs));
-    setInputs([]);
+    setInputs({});
   };
   return (
     <div className="auth-size-woindow">
       <Form inline className="mt-5 login-form" onSubmit={submitHandler}>
         <FormGroup floating>
           <Input
-            id="exampleUserName"
-            name="UserName"
-            placeholder="UserName"
+            id="exampleUsName"
+            name="username"
+            placeholder="username"
             type="text"
             onChange={inputHandler}
             value={inputs.username || ''}
           />
           <Label for="exampleEmail">
-            UserName
+            Имя пользователя
           </Label>
         </FormGroup>
         {' '}
@@ -58,7 +59,7 @@ export default function Registration() {
             value={inputs.password || ''}
           />
           <Label for="examplePassword">
-            Password
+            Пароль
           </Label>
         </FormGroup>
         {' '}
