@@ -34,10 +34,12 @@ body {
     cursor: pointer;
     background-color: #731705;
     border: 1px solid #ae230b;
+    transition: transform 0.5s linear;
   }
   
   .start-btn:hover {
     background-color: #ae230b;
     cursor: url('./img/swords-cursor.svg'), auto;
     box-shadow: 10px 5px 2em gold;
+    transform: scale(1.1, 1.1);
   }
