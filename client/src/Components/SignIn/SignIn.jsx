@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button, Form, FormGroup, Input, Label, NavLink,
 } from 'reactstrap';
@@ -35,9 +36,11 @@ export default function SignIn() {
         <Button className="BlizBtn mt-4">
           Авторизоваться
         </Button>
-        <NavLink href="/registration" className="mt-4">
-          Пройти регистрацию
-        </NavLink>
+        <Link to="/signup">
+          <NavLink className="mt-4">
+            Пройти регистрацию
+          </NavLink>
+        </Link>
       </Form>
     </div>
   );

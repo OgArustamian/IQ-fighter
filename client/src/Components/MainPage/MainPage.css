@@ -39,4 +39,5 @@ body {
   .start-btn:hover {
     background-color: #ae230b;
     cursor: url('./img/swords-cursor.svg'), auto;
+    box-shadow: 10px 5px 2em gold;
   }
