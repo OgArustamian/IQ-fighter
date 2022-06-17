@@ -45,7 +45,7 @@ router.route('/signIn')
           };
           return res.json({ username, id: findUser.id });
         }
-        res.json({ message: loginExists });
+        return res.json({ message: loginExists });
       } catch (err) {
         console.error(err);
         res.sendStatus(400);
@@ -56,7 +56,7 @@ router.route('/signIn')
 
 router.route('/signOut')
   .get((req, res) => {
-    res.session.destroy();
+    req.session.destroy();
     res.clearCookie('sessionID').sendStatus(200);
   });
 
