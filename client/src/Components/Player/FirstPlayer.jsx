@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './FirstPlayer.css';
 import ImageMapper from 'react-image-mapper';
 import attackCursor from './img/sword-attack-icon .png';
 
