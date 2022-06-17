@@ -1,0 +1,16 @@
+.modal-dialog {
+    max-width: 65%;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.answer-checkbox {
+    margin: 5px 5px 0 32%;
+}
+
+.quiz-question {
+    width: 70%;
+    margin: 0 auto;
+}

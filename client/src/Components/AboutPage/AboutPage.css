@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+.about-container {
+    background-image: url('./rules.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+}
+
+.about-title {
+    font-weight: bold;
+}
+
+.about-description{
+    max-width: 670px;
+    font-size: 24px;
+    margin: 0 auto;
+}
+
+.about-description span {
+    color: red;
+    font-weight: bold;
+}
