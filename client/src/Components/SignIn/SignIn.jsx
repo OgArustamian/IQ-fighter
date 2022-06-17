@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button, Form, FormGroup, Input, Label, NavLink,
 } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+import { userSignIn } from '../../Redux/Actions/userAction';
 import './SignIn.css';
 
 export default function SignIn() {
+  const [inputs, setInputs] = useState({});
+  const dispatch = useDispatch();
+  const inputHandler = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(userSignIn(inputs));
+    setInputs({});
+  };
   return (
     <div className="auth-size-woindow">
-      <Form inline className="mt-5   login-form">
+      <Form inline className="mt-5 login-form" onSubmit={submitHandler}>
         <FormGroup floating>
           <Input
-            id="exampleEmail"
-            name="email"
+            id="exampleUserName"
+            name="username"
             placeholder="Email"
-            type="email"
+            type="text"
+            value={inputs.username || ''}
+            onChange={inputHandler}
           />
           <Label for="exampleEmail">
-            Email
+            Имя пользователя
           </Label>
         </FormGroup>
         {' '}
@@ -27,13 +41,15 @@ export default function SignIn() {
             name="password"
             placeholder="Password"
             type="password"
+            value={inputs.password || ''}
+            onChange={inputHandler}
           />
           <Label for="examplePassword">
-            Password
+            Пароль
           </Label>
         </FormGroup>
         {' '}
-        <Button className="BlizBtn mt-4">
+        <Button className="BlizBtn mt-4" type="submit">
           Авторизоваться
         </Button>
         <Link to="/signup">

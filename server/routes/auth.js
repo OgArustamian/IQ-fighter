@@ -4,6 +4,7 @@ const { User } = require('../db/models');
 
 const usernameExists = 'Этот логин уже существует.';
 const emailExists = 'Этот email уже существует.';
+const loginExists = 'Неверный логин или пароль';
 
 router.route('/signUp')
   .post(async (req, res) => {
@@ -15,12 +16,15 @@ router.route('/signUp')
         );
         req.session.user = {
           id: createUser.id,
+          username: createUser.username,
           email: createUser.email,
         };
-        return res.sendStatus(200);
+        return res.json({ username, id: createUser.id });
       } catch (err) {
+        if (err.parent.constraint == 'Users_email_key') { return res.json({ message: emailExists }); }
+        if (err.parent.constraint == 'Users_username_key') { return res.json({ message: usernameExists }); }
         console.error(err);
-        //   res.json()
+        res.sendStatus(400);
       }
     }
     // return
@@ -32,26 +36,36 @@ router.route('/signIn')
     if (username, password) {
       try {
         const findUser = await User.findOne({ where: { username } });
-        if (username && await bcrypt.compare(password, findUser.password)) {
+        console.log('find ----------->', findUser);
+        if (findUser && await bcrypt.compare(password, findUser.password)) {
           req.session.user = {
             id: findUser.id,
+            username: findUser.username,
             email: findUser.email,
           };
-          return res.sendStatus(200);
+          return res.json({ username, id: findUser.id });
         }
-        // res.json()
+        res.json({ message: loginExists });
       } catch (err) {
         console.error(err);
-        // res.json()
+        res.sendStatus(400);
       }
     }
-    // return
+    res.json({ message: loginExists });
   });
 
 router.route('/signOut')
   .get((req, res) => {
     res.session.destroy();
     res.clearCookie('sessionID').sendStatus(200);
+  });
+
+router.route('/check')
+  .post(async (req, res) => {
+    if (req.session.user) {
+      return res.json({ ...req.session.user });
+    }
+    res.sendStatus(400);
   });
 
 module.exports = router;
