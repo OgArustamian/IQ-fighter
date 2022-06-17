@@ -89,7 +89,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
-    map.delete(userID);
+    map.delete(userID);git 
   });
 });
 
