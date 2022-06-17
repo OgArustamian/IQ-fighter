@@ -6,7 +6,7 @@ function AuthRouter({ children }) {
   const { users } = useSelector((state) => state);
   console.log(users);
   const location = useLocation();
-  if (!users.name) {
+  if (!users.username) {
     return children;
   }
   return <Navigate to="/" state={{ from: location }} replace />;

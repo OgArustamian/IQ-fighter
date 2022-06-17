@@ -7,13 +7,13 @@ import SignIn from './Components/SignIn/SignIn';
 import MainNavbar from './Components/MainNavbar/MainNavbar';
 import MainPage from './Components/MainPage/MainPage';
 import AuthRouter from './Components/AuthRouter/AuthRouter';
-// import { checkUser } from './Redux/Actions/userAction';
+import { checkUser } from './Redux/Actions/userAction';
 
 function App() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(checkUser());
-  // }, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkUser());
+  }, []);
   return (
     <div className="App">
       <MainNavbar />

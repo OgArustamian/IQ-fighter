@@ -12,11 +12,11 @@ export const regUser = (value) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-// export const checkUser = () => (dispatch) => {
-//   axios.post(`${process.env.REACT_APP_URL}/auth/check`)
-//     .then((response) => dispatch(setUser(response.data)))
-//     .catch((err) => console.log(err));
-// };
+export const checkUser = () => (dispatch) => {
+  axios.post('/auth/check')
+    .then((response) => dispatch(setUser(response.data)))
+    .catch((err) => console.log(err));
+};
 
 export const userLogOut = () => (dispatch) => {
   axios('/auth/signOut')
