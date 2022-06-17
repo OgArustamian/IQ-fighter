@@ -1,8 +1,15 @@
 import React from 'react';
 import './MainNavbar.css';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogOut } from '../../Redux/Actions/userAction';
 
 function MainNavbar() {
+  const { users } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const logOutHandler = () => {
+    dispatch(userLogOut());
+  };
   return (
     <div className="MainNavbar">
       <div className="main-logo">
@@ -17,9 +24,17 @@ function MainNavbar() {
             <Link to="/ladderboard">
               <li className="nav-item">РЕЙТИНГ</li>
             </Link>
-            <Link to="/signin">
-              <li className="nav-item">АВТОРИЗАЦИЯ</li>
-            </Link>
+            {!users.username
+              ? (
+                <Link to="/signin">
+                  <li className="nav-item">АВТОРИЗАЦИЯ</li>
+                </Link>
+              )
+              : (
+                <Link to="/" onClick={logOutHandler}>
+                  <li className="nav-item">Выйти</li>
+                </Link>
+              )}
           </ul>
         </nav>
       </div>
