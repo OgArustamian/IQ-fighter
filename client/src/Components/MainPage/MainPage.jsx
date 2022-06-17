@@ -2,6 +2,7 @@ import React from 'react';
 import './MainPage.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import QuizModal from '../QuizModal/QuizModal';
 
 function MainPage() {
 //   const { user } = useSelector((state) => state);
@@ -14,6 +15,7 @@ function MainPage() {
           <h1 className="start-title">Начать игру</h1>
         </button>
       </Link>
+      <QuizModal />
     </div>
   );
 }
