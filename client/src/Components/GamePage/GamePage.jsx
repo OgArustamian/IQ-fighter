@@ -2,6 +2,8 @@ import React from 'react';
 import FirstPlayer from '../Player/FirstPlayer';
 import SecondPlayer from '../Player/SecondPlayer';
 import './GamePage.css';
+import maleChar from '../Player/img/male-mage.png';
+import femaleChar from '../Player/img/female-mage.webp';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -12,8 +14,14 @@ function GamePage() {
 
   return (
     <div className="game-page-container">
-      <FirstPlayer url={firstUrl} />
-      <SecondPlayer url={secondUrl} />
+      <div>
+        <FirstPlayer url={femaleChar} />
+        <button className="mt-5" type="button">КНОПКА</button>
+      </div>
+      <div>
+        <SecondPlayer url={maleChar} />
+        <button type="button">КНОПКА</button>
+      </div>
     </div>
   );
 }
