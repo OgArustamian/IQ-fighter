@@ -1,7 +1,7 @@
 body {
-    background-image: url('https://img2.goodfon.ru/original/1920x1080/4/a8/muzhchina-zhenschina-mag-magiya-boy.jpg');
-    background-repeat: no-repeat;
-    background-position-x: center;
+  background-image: url('https://img2.goodfon.ru/original/1920x1080/4/a8/muzhchina-zhenschina-mag-magiya-boy.jpg');
+  background-repeat: no-repeat;
+  background-position-x: center;
 }
 
 .start-title {
@@ -31,7 +31,6 @@ body {
     font: inherit;
     color: inherit;
     background-color: transparent;
-    cursor: pointer;
     background-color: #731705;
     border: 1px solid #ae230b;
     transition: transform 0.5s linear;
