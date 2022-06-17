@@ -1,5 +1,6 @@
 import React from 'react';
-import Player from '../Player/Player';
+import FirstPlayer from '../Player/FirstPlayer';
+import SecondPlayer from '../Player/SecondPlayer';
 import './GamePage.css';
 
 function GamePage() {
@@ -11,8 +12,8 @@ function GamePage() {
 
   return (
     <div className="game-page-container">
-      <Player url={firstUrl} />
-      <Player url={secondUrl} />
+      <FirstPlayer url={firstUrl} />
+      <SecondPlayer url={secondUrl} />
     </div>
   );
 }

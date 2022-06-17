@@ -11,6 +11,9 @@ function MainNavbar() {
             <Link to="/">
               <li className="nav-item">НА ГЛАВНУЮ</li>
             </Link>
+            <Link to="/about">
+              <li className="nav-item">ОБ ИГРЕ</li>
+            </Link>
             <Link to="/ladderboard">
               <li className="nav-item">РЕЙТИНГ</li>
             </Link>

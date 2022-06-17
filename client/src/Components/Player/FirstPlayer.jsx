@@ -1,15 +1,24 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
-import './Player.css';
+import React, { useState } from 'react';
+import './FirstPlayer.css';
 import ImageMapper from 'react-image-mapper';
+import attackCursor from './img/sword-attack-icon .png';
 
-function Player({ url }) {
+function FirstPlayer({ url }) {
+  const [isHover, setIsHover] = useState(false);
+
+  const body = document.querySelector('body');
+
+  if (isHover) {
+    body.style.cursor = `url(${attackCursor}), auto`;
+  } else {
+    body.style.cursor = 'default';
+  }
+
   const MAP = {
     name: 'character',
     areas: [
       {
-        name: 'head', shape: 'circle', coords: [425, 209, 103], preFillColor: '', fillColor: 'rgba(255, 0, 0, 0.6)',
+        name: 'head', shape: 'circle', coords: [425, 209, 103], fillColor: 'rgba(255, 0, 0, 0.6)',
       },
       {
         name: 'leftHand', shape: 'poly', coords: [32, 581, 110, 582, 175, 546, 206, 497, 254, 466, 306, 353, 318, 368, 298, 474, 280, 502, 249, 533, 205, 574, 153, 616, 120, 641, 60, 626, 26, 619, 17, 596, 15], fillColor: 'rgba(255, 0, 0, 0.6)',
@@ -33,9 +42,11 @@ function Player({ url }) {
         map={MAP}
         width={250}
         imgWidth={865}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
       />
     </div>
   );
 }
 
-export default Player;
+export default FirstPlayer;

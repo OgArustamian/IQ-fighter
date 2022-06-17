@@ -5,6 +5,7 @@ import SignIn from './Components/SignIn/SignIn';
 import MainNavbar from './Components/MainNavbar/MainNavbar';
 import MainPage from './Components/MainPage/MainPage';
 import GamePage from './Components/GamePage/GamePage';
+import AboutPage from './Components/AboutPage/AboutPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<Registration />} />
         <Route path="/profile/:id" element />
         <Route path="/game" element={<GamePage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </div>
   );
