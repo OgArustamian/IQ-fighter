@@ -9,13 +9,13 @@ function MainNavbar() {
         <nav className="main-navigation">
           <ul className="navigation">
             <Link to="/">
-              <li className="nav-item">ЛОГО</li>
+              <li className="nav-item">НА ГЛАВНУЮ</li>
             </Link>
             <Link to="/ladderboard">
               <li className="nav-item">РЕЙТИНГ</li>
             </Link>
             <Link to="/signin">
-              <li className="nav-item">ВОЙТИ</li>
+              <li className="nav-item">АВТОРИЗАЦИЯ</li>
             </Link>
           </ul>
         </nav>

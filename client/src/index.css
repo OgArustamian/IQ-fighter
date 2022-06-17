@@ -1,8 +1,10 @@
-@import url(./fonts/fonts.css);
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap'); */
 
 body {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family:  'Kelly Slab', cursive;
+  /* font-family: 'Balsamiq Sans', cursive; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #271628;
