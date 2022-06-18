@@ -1,8 +1,10 @@
 import React from 'react';
 import './MainPage.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QuizModal from '../QuizModal/QuizModal';
+import { useWsContext } from '../Context/Context';
+import { messageFind } from '../../Redux/Actions/wsAction';
 
 function MainPage() {
 //   const { user } = useSelector((state) => state);

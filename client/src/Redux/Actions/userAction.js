@@ -24,6 +24,7 @@ export const userLogOut = () => (dispatch) => {
 };
 
 export const userSignIn = (value) => (dispatch) => {
+  console.log(process.env.REACT_APP_URL);
   axios.post('/auth/signIn', value)
     .then((res) => dispatch(setUser(res.data)));
 };

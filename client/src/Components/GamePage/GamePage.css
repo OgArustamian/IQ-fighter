@@ -6,3 +6,11 @@
     width: 100%;
     margin: 0 auto;
 }
+
+.alert-msg {
+    color: white;
+}
+
+.hidden {
+    visibility: hidden;
+}
