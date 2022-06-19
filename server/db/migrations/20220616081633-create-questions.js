@@ -11,9 +11,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      url: {
+        type: Sequelize.STRING,
+      },
       isAnswered: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+      },
+      difficulty: {
+        type: Sequelize.INTEGER,
       },
       theme_id: {
         type: Sequelize.INTEGER,
