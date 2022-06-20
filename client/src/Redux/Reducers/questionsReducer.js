@@ -1,6 +1,8 @@
 import { SHOW_QUESTION } from '../Types/types';
 
-const questionsReducer = (state = {}, action) => {
+const initState = { answeredQuestions: [] };
+
+const questionsReducer = (state = initState, action) => {
   const { type, payload } = action;
 
   switch (type) {
