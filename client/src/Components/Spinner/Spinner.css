@@ -1,7 +1,7 @@
 img.rot {
-  animation: 1s linear 0s normal none infinite running rot;
-  -webkit-animation: 1s linear 0s normal none infinite running rot;
-  width: 100px;
+  animation: 2s linear 0s normal none infinite running rot;
+  -webkit-animation: 2s linear 0s normal none infinite running rot;
+  width: 300px;
 }
 @keyframes rot {
   0% {
@@ -19,3 +19,8 @@ img.rot {
     transform: rotate(360deg);
   }
 }
+
+.centered {
+  margin: 200px auto;
+  }
+  

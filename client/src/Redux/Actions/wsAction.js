@@ -1,10 +1,17 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/prefer-default-export */
-import { CREATE_ROOM, JOIN_ROOM, SET_ROOM_WS } from '../Types/types';
+import {
+  CREATE_ROOM, JOIN_ROOM, SET_ROOM_WS, SHOW_SPINNER_WS,
+} from '../Types/types';
 import setTurn from './playerAction';
 
 export const setRoom = (value) => ({
   type: SET_ROOM_WS,
+  payload: value,
+});
+
+export const showSpinner = (value) => ({
+  type: SHOW_SPINNER_WS,
   payload: value,
 });
 
@@ -23,6 +30,7 @@ export const messageFind = (ws) => (dispatch) => {
 
       case JOIN_ROOM:
         dispatch(setRoom(room));
+        dispatch(showSpinner(type));
         break;
 
       default:

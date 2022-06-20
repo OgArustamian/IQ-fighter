@@ -8,8 +8,11 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
+import Spinner from '../Spinner/Spinner';
 
 function GamePage() {
+  const { spinner } = useSelector((state) => state);
+  console.log('======>WS', spinner);
   const dispatch = useDispatch();
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
@@ -40,11 +43,17 @@ function GamePage() {
   }, []);
 
   return (
-    <div className="game-page-container">
-      <Player url={femaleChar} model={femaleMageModel} active={turn} width={250} imgWidth={865} />
-      <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
-      <p className="alert-msg hidden">вы нажали на кнопку</p>
-      <Player url={maleChar} model={maleMageModel} active={!turn} width={600} imgWidth={820} />
+    <div>
+      {spinner !== 'joinedRoom'
+        ? <Spinner />
+        : (
+          <div className="game-page-container">
+            <Player url={femaleChar} model={femaleMageModel} active={turn} width={250} imgWidth={865} />
+            <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
+            <p className="alert-msg hidden">вы нажали на кнопку</p>
+            <Player url={maleChar} model={maleMageModel} active={!turn} width={600} imgWidth={820} />
+          </div>
+        )}
     </div>
   );
 }

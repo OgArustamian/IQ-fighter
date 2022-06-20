@@ -1,10 +1,11 @@
 import React from 'react';
 import './Spinner.css';
+import spinnerimg from './img/fireball.png';
 
 export default function Spinner() {
   return (
-    <div>
-      <img className="rot" src="./img/fireball.png" />
+    <div className="centered">
+      <img className="rot" src={spinnerimg} alt="#" />
     </div>
   );
 }
