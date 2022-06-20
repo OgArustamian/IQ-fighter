@@ -4,6 +4,8 @@ import questionReducer from './questionReducer';
 import answersReducer from './answersReducer';
 import usersReducer from './usersReducer';
 import wsReducer from './wsReducer';
+import ratingReducer from './ratingReducer';
+import spinnerReducer from './spinnerReducer';
 
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -11,6 +13,7 @@ const rootReducer = combineReducers({
   ws: wsReducer,
   question: questionReducer,
   player: playerReducer,
+  spinner: spinnerReducer,
 });
 
 export default rootReducer;
