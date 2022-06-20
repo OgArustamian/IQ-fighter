@@ -9,25 +9,4 @@ export const setRoom = (value) => ({
 
 export const messageFind = (ws) => (dispatch) => {
   ws.send(JSON.stringify({ type: 'find', params: { } }));
-  ws.onmessage = (event) => {
-    console.log('ws Action', event.data);
-    const { type, params } = JSON.parse(event.data);
-    const { room, game } = params;
-
-    switch (type) {
-      case CREATE_ROOM:
-        dispatch(setRoom(room));
-        dispatch(setTurn(game));
-        break;
-
-      case JOIN_ROOM:
-        dispatch(setRoom(room));
-        dispatch(setGame(game));
-        break;
-
-      default:
-        dispatch(setRoom(room));
-        break;
-    }
-  };
 };

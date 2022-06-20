@@ -18,14 +18,4 @@ export const fetchQuestion = (difficulty, ws, answeredQuestions, room, game) => 
       game,
     },
   }));
-
-  ws.onmessage = (event) => {
-    const { type, params } = JSON.parse(event.data);
-
-    if (type === ATTACK) {
-      dispatch(showQuestion(params));
-    } else {
-      alert('Упс, ошибочка вышла');
-    }
-  };
 };

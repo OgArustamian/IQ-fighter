@@ -20,21 +20,9 @@ function GamePage() {
   const { ws } = useWsContext();
   const { id } = useSelector((state) => state.users);
 
-  function showAlert(value) {
-    ws.send(JSON.stringify({ type: 'game', subtype: 'changeBtnTest', params: { room } }));
-  }
-
   function leaveFromRoom(value) {
     ws.send(JSON.stringify({ type: 'leave', params: { room } }));
   }
-
-  ws.onmessage = (event) => {
-    const { type } = JSON.parse(event.data);
-    if (type === 'changeBtnTest') {
-      const alert = document.querySelector('.alert-msg');
-      alert.classList.toggle('hidden');
-    }
-  };
 
   useEffect(() => {
     dispatch(messageFind(ws));
@@ -43,8 +31,6 @@ function GamePage() {
   return (
     <div className="game-page-container">
       <Player url={femaleChar} model={femaleMageModel} active={turn} width={250} imgWidth={865} />
-      <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
-      <p className="alert-msg hidden">вы нажали на кнопку</p>
       <Player url={maleChar} model={maleMageModel} active={!turn} width={600} imgWidth={820} />
     </div>
   );
