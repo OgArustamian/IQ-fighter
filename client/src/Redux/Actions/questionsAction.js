@@ -1,20 +1,30 @@
-import { SHOW_QUESTION } from '../Types/types';
+/* eslint-disable no-param-reassign */
+import { ATTACK, GAME, SHOW_QUESTION } from '../Types/types';
 
 export const showQuestion = (question) => ({
   type: SHOW_QUESTION,
   paylooad: question,
 });
 
-export const fetchQuestion = (difficulty) => async (dispatch) => {
-  const response = await fetch(`${process.env.REACT_APP_URL}/questions`, {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+export const fetchQuestion = (difficulty, ws, answeredQuestions, room) => (dispatch) => {
+  ws.send(JSON.stringify({
+    type: GAME,
+    subtype: ATTACK,
+    params: {
+      difficulty,
+      answeredQuestions,
+      room,
     },
-    body: JSON.stringify({ difficulty }),
-  });
+  }));
 
-  const question = await response.json();
+  ws.onmessage = (event) => {
+    const { type, params } = JSON.parse(event.data);
+    const question = params;
 
-  dispatch(showQuestion(question));
+    if (type === ATTACK) {
+      dispatch(showQuestion(question));
+    } else {
+      alert('Упс, ошибочка вышла');
+    }
+  };
 };
