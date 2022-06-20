@@ -13,3 +13,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+area:hover {
+  cursor: url('./Components/Player/img/sword-attack-icon.png'), auto;
+}

@@ -17,21 +17,22 @@ function Context({ children }) {
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
-    const { room, game } = params;
+    const { room, gameID, turnID } = params;
 
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
         setModal(!modal);
         break;
+
       case CREATE_ROOM:
         dispatch(setRoom(room));
-        dispatch(setTurn(game));
+        dispatch(setTurn(gameID, turnID));
         break;
 
       case JOIN_ROOM:
         dispatch(setRoom(room));
-        dispatch(setGame(game));
+        dispatch(setGame(gameID));
         dispatch(showSpinner(type));
         break;
 

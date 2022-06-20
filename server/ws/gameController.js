@@ -17,12 +17,11 @@ function generalInformation(subtype, rooms, room, message) {
 }
 
 async function attack(subtype, rooms, params) {
-  const {
-    room, difficulty, questAnsweredID, game,
-  } = params;
+  const { room, difficulty, answeredQuestions } = params;
 
-  const question = await Questions.findOne({ where: { id: { [Op.notIn]: questAnsweredID }, difficulty } });
+  const question = await Questions.findOne({ where: { id: { [Op.notIn]: answeredQuestions }, difficulty } });
   const turn = await Turn.create({ game_id: game, question_id: question.id, difficulty });
+  
   const requestAnswers = await Answers.findAll({ where: { question_id: question.id } });
   const answers = requestAnswers.map((el) => ({ id: el.id, answer: el.answer }));
   const message = {
@@ -47,6 +46,7 @@ async function checkAnswer(subtype, rooms, params) {
   } = params;
 
   const answer = await Answers.findOne({ where: { id: answerID } });
+  
   if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
   if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 
