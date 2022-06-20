@@ -32,7 +32,7 @@ function MainNavbar() {
               )
               : (
                 <Link to="/" onClick={logOutHandler}>
-                  <li className="nav-item">Выйти</li>
+                  <li className="nav-item">ВЫЙТИ</li>
                 </Link>
               )}
           </ul>
