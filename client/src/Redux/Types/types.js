@@ -6,6 +6,7 @@ export const SET_ROOM_WS = 'SET_ROOM_WS';
 export const CHANGE_BTN = 'CHANGE_BTN.';
 export const SHOW_QUESTION = 'SHOW_QUESTION';
 export const SET_TURN = 'SET_TURN';
+export const SET_GAME = 'SET_GAME';
 
 // serser ws types
 export const CREATE_ROOM = 'createdRoom';

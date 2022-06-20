@@ -17,7 +17,7 @@ function GamePage() {
 
   const room = useSelector((state) => state.ws);
   const { turn } = useSelector((state) => state.player);
-  const ws = useWsContext();
+  const { ws } = useWsContext();
   const { id } = useSelector((state) => state.users);
 
   function showAlert(value) {
@@ -28,7 +28,7 @@ function GamePage() {
     ws.send(JSON.stringify({ type: 'leave', params: { room } }));
   }
 
-  ws.onmessage = function (event) {
+  ws.onmessage = (event) => {
     const { type } = JSON.parse(event.data);
     if (type === 'changeBtnTest') {
       const alert = document.querySelector('.alert-msg');
