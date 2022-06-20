@@ -1,11 +1,9 @@
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './GamePage.css';
 import maleChar from '../Player/img/male-mage.png';
 import femaleChar from '../Player/img/female-mage.webp';
 import { useWsContext } from '../Context/Context';
-import { wsChangeBtn } from '../../Redux/Actions/gameAction';
 import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
 import Player from '../Player/Player';
@@ -39,27 +37,14 @@ function GamePage() {
 
   useEffect(() => {
     console.log('useEffect true');
-    // ws.onopen = function (e) {
-    // console.log('onopen true');
     dispatch(messageFind(ws));
-    // console.log('dispatch true');
-    // };
   }, []);
 
-//   return (
-//     <div className="game-page-container">
-//       <p className="alert-msg hidden">вы нажали на кнопку</p>
-//       <div>
-//         <FirstPlayer url={femaleChar} />
-//         <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
-//       </div>
-//       <div>
-//         <SecondPlayer url={maleChar} />
-//         <button onClick={() => leaveFromRoom(room)} type="button">КНОПКА ЛИВНУТЬ</button>
-//       </div>
   return (
     <div className="game-page-container">
       <Player url={femaleChar} player={femaleMageModel} width={250} imgWidth={865} />
+      {/* <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
+      <p className="alert-msg hidden">вы нажали на кнопку</p> */}
       <Player url={maleChar} player={maleMageModel} width={600} imgWidth={820} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader,
+  Button, Form, Modal, ModalBody, ModalFooter, ModalHeader,
 } from 'reactstrap';
 import './QuizModal.css';
 
