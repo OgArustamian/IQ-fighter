@@ -22,7 +22,7 @@ function Player({
         map={player}
         width={width}
         imgWidth={imgWidth}
-        onClick={()}
+        // onClick={()}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       />
