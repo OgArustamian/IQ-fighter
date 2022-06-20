@@ -24,6 +24,7 @@ async function attack(subtype, rooms, params) {
 
   const question = await Questions.findOne({ where: { id: { [Op.notIn]: answeredQuestions }, difficulty } });
   const turn = await Turn.update({ question_id: question.id, difficulty }, { where: { id: turnID } });
+
   const requestAnswers = await Answers.findAll({ where: { question_id: question.id } });
   const answers = requestAnswers.map((el) => ({ id: el.id, answer: el.answer }));
   const message = {
@@ -56,6 +57,7 @@ async function checkAnswer(subtype, rooms, params) {
 
   const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
+
   if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
   if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 

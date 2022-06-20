@@ -12,13 +12,14 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: !state.turn,
-        game: payload,
+        gameID: payload.gameID,
+        turnID: payload.turnID,
       };
 
     case SET_GAME:
       return {
         ...state,
-        game: payload,
+        gameID: payload,
       };
 
     default:
