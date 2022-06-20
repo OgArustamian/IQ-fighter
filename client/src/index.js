@@ -7,17 +7,20 @@ import axios from 'axios';
 import { Provider } from 'react-redux';
 import storeR from './Redux/store';
 import App from './App';
+import Context from './Components/Context/Context';
 
 axios.defaults.baseURL = process.env.REACT_APP_URL;
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Container>
-    <BrowserRouter>
-      <Provider store={storeR}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </Container>,
+  <Context>
+    <Container>
+      <BrowserRouter>
+        <Provider store={storeR}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </Container>
+  </Context>,
 );

@@ -36,7 +36,6 @@ router.route('/signIn')
     if (username, password) {
       try {
         const findUser = await User.findOne({ where: { username } });
-        console.log('find ----------->', findUser);
         if (findUser && await bcrypt.compare(password, findUser.password)) {
           req.session.user = {
             id: findUser.id,
