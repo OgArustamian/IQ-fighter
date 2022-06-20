@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MainPage.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import QuizModal from '../QuizModal/QuizModal';
-import { useWsContext } from '../Context/Context';
-import { messageFind } from '../../Redux/Actions/wsAction';
 
 function MainPage() {
-//   {user ? className="start-btn" : className="disabled"}
+  const body = document.querySelector('body');
+  body.style.backgroundImage = "url('https://img2.goodfon.ru/original/1920x1080/4/a8/muzhchina-zhenschina-mag-magiya-boy.jpg')";
 
   const { users } = useSelector((state) => state);
 
