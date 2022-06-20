@@ -1,8 +1,13 @@
 /* eslint-disable no-param-reassign */
-import { SET_ROOM_WS } from '../Types/types';
+import { SET_ROOM_WS, SHOW_SPINNER_WS } from '../Types/types';
 
 export const setRoom = (value) => ({
   type: SET_ROOM_WS,
+  payload: value,
+});
+
+export const showSpinner = (value) => ({
+  type: SHOW_SPINNER_WS,
   payload: value,
 });
 
