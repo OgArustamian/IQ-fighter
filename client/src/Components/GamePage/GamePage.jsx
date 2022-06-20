@@ -9,7 +9,6 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 import Spinner from '../Spinner/Spinner';
-import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
   const { spinner } = useSelector((state) => state);

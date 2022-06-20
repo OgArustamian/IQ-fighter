@@ -4,7 +4,6 @@ import { useLocation, Navigate } from 'react-router-dom';
 
 function AuthRouter({ children }) {
   const { users } = useSelector((state) => state);
-  console.log(users);
   const location = useLocation();
   if (!users.username) {
     return children;

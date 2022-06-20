@@ -23,8 +23,10 @@ function QuizModal() {
   const ws = useWsContext();
 
   function answerHandler() {
-    dispatch(sendAnswer(ws, room, id, userAnswer));
-    toggle();
+    if (userAnswer) {
+      dispatch(sendAnswer(ws, room, id, userAnswer));
+      toggle();
+    }
   }
 
   return (

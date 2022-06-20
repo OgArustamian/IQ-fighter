@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
 import QuizModal from '../QuizModal/QuizModal';
-import attackCursor from './img/sword-attack-icon.png';
 
 function Player({
   url, model, width, imgWidth, active,
@@ -36,7 +35,6 @@ function Player({
         imgWidth={imgWidth}
       />
       {modal ? <QuizModal /> : null }
-
     </div>
   );
 }
