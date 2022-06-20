@@ -31,8 +31,6 @@ function Player({
       room,
       player.game,
     ));
-
-    setModal(!modal);
   }
 
   return (

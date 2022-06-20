@@ -9,7 +9,7 @@ const questionReducer = (state = initState, action) => {
     case SHOW_QUESTION:
       return {
         ...payload,
-        answeredQuestions: [...state.answeredQuestions, payload.question],
+        answeredQuestions: [...state.answeredQuestions, payload.questionID],
       };
 
     default:
