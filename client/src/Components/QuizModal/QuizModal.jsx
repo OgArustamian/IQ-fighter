@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, Form, Modal, ModalBody, ModalFooter, ModalHeader,
 } from 'reactstrap';
+import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import './QuizModal.css';
 
@@ -14,6 +15,11 @@ function QuizModal() {
   const ws = useWsContext();
   const { id } = useSelector((state) => state.users);
   console.log(id, answer);
+
+  function answerHandler() {
+    dispatch(sendAnswer(ws, id, answer));
+    toggle();
+  }
 
   return (
     <div>
@@ -48,7 +54,7 @@ function QuizModal() {
             </div>
           </Form>
         </ModalBody>
-        <ModalFooter><Button color="success" onClick={toggle}>Send answer</Button></ModalFooter>
+        <ModalFooter><Button color="success" onClick={() => answerHandler}>Send answer</Button></ModalFooter>
       </Modal>
     </div>
   );

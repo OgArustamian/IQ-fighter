@@ -5,8 +5,8 @@ export const setAnswer = (value) => ({
   payload: value,
 });
 
-export const sendAnswer = (ws) => (dispatch) => {
-  ws.send(JSON.stringify({ type: 'game', subtype: 'answer', params: { user_id, answer_id } }));
+export const sendAnswer = (ws, userId, answerId) => (dispatch) => {
+  ws.send(JSON.stringify({ type: 'game', subtype: 'answer', params: { userId, answerId } }));
   ws.onmessage = function (e) {
     console.log('ws action', e.data);
   };
