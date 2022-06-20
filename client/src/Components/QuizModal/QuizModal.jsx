@@ -16,12 +16,14 @@ function QuizModal() {
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
 
+  const room = useSelector((state) => state.ws);
+
   const [userAnswer, setUserAnswer] = useState();
   const dispatch = useDispatch();
   const ws = useWsContext();
 
   function answerHandler() {
-    // dispatch(sendAnswer(ws, id, userAnswer));
+    dispatch(sendAnswer(ws, room, id, userAnswer));
     toggle();
   }
 
