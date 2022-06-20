@@ -12,7 +12,6 @@ import Spinner from '../Spinner/Spinner';
 
 function GamePage() {
   const { spinner } = useSelector((state) => state);
-  console.log('======>WS', spinner);
   const dispatch = useDispatch();
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';

@@ -8,8 +8,9 @@ const {
 } = require('../db/models');
 
 function generalInformation(infotype, rooms, room, message, userID = 0) {
-  switch (infotype) {
-    case 'attack' || 'draw':
+  console.log('infotype ------>', infotype, (infotype === 'draw'));
+  switch (true) {
+    case infotype === 'attack' || infotype === 'draw':
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -18,16 +19,19 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
         }
       }
       break;
-    case 'win' || 'loss':
+    case infotype === 'win' || infotype === 'loss':
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
+            console.log('el,userID ------>', el.userID);
             if (el.userID === userID) el.send(JSON.stringify(message));
           });
         }
       }
+      break;
     default:
       console.log('eror generalinformation gamecontroller');
+      break;
   }
 }
 
@@ -66,13 +70,16 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
   if (answers.length === 2) {
     const trueAnsweredUser = answers.filter((el) => (el.isTrue));
     const falseAnsweredUser = answers.filter((el) => (!el.isTrue));
-    switch (trueAnsweredUser) {
-      case (trueAnsweredUser.length === 2 || falseAnsweredUser === 2):
+    console.log('true ---->', trueAnsweredUser.length);
+    console.log('false ---->', falseAnsweredUser.length);
+    switch (true) {
+      case trueAnsweredUser.length === 2 || falseAnsweredUser.length === 2:
+        console.log('draw ----->');
         infotype = 'draw';
         message = { type: infotype, params: { turnID } };
-        generalInformation(subtype, rooms, room, message);
+        generalInformation(infotype, rooms, room, message);
         break;
-      case (trueAnsweredUser.length === 1):
+      case trueAnsweredUser.length === 1:
         infotype = 'win';
         turnWinnerID = trueAnsweredUser[0].id;
         message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
@@ -93,6 +100,8 @@ async function checkAnswer(subtype, rooms, params) {
   const {
     room, userID, answerID, turnID,
   } = params;
+
+  console.log('params ---------->', params);
 
   const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });

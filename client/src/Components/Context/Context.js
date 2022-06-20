@@ -5,15 +5,8 @@ import React, {
 import { useDispatch } from 'react-redux';
 import { setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
-<<<<<<< HEAD
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import { ATTACK, CREATE_ROOM, JOIN_ROOM } from '../../Redux/Types/types';
-=======
-import { setRoom } from '../../Redux/Actions/wsAction';
-import {
-  ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
-} from '../../Redux/Types/types';
->>>>>>> QuizModalReducer
 
 const WsContext = createContext();
 
@@ -23,6 +16,7 @@ function Context({ children }) {
   const dispatch = useDispatch();
 
   ws.onmessage = (event) => {
+    console.log(event.data);
     const { type, params } = JSON.parse(event.data);
     const { room, gameID, turnID } = params;
 
@@ -34,12 +28,11 @@ function Context({ children }) {
 
       case CREATE_ROOM:
         dispatch(setRoom(room));
-        dispatch(setTurn(gameID, turnID));
         break;
 
       case JOIN_ROOM:
         dispatch(setRoom(room));
-        dispatch(setGame(gameID));
+        dispatch(setTurn(gameID, turnID));
         dispatch(showSpinner(type));
         break;
 
