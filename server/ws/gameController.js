@@ -23,9 +23,10 @@ function sendBtn(subtype, rooms, params) {
 }
 
 async function attack(subtype, rooms, params) {
-  const { room, difficulty, questAnsweredID } = params;
-  const question = await Questions.findOne({ where: { id: { [Op.notIn]: questAnsweredID }, difficulty } });
-  await Turn.create({game_id:})
+  const { room, difficulty, answeredQuestions } = params;
+
+  const question = await Questions.findOne({ where: { id: { [Op.notIn]: answeredQuestions }, difficulty } });
+  // await Turn.create({ game_id });
   const requestAnswers = await Answers.findAll({ where: { question_id: question.id } });
   const answers = requestAnswers.map((el) => ({ id: el.id, answer: el.answer }));
   const message = {
@@ -42,7 +43,6 @@ async function attack(subtype, rooms, params) {
 async function answer(subtype, rooms, params) {
   const { userID, room, answerID } = params;
   const answer = await Answers.findOne({ where: { id: answerID } });
-  
 }
 
 function gameController(rooms, subtype, params) {

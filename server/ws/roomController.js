@@ -90,7 +90,7 @@ function leave(rooms, ws) {
 function roomController(rooms, maxClients, ws, userID) {
   console.log('controller', rooms);
   for (const [key, value] of Object.entries(rooms)) {
-    console.log(`${key}: ${value.length}`);
+    console.log(`${key}: ${value}`);
     if (value.length < 2) { return join(rooms, maxClients, ws, userID, key); }
   }
   create(ws, userID, rooms);
