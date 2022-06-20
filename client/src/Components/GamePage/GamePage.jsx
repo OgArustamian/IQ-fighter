@@ -43,8 +43,8 @@ function GamePage() {
   return (
     <div className="game-page-container">
       <Player url={femaleChar} player={femaleMageModel} width={250} imgWidth={865} />
-      {/* <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
-      <p className="alert-msg hidden">вы нажали на кнопку</p> */}
+      <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
+      <p className="alert-msg hidden">вы нажали на кнопку</p>
       <Player url={maleChar} player={maleMageModel} width={600} imgWidth={820} />
     </div>
   );

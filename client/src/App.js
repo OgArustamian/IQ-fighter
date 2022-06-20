@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Registration from './Components/Registration/Registration';
 import SignIn from './Components/SignIn/SignIn';
@@ -13,6 +13,8 @@ import AboutPage from './Components/AboutPage/AboutPage';
 import LadderBoard from './Components/LadderBoard/LadderBoard';
 
 function App() {
+  const { ws } = useSelector((state) => state);
+  console.log('======>WS', ws);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkUser());
