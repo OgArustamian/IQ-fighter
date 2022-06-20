@@ -10,6 +10,7 @@ import AuthRouter from './Components/AuthRouter/AuthRouter';
 import { checkUser } from './Redux/Actions/userAction';
 import GamePage from './Components/GamePage/GamePage';
 import AboutPage from './Components/AboutPage/AboutPage';
+import LadderBoard from './Components/LadderBoard/LadderBoard';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
       <MainNavbar />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/ladderboard" element />
+        <Route path="/ladderboard" element={<LadderBoard />} />
         <Route
           path="/signIn"
           element={(

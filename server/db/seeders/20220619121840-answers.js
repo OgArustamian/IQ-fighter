@@ -260,6 +260,306 @@ module.exports = {
       {
         answer: 'Джейсон Стэтхэм', isTrue: false, question_id: 20, createdAt: new Date(), updatedAt: new Date(),
       },
+      {
+        answer: '112', isTrue: false, question_id: 21, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '122', isTrue: false, question_id: 21, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '022', isTrue: true, question_id: 21, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '012', isTrue: false, question_id: 21, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'number', isTrue: false, question_id: 22, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'array', isTrue: false, question_id: 22, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'object', isTrue: true, question_id: 22, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'NaN', isTrue: false, question_id: 22, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '105', isTrue: true, question_id: 23, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"105"', isTrue: false, question_id: 23, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'TypeError', isTrue: false, question_id: 23, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"10*10+5"', isTrue: false, question_id: 23, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '8', isTrue: false, question_id: 24, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '10', isTrue: true, question_id: 24, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'SyntaxError', isTrue: false, question_id: 24, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError', isTrue: false, question_id: 24, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '12', isTrue: false, question_id: 25, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '123', isTrue: false, question_id: 25, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '124', isTrue: true, question_id: 25, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '134', isTrue: false, question_id: 25, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '0, "", undefined', isTrue: true, question_id: 26, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '0, new Number(0), "", new Boolean(false), undefined', isTrue: false, question_id: 26, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '0, "", new Boolean(false), undefined', isTrue: false, question_id: 26, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Все являются "ложными"', isTrue: false, question_id: 26, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"number"', isTrue: false, question_id: 27, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"string"', isTrue: true, question_id: 27, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"object"', isTrue: false, question_id: 27, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"undefined"', isTrue: false, question_id: 27, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"undefined", "number"', isTrue: true, question_id: 28, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"number", "number"', isTrue: false, question_id: 28, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"object", "number"', isTrue: false, question_id: 28, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"number", "undefined"', isTrue: false, question_id: 28, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '[1, 1, 2, 3, 4]', isTrue: false, question_id: 29, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '[1, 2, 3, 4]', isTrue: false, question_id: 29, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{1, 1, 2, 3, 4}', isTrue: false, question_id: 29, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{1, 2, 3, 4}', isTrue: true, question_id: 29, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '10', isTrue: false, question_id: 30, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '11', isTrue: false, question_id: 30, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Error', isTrue: true, question_id: 30, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'NaN', isTrue: false, question_id: 30, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'false, true', isTrue: true, question_id: 31, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '"Lydia", 21', isTrue: false, question_id: 31, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'true, true', isTrue: false, question_id: 31, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined, undefined', isTrue: false, question_id: 31, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '[[1, 2, 3, 4, 5]]', isTrue: false, question_id: 32, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '[1, 2, 3, 4, 5]', isTrue: false, question_id: 32, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '1', isTrue: true, question_id: 32, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '[1]', isTrue: false, question_id: 32, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ admin: true, user: { name: "Lydia", age: 21 } }', isTrue: false, question_id: 33, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ admin: true, name: "Lydia", age: 21 }', isTrue: true, question_id: 33, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ admin: true, user: ["Lydia", 21] }', isTrue: true, question_id: 33, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ admin: true }', isTrue: true, question_id: 33, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'mouse.bird.size', isTrue: true, question_id: 34, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'mouse[bird.size]', isTrue: false, question_id: 34, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'mouse[bird["size"]]', isTrue: false, question_id: 34, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Все варианты валидны', isTrue: false, question_id: 34, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Hello', isTrue: true, question_id: 35, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Hey!', isTrue: false, question_id: 35, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 35, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError', isTrue: false, question_id: 35, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'true, false, true', isTrue: false, question_id: 36, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'false, false, true', isTrue: false, question_id: 36, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'true, false, false', isTrue: true, question_id: 36, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'false, false, true', isTrue: false, question_id: 36, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{}', isTrue: true, question_id: 37, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError: greetign is not defined', isTrue: false, question_id: 37, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 37, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'TypeError', isTrue: false, question_id: 37, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Ничего, всё в порядке!', isTrue: true, question_id: 38, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'SyntaxError', isTrue: false, question_id: 38, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 38, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError', isTrue: false, question_id: 38, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Да', isTrue: false, question_id: 39, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Нет', isTrue: true, question_id: 39, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Повторите еще раз', isTrue: false, question_id: 39, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Это точно про JS?', isTrue: false, question_id: 39, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'NaN', isTrue: false, question_id: 40, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'TypeError', isTrue: false, question_id: 40, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '12', isTrue: true, question_id: 40, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '3', isTrue: false, question_id: 40, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Да', isTrue: true, question_id: 41, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Нет', isTrue: false, question_id: 41, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Возможно', isTrue: false, question_id: 41, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Я бы почистил', isTrue: false, question_id: 41, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Lydia', isTrue: false, question_id: 42, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'myName', isTrue: false, question_id: 42, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 42, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError', isTrue: true, question_id: 42, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ x: 100, y: 20 }', isTrue: false, question_id: 43, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ x: 10, y: 20 }', isTrue: true, question_id: 43, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '{ x: 100 }', isTrue: false, question_id: 43, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'ReferenceError', isTrue: false, question_id: 43, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '["apple", "banana"]', isTrue: false, question_id: 44, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: '2', isTrue: true, question_id: 44, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'true', isTrue: false, question_id: 44, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 44, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'I made it!', isTrue: false, question_id: 45, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Promise {<resolved>: "I made it!"}', isTrue: false, question_id: 45, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'Promise {<pending>}', isTrue: true, question_id: 45, createdAt: new Date(), updatedAt: new Date(),
+      },
+      {
+        answer: 'undefined', isTrue: false, question_id: 45, createdAt: new Date(), updatedAt: new Date(),
+      },
     ];
 
     await queryInterface.bulkInsert('Answers', answers, {});
