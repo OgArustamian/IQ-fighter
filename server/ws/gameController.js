@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-fallthrough */
 /* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
@@ -6,13 +7,27 @@ const {
   Questions, Answers, Turn, UserTurn,
 } = require('../db/models');
 
-function generalInformation(infotype, rooms, room, message) {
-  for (const [key, value] of Object.entries(rooms)) {
-    if (key === room) {
-      value.forEach((el) => {
-        el.send(JSON.stringify(message));
-      });
-    }
+function generalInformation(infotype, rooms, room, message, userID = 0) {
+  switch (infotype) {
+    case 'attack' || 'draw':
+      for (const [key, value] of Object.entries(rooms)) {
+        if (key === room) {
+          value.forEach((el) => {
+            el.send(JSON.stringify(message));
+          });
+        }
+      }
+      break;
+    case 'win' || 'loss':
+      for (const [key, value] of Object.entries(rooms)) {
+        if (key === room) {
+          value.forEach((el) => {
+            if (el.userID === userID) el.send(JSON.stringify(message));
+          });
+        }
+      }
+    default:
+      console.log('eror generalinformation gamecontroller');
   }
 }
 
@@ -38,20 +53,44 @@ async function attack(subtype, rooms, params) {
   generalInformation(subtype, rooms, room, message);
 }
 
-async function responseAnswers(subtype, rooms, turnID, difficulty) {
-  const answers = await UserTurn.findAll({ where: { turn_id: turnID } });
+async function responseAnswers(subtype, rooms, room, oldturn) {
+  const { game_id, difficulty } = oldturn;
+  let infotype = '';
+  let message = {};
+  let turnWinnerID;
+  let turnLoserID;
+  const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
+  const turn = await Turn.create({ where: { game_id } });
+  const turnID = turn.id;
   if (answers.length === 2) {
-    switch (true) {
-      case ((answers[0].isTrue) && (answers[1].isTrue)):
-        const message = { type: 'draw', params: {} };
+    const trueAnsweredUser = answers.filter((el) => (el.isTrue));
+    const falseAnsweredUser = answers.filter((el) => (!el.isTrue));
+    switch (trueAnsweredUser) {
+      case (trueAnsweredUser.length === 2 || falseAnsweredUser === 2):
+        infotype = 'draw';
+        message = { type: infotype, params: { turnID } };
         generalInformation(subtype, rooms, room, message);
+        break;
+      case (trueAnsweredUser.length === 1):
+        infotype = 'win';
+        turnWinnerID = trueAnsweredUser[0].id;
+        message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
+        generalInformation(infotype, rooms, room, message, turnWinnerID);
+        infotype = 'loss';
+        turnLoserID = falseAnsweredUser[0].id;
+        message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
+        generalInformation(infotype, rooms, room, message, turnLoserID);
+        break;
+      default:
+        console.log('check answerd error');
+        break;
     }
   }
 }
 
 async function checkAnswer(subtype, rooms, params) {
   const {
-    userID, answerID, turnID,
+    room, userID, answerID, turnID,
   } = params;
 
   const answer = await Answers.findOne({ where: { id: answerID } });
@@ -59,7 +98,7 @@ async function checkAnswer(subtype, rooms, params) {
   if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
   if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 
-  responseAnswers(subtype, rooms, turnID, turn.difficulty);
+  responseAnswers(subtype, rooms, room, turn);
 }
 
 function gameController(rooms, subtype, params) {
