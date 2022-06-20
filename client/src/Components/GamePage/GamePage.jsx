@@ -1,10 +1,10 @@
-import React from 'react';
-import FirstPlayer from '../Player/FirstPlayer';
-import SecondPlayer from '../Player/SecondPlayer';
+/* eslint-disable max-len */
+import React, { useEffect, useState } from 'react';
 import './GamePage.css';
 import maleChar from '../Player/img/male-mage.png';
 import femaleChar from '../Player/img/female-mage.webp';
-import Players from '../Player/Players';
+import Player from '../Player/Player';
+import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -12,7 +12,8 @@ function GamePage() {
 
   return (
     <div className="game-page-container">
-      <Players />
+      <Player url={femaleChar} player={femaleMageModel} width={250} imgWidth={865} />
+      <Player url={maleChar} player={maleMageModel} width={600} imgWidth={820} />
     </div>
   );
 }
