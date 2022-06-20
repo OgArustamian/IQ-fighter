@@ -5,8 +5,15 @@ import React, {
 import { useDispatch } from 'react-redux';
 import { setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
+<<<<<<< HEAD
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import { ATTACK, CREATE_ROOM, JOIN_ROOM } from '../../Redux/Types/types';
+=======
+import { setRoom } from '../../Redux/Actions/wsAction';
+import {
+  ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
+} from '../../Redux/Types/types';
+>>>>>>> QuizModalReducer
 
 const WsContext = createContext();
 
