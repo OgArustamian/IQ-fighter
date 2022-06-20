@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button, Form, Modal, ModalBody, ModalFooter, ModalHeader,
 } from 'reactstrap';
+import { useWsContext } from '../Context/Context';
 import './QuizModal.css';
 
 function QuizModal() {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState({});
+  const dispatch = useDispatch();
+  const ws = useWsContext();
+  const { id } = useSelector((state) => state.users);
+  console.log(id, answer);
 
   return (
     <div>

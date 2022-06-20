@@ -8,6 +8,7 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
+import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ function GamePage() {
       {/* <button onClick={() => showAlert(room)} className="mt-5" type="button">ПРОСТО КНОПКА</button>
       <p className="alert-msg hidden">вы нажали на кнопку</p> */}
       <Player url={maleChar} player={maleMageModel} width={600} imgWidth={820} />
+
+      <QuizModal />
     </div>
   );
 }
