@@ -8,6 +8,7 @@ export const SHOW_QUESTION = 'SHOW_QUESTION';
 export const SHOW_RAITNG = 'SHOW_RAITNG';
 export const SET_TURN = 'SET_TURN';
 export const SHOW_SPINNER_WS = 'SHOW_SPINNER_WS';
+export const SET_GAME = 'SET_GAME';
 
 // serser ws types
 export const CREATE_ROOM = 'createdRoom';

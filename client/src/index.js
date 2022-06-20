@@ -14,13 +14,13 @@ axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Context>
-    <Container>
-      <BrowserRouter>
-        <Provider store={storeR}>
+  <Provider store={storeR}>
+    <Context>
+      <Container>
+        <BrowserRouter>
           <App />
-        </Provider>
-      </BrowserRouter>
-    </Container>
-  </Context>,
+        </BrowserRouter>
+      </Container>
+    </Context>
+  </Provider>,
 );

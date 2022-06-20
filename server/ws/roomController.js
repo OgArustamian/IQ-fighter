@@ -4,6 +4,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
+const { Game } = require('../db/models');
+
 // function generalInformation(ws) {
 //   let obj;
 //   if (ws.room === undefined) {
@@ -37,12 +39,14 @@ function genKey(length) {
   return result;
 }
 
-function create(ws, userID, rooms) {
+async function create(ws, userID, rooms) {
   ws.userID = userID;
   const room = genKey(5);
   console.log('create', room); // information
   rooms[room] = [ws];
+  const game = await Game.create({ winner_id: 0 });
   ws.room = room;
+  // ws.game = game.id;
   ws.send(JSON.stringify({ type: 'createdRoom', params: { room } }));
 
   // generalInformation(ws);
@@ -62,6 +66,9 @@ function join(rooms, maxClients, ws, userID, room) {
   rooms[room].push(ws);
   ws.userID = userID;
   ws.room = room;
+  // const { game } = rooms[room][0];
+  // ws.game = game;
+  // console.log('game in ws', ws.game);
 
   console.log('join', room); // information
 
@@ -82,12 +89,13 @@ function leave(rooms, ws) {
   try {
     rooms[room] = rooms[room].filter((so) => so !== ws);
     ws.room = undefined;
+    // ws.game = undefined;
   } catch (err) { console.error(err); }
 
   if (rooms[room].length == 0) { close(rooms, room); }
 }
 
-function controller(rooms, maxClients, ws, userID) {
+function roomController(rooms, maxClients, ws, userID) {
   console.log('controller', rooms);
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value.length}`);
@@ -97,5 +105,5 @@ function controller(rooms, maxClients, ws, userID) {
 }
 
 module.exports = {
-  create, join, controller, leave,
+  create, join, roomController, leave,
 };

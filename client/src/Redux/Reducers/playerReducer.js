@@ -1,4 +1,4 @@
-import { SET_TURN } from '../Types/types';
+import { SET_GAME, SET_TURN } from '../Types/types';
 
 const initState = {
   turn: false,
@@ -12,7 +12,15 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: !state.turn,
+        game: payload,
       };
+
+    case SET_GAME:
+      return {
+        ...state,
+        game: payload,
+      };
+
     default:
       return state;
   }

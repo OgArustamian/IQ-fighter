@@ -1,7 +1,11 @@
-import { SET_TURN } from '../Types/types';
+import { SET_GAME, SET_TURN } from '../Types/types';
 
-const setTurn = () => ({
+export const setTurn = (game) => ({
   type: SET_TURN,
+  payload: game,
 });
 
-export default setTurn;
+export const setGame = (game) => ({
+  type: SET_GAME,
+  payload: game,
+});
