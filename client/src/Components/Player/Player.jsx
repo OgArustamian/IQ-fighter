@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchQuestion } from '../../Redux/Actions/questionsAction';
+import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
+import QuizModal from '../QuizModal/QuizModal';
 import attackCursor from './img/sword-attack-icon .png';
 
 function Player({
@@ -16,13 +17,22 @@ function Player({
     body.style.cursor = 'default';
   }
 
-  const ws = useWsContext();
+  const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
-  const { questions } = useSelector((state) => state);
+  const { question, player } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const { modal, setModal } = useWsContext();
 
   function attackHandler(area) {
-    dispatch(fetchQuestion(area.questionDifficulty, ws, questions.answeredQuestions, room));
+    dispatch(fetchQuestion(
+      area.questionDifficulty,
+      ws,
+      question.answeredQuestions,
+      room,
+      player.game,
+    ));
+
+    setModal(!modal);
   }
 
   return (
@@ -37,6 +47,8 @@ function Player({
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       />
+      {modal ? <QuizModal /> : null }
+
     </div>
   );
 }

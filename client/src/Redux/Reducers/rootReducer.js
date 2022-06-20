@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import playerReducer from './playerReducer';
-import questionsReducer from './questionsReducer';
+import questionReducer from './questionReducer';
 import usersReducer from './usersReducer';
 import wsReducer from './wsReducer';
 
 const rootReducer = combineReducers({
   users: usersReducer,
   ws: wsReducer,
-  questions: questionsReducer,
+  question: questionReducer,
   player: playerReducer,
 });
 
