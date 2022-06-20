@@ -22,7 +22,9 @@ function QuizModal() {
 
   function answerHandler() {
     // dispatch(sendAnswer(ws, id, userAnswer));
-    toggle();
+    if (userAnswer) {
+      toggle();
+    }
   }
 
   return (

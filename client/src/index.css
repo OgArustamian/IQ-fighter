@@ -15,5 +15,9 @@ code {
 }
 
 area:hover {
-  cursor: url('./Components/Player/img/sword-attack-icon.png'), auto;
+  cursor: url('./img/sword-attack-icon.png'), auto;
+}
+
+.answer-checkbox:hover {
+  cursor: url('./img/staff.png'), auto;
 }

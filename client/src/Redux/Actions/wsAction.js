@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { CREATE_ROOM, JOIN_ROOM, SET_ROOM_WS } from '../Types/types';
-import { setTurn, setGame } from './playerAction';
+import { SET_ROOM_WS } from '../Types/types';
 
 export const setRoom = (value) => ({
   type: SET_ROOM_WS,
