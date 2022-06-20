@@ -14,7 +14,7 @@ module.exports = {
         question: 'Временная память в компьютере.', difficulty: 4, theme_id: 2, createdAt: new Date(), updatedAt: new Date(),
       },
       {
-        question: 'Как расшифровывается аббревиатура BIOS?', difficulty: 4, theme_id: 2, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Как расшифровывается аббревиатура BIOS?', difficulty: 3, theme_id: 2, createdAt: new Date(), updatedAt: new Date(),
       },
       {
         question: 'Соединение (физическое или логическое), через которое принимаются и отправляются данные в компьютере.', difficulty: 2, theme_id: 2, createdAt: new Date(), updatedAt: new Date(),
@@ -38,16 +38,16 @@ module.exports = {
         question: 'В компьютере информация хранится в виде:', difficulty: 1, theme_id: 2, createdAt: new Date(), updatedAt: new Date(),
       },
       {
-        question: 'Что вернёт данный код: console.log( false && 1 && [] )', difficulty: 1, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Что вернёт данный код: console.log( false && 1 && [] )?', difficulty: 1, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
       },
       {
-        question: 'Что вернёт данный код: console.log( " " && true && 5 )', difficulty: 2, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Что вернёт данный код: console.log( " " && true && 5 )?', difficulty: 2, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
       },
       {
         question: 'Как быстрее всего преобразовать строку в число?', difficulty: 4, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
       },
       {
-        question: 'Что вернёт данный код: console.log( null || 1 || undefined )', difficulty: 2, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Что вернёт данный код: console.log( null || 1 || undefined )?', difficulty: 2, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
       },
       {
         question: `Что будет в консоли?
@@ -66,10 +66,10 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        question: 'Что вернёт данный код: console.log( typeof null )', difficulty: 3, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Что вернёт данный код: console.log( typeof null )?', difficulty: 3, theme_id: 4, createdAt: new Date(), updatedAt: new Date(),
       },
       {
-        question: 'Краткий пересказ какого фильмы вы видите: "Бывший мертвец организовывает группу по интересам"', difficulty: 3, theme_id: 1, createdAt: new Date(), updatedAt: new Date(),
+        question: 'Краткий пересказ какого фильма вы видите: "Бывший мертвец организовывает группу по интересам"?', difficulty: 3, theme_id: 1, createdAt: new Date(), updatedAt: new Date(),
       },
       {
         question: 'Какой актер озвучил фразу «Я есть Грут» на 15 различных языках?', difficulty: 1, theme_id: 1, createdAt: new Date(), updatedAt: new Date(),
