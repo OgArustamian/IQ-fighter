@@ -1,14 +1,14 @@
-import { SET_ROOM_WS, SHOW_SPINNER_WS } from '../Types/types';
+import { SHOW_RAITNG } from '../Types/types';
 
 // eslint-disable-next-line default-param-last
-const wsReducer = (state = [], action) => {
+const ratingReducer = (state = [], action) => {
   const { type, payload } = action;
   switch (type) {
-    case SET_ROOM_WS:
+    case SHOW_RAITNG:
       return payload;
     default:
       return state;
   }
 };
 
-export default wsReducer;
+export default ratingReducer;

@@ -5,7 +5,9 @@ export const SET_USER_WS = 'SET_USER_WS'; // Not activ
 export const SET_ROOM_WS = 'SET_ROOM_WS';
 export const CHANGE_BTN = 'CHANGE_BTN.';
 export const SHOW_QUESTION = 'SHOW_QUESTION';
+export const SHOW_RAITNG = 'SHOW_RAITNG';
 export const SET_TURN = 'SET_TURN';
+export const SHOW_SPINNER_WS = 'SHOW_SPINNER_WS';
 export const SET_GAME = 'SET_GAME';
 
 // serser ws types

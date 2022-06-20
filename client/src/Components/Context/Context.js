@@ -5,7 +5,7 @@ import React, {
 import { useDispatch } from 'react-redux';
 import { setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
-import { setRoom } from '../../Redux/Actions/wsAction';
+import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import { ATTACK, CREATE_ROOM, JOIN_ROOM } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -32,6 +32,7 @@ function Context({ children }) {
       case JOIN_ROOM:
         dispatch(setRoom(room));
         dispatch(setGame(game));
+        dispatch(showSpinner(type));
         break;
 
       default:
