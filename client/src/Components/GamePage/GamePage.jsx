@@ -8,6 +8,7 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
+import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function GamePage() {
   const { id } = useSelector((state) => state.users);
 
   function showAlert(value) {
-    ws.send(JSON.stringify({ type: 'changeBtnTest', params: { room } }));
+    ws.send(JSON.stringify({ type: 'game', subtype: 'changeBtnTest', params: { room } }));
   }
 
   function leaveFromRoom(value) {
@@ -29,7 +30,7 @@ function GamePage() {
 
   ws.onmessage = (event) => {
     const { type } = JSON.parse(event.data);
-    if (type === 'activChangeBtn') {
+    if (type === 'changeBtnTest') {
       const alert = document.querySelector('.alert-msg');
       alert.classList.toggle('hidden');
     }

@@ -87,7 +87,7 @@ function leave(rooms, ws) {
   if (rooms[room].length == 0) { close(rooms, room); }
 }
 
-function controller(rooms, maxClients, ws, userID) {
+function roomController(rooms, maxClients, ws, userID) {
   console.log('controller', rooms);
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value.length}`);
@@ -97,5 +97,5 @@ function controller(rooms, maxClients, ws, userID) {
 }
 
 module.exports = {
-  create, join, controller, leave,
+  create, join, roomController, leave,
 };

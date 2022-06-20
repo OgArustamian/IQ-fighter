@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Form, Modal, ModalBody, ModalFooter, ModalHeader,
 } from 'reactstrap';
+import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import './QuizModal.css';
 
@@ -12,7 +13,17 @@ function QuizModal() {
   const toggle = () => setModal(!modal);
 
   const { question } = useSelector((state) => state);
+  const { id } = useSelector((state) => state.users);
+
   const [userAnswer, setUserAnswer] = useState();
+  const [answer, setAnswer] = useState({});
+  const dispatch = useDispatch();
+  const ws = useWsContext();
+
+  function answerHandler() {
+    dispatch(sendAnswer(ws, id, answer));
+    toggle();
+  }
 
   return (
     <div>
@@ -48,7 +59,7 @@ function QuizModal() {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={toggle}>Send answer</Button>
+          <Button color="success" onClick={() => answerHandler}>Send answer</Button>
         </ModalFooter>
       </Modal>
     </div>
