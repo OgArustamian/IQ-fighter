@@ -44,7 +44,7 @@ async function create(ws, userID, rooms) {
   const room = genKey(5);
   console.log('create', room); // information
   rooms[room] = [ws];
-  // const game = await Game.create({ winner_id: 0 });
+  const game = await Game.create({ winner_id: 0 });
   ws.room = room;
   // ws.game = game.id;
   ws.send(JSON.stringify({ type: 'createdRoom', params: { room } }));
@@ -68,7 +68,7 @@ function join(rooms, maxClients, ws, userID, room) {
   ws.room = room;
   // const { game } = rooms[room][0];
   // ws.game = game;
-  console.log('game in ws', ws.game);
+  // console.log('game in ws', ws.game);
 
   console.log('join', room); // information
 
@@ -89,7 +89,7 @@ function leave(rooms, ws) {
   try {
     rooms[room] = rooms[room].filter((so) => so !== ws);
     ws.room = undefined;
-    // ws.game = undefined
+    // ws.game = undefined;
   } catch (err) { console.error(err); }
 
   if (rooms[room].length == 0) { close(rooms, room); }

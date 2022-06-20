@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
 const { Op } = require('sequelize');
@@ -13,15 +14,6 @@ function generalInformation(subtype, rooms, room, message) {
       });
     }
   }
-}
-
-function sendBtn(subtype, rooms, params) {
-  const { room } = params;
-  const message = {
-    type: subtype,
-    params: {},
-  };
-  generalInformation(subtype, rooms, room, message);
 }
 
 async function attack(subtype, rooms, params) {
@@ -46,7 +38,7 @@ async function attack(subtype, rooms, params) {
 }
 
 async function responseAnswers(subtype, rooms) {
-  console.log('answer response')
+  console.log('answer response');
 }
 
 async function checkAnswer(subtype, rooms, params) {
@@ -63,9 +55,6 @@ async function checkAnswer(subtype, rooms, params) {
 
 function gameController(rooms, subtype, params) {
   switch (subtype) {
-    case 'changeBtnTest':
-      sendBtn(subtype, rooms, params);
-      break;
     case 'attack':
       attack(subtype, rooms, params);
       break;
