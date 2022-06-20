@@ -44,7 +44,7 @@ async function create(ws, userID, rooms) {
   const room = genKey(5);
   console.log('create', room); // information
   rooms[room] = [ws];
-  const game = await Game.create({ winner_id: 0 });
+  // const game = await Game.create({ winner_id: 0 });
   ws.room = room;
   // ws.game = game.id;
   ws.send(JSON.stringify({ type: 'createdRoom', params: { room } }));
