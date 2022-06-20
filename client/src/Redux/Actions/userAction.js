@@ -15,7 +15,7 @@ export const regUser = (value) => (dispatch) => {
 export const checkUser = () => (dispatch) => {
   axios.post('/auth/check')
     .then((response) => dispatch(setUser(response.data)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setUser({})));
 };
 
 export const userLogOut = () => (dispatch) => {
@@ -24,6 +24,7 @@ export const userLogOut = () => (dispatch) => {
 };
 
 export const userSignIn = (value) => (dispatch) => {
+  console.log(process.env.REACT_APP_URL);
   axios.post('/auth/signIn', value)
     .then((res) => dispatch(setUser(res.data)));
 };

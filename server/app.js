@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
@@ -8,11 +9,15 @@ const FileStore = require('session-file-store')(session);
 
 // ws
 const http = require('http');
-const { uuid } = require('uuidv4');
+const { v4: uuidv4 } = require('uuid');
 const { WebSocketServer } = require('ws');
+
+const { controller, leave } = require('./ws/roomController');
+const sendBtn = require('./ws/gameController');
 
 const map = new Map();
 
+// routing
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
@@ -64,11 +69,11 @@ server.on('upgrade', (request, socket, head) => {
   console.log('Parsing session from request...');
 
   sessionParser(request, {}, () => {
-    if (!request.session.user) {
-      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
-      socket.destroy();
-      return;
-    }
+    // if (!request.session.user) {
+    //   socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
+    //   socket.destroy();
+    //   return;
+    // }
 
     console.log('Session is parsed!');
 
@@ -78,18 +83,35 @@ server.on('upgrade', (request, socket, head) => {
   });
 });
 
+const maxClients = 2;
+const rooms = {};
+
 // part2
 wss.on('connection', (ws, request) => {
-  const userID = request.session.user.id;
-
+  const userID = request.session.userid || uuidv4();
   map.set(userID, ws);
 
+  // коннект и получение месседжа
   ws.on('message', (message) => {
-    console.log(`Received message ${message} from user ${userID}`);
-  });
+    const obj = JSON.parse(message);
+    const { type } = obj;
+    const { params } = obj;
 
-  ws.on('close', () => {
-    map.delete(userID);
+    switch (type) {
+      case 'changeBtnTest':
+        sendBtn(rooms, params.room);
+        break;
+      case 'find':
+        controller(rooms, maxClients, ws, userID);
+        break;
+      case 'leave':
+        leave(rooms, ws);
+        break;
+      default:
+        console.log('default case');
+        console.warn(`Type: ${type} unknown`);
+        break;
+    }
   });
 });
 
