@@ -4,19 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
 import QuizModal from '../QuizModal/QuizModal';
-import attackCursor from './img/sword-attack-icon .png';
+import attackCursor from './img/sword-attack-icon.png';
 
 function Player({
   url, model, width, imgWidth, active,
 }) {
-  const [isHover, setIsHover] = useState(false);
-  const body = document.querySelector('body');
-  if (isHover) {
-    body.style.cursor = `url(${attackCursor}), auto`;
-  } else {
-    body.style.cursor = 'default';
-  }
-
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
   const { question, player } = useSelector((state) => state);
@@ -29,21 +21,19 @@ function Player({
       ws,
       question.answeredQuestions,
       room,
-      player.game,
+      player.turnID,
     ));
   }
 
   return (
     <div>
       <ImageMapper
+        onClick={(area) => attackHandler(area)}
         // active={active}
         src={url}
         map={model}
         width={width}
         imgWidth={imgWidth}
-        onClick={(area) => attackHandler(area)}
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
       />
       {modal ? <QuizModal /> : null }
 

@@ -27,7 +27,7 @@ function QuizModal() {
 
   return (
     <div>
-      <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal} toggle={toggle}>
+      <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
         <ModalHeader>Quiz theme</ModalHeader>
         <ModalBody>
           <p id={question.questionID} className="quiz-question">
