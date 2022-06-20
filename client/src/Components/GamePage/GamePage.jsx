@@ -43,7 +43,7 @@ function GamePage() {
     // ws.onopen = function (e) {
     // console.log('onopen true');
     dispatch(messageFind(ws));
-    console.log('dispatch true');
+    // console.log('dispatch true');
     // };
   }, []);
 

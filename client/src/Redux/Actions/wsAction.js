@@ -8,7 +8,7 @@ export const setRoom = (value) => ({
 });
 
 export const messageFind = (ws) => (dispatch) => {
-  ws.send(JSON.stringify({ type: 'find', params: {  } }));
+  ws.send(JSON.stringify({ type: 'find', params: { } }));
   ws.onmessage = function (event) {
     console.log('ws Action', event.data);
     const { type, params } = JSON.parse(event.data);
