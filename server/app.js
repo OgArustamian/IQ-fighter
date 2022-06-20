@@ -12,8 +12,8 @@ const http = require('http');
 const { v4: uuidv4 } = require('uuid');
 const { WebSocketServer } = require('ws');
 
-const { controller, leave } = require('./ws/roomController');
-const sendBtn = require('./ws/gameController');
+const { roomController, leave } = require('./ws/roomController');
+const gameController = require('./ws/gameController');
 
 const map = new Map();
 
@@ -95,14 +95,15 @@ wss.on('connection', (ws, request) => {
   ws.on('message', (message) => {
     const obj = JSON.parse(message);
     const { type } = obj;
+    const { subtype } = obj;
     const { params } = obj;
 
     switch (type) {
-      case 'changeBtnTest':
-        sendBtn(rooms, params.room);
+      case 'game':
+        gameController(rooms, subtype, params);
         break;
       case 'find':
-        controller(rooms, maxClients, ws, userID);
+        roomController(rooms, maxClients, ws, userID);
         break;
       case 'leave':
         leave(rooms, ws);
