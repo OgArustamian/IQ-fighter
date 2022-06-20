@@ -23,13 +23,15 @@ function QuizModal() {
   const ws = useWsContext();
 
   function answerHandler() {
-    dispatch(sendAnswer(ws, room, id, userAnswer));
-    toggle();
+    if (userAnswer) {
+      dispatch(sendAnswer(ws, room, id, userAnswer));
+      toggle();
+    }
   }
 
   return (
     <div>
-      <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal} toggle={toggle}>
+      <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
         <ModalHeader>Quiz theme</ModalHeader>
         <ModalBody>
           <p id={question.questionID} className="quiz-question">

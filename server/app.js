@@ -97,7 +97,7 @@ wss.on('connection', (ws, request) => {
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
-
+    console.log('request====>', obj);
     switch (type) {
       case 'game':
         gameController(rooms, subtype, params);
