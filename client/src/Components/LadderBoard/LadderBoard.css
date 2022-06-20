@@ -1,0 +1,17 @@
+.ladderBoard-conteiner {
+  background-image: url('../AboutPage/rules.png');
+  background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+}
+
+.table-form {
+  width: 416px;
+    margin: 0 auto; 
+}

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   Button, Form, FormGroup, Input, Label, NavLink,
 } from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './Registration.css';
 import { regUser } from '../../Redux/Actions/userAction';
 
 export default function Registration() {
   const [inputs, setInputs] = useState({});
+  const { users } = useSelector((state) => state);
   const dispatch = useDispatch();
   const inputHandler = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -63,6 +65,18 @@ export default function Registration() {
           </Label>
         </FormGroup>
         {' '}
+        {users.message === 'Этот email уже существует.'
+              && (
+                <Alert color="danger">
+                  Такой email уже существует.
+                </Alert>
+              )}
+        {users.message === 'Этот логин уже существует.'
+              && (
+                <Alert color="danger">
+                  Этот Ник-нейм уже занят.
+                </Alert>
+              )}
         <Button className="BlizBtn mt-4" type="submit">
           Зарегистрироваться
         </Button>

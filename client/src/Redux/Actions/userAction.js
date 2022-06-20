@@ -15,7 +15,7 @@ export const regUser = (value) => (dispatch) => {
 export const checkUser = () => (dispatch) => {
   axios.post('/auth/check')
     .then((response) => dispatch(setUser(response.data)))
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(setUser({})));
 };
 
 export const userLogOut = () => (dispatch) => {

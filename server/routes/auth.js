@@ -55,7 +55,7 @@ router.route('/signIn')
 
 router.route('/signOut')
   .get((req, res) => {
-    res.session.destroy();
+    req.session.destroy();
     res.clearCookie('sessionID').sendStatus(200);
   });
 

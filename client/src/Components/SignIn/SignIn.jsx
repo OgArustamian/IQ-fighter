@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
+  Alert,
   Button, Form, FormGroup, Input, Label, NavLink,
 } from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSignIn } from '../../Redux/Actions/userAction';
 import './SignIn.css';
 
 export default function SignIn() {
   const [inputs, setInputs] = useState({});
+  const { users } = useSelector((state) => state);
   const dispatch = useDispatch();
   const inputHandler = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -31,7 +33,7 @@ export default function SignIn() {
             onChange={inputHandler}
           />
           <Label for="exampleEmail">
-            Имя пользователя
+            Ник-нейм
           </Label>
         </FormGroup>
         {' '}
@@ -49,12 +51,18 @@ export default function SignIn() {
           </Label>
         </FormGroup>
         {' '}
+        {users.message
+              && (
+                <Alert color="danger">
+                  Не верный ник-нейм или пароль
+                </Alert>
+              )}
         <Button className="BlizBtn mt-4" type="submit">
           Авторизоваться
         </Button>
         <Link to="/signup">
           <NavLink className="mt-4">
-            Пройти регистрацию
+            <strong>Пройти регистрацию.</strong>
           </NavLink>
         </Link>
       </Form>

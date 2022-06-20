@@ -27,7 +27,6 @@ body {
   
   .start-btn {
     padding: 0;
-    border: none;
     font: inherit;
     color: inherit;
     background-color: transparent;
@@ -41,4 +40,16 @@ body {
     cursor: url('./img/swords-cursor.svg'), auto;
     box-shadow: 10px 5px 2em gold;
     transform: scale(1.1, 1.1);
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.8;
+    border: 1px solid #999999;
+    background-color: #cccccc;
+
+  }
+
+  .text-disabled {
+    color: grey;
   }
