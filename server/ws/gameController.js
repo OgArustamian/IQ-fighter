@@ -6,7 +6,7 @@ const {
   Questions, Answers, Turn, UserTurn,
 } = require('../db/models');
 
-function generalInformation(subtype, rooms, room, message) {
+function generalInformation(infotype, rooms, room, message) {
   for (const [key, value] of Object.entries(rooms)) {
     if (key === room) {
       value.forEach((el) => {
@@ -17,11 +17,14 @@ function generalInformation(subtype, rooms, room, message) {
 }
 
 async function attack(subtype, rooms, params) {
-  const { room, difficulty, answeredQuestions } = params;
+  const {
+    room, difficulty, answeredQuestions, turnID,
+  } = params;
+  console.log(turnID);
 
   const question = await Questions.findOne({ where: { id: { [Op.notIn]: answeredQuestions }, difficulty } });
-  const turn = await Turn.create({ game_id: game, question_id: question.id, difficulty });
-  
+  const turn = await Turn.update({ question_id: question.id, difficulty }, { where: { id: turnID } });
+
   const requestAnswers = await Answers.findAll({ where: { question_id: question.id } });
   const answers = requestAnswers.map((el) => ({ id: el.id, answer: el.answer }));
   const message = {
@@ -36,21 +39,29 @@ async function attack(subtype, rooms, params) {
   generalInformation(subtype, rooms, room, message);
 }
 
-async function responseAnswers(subtype, rooms) {
-  console.log('answer response');
+async function responseAnswers(subtype, rooms, turnID, difficulty) {
+  const answers = await UserTurn.findAll({ where: { turn_id: turnID } });
+  if (answers.length === 2) {
+    switch (true) {
+      case ((answers[0].isTrue) && (answers[1].isTrue)):
+        const message = { type: 'draw', params: {} };
+        generalInformation(subtype, rooms, room, message);
+    }
+  }
 }
 
 async function checkAnswer(subtype, rooms, params) {
   const {
-    userID, room, answerID, turnID,
+    userID, answerID, turnID,
   } = params;
 
   const answer = await Answers.findOne({ where: { id: answerID } });
-  
+  const turn = await Turn.findOne({ where: { id: turnID } });
+
   if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
   if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 
-  responseAnswers(subtype, rooms);
+  responseAnswers(subtype, rooms, turnID, turn.difficulty);
 }
 
 function gameController(rooms, subtype, params) {
