@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { SET_ANSWER } from '../Types/types';
 
 export const setAnswer = (value) => ({
@@ -6,7 +5,9 @@ export const setAnswer = (value) => ({
   payload: value,
 });
 
-export const saveAnswer = (value) => (dispatch) => {
-  axios.post('/', value)
-    .catch((err) => console.log(err));
+export const sendAnswer = (ws, userId, answerId) => (dispatch) => {
+  ws.send(JSON.stringify({ type: 'game', subtype: 'answer', params: { userId, answerId } }));
+  ws.onmessage = function (e) {
+    console.log('ws action', e.data);
+  };
 };

@@ -8,6 +8,7 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
+import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
   const dispatch = useDispatch();
