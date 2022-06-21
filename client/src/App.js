@@ -11,6 +11,7 @@ import { checkUser } from './Redux/Actions/userAction';
 import GamePage from './Components/GamePage/GamePage';
 import AboutPage from './Components/AboutPage/AboutPage';
 import LadderBoard from './Components/LadderBoard/LadderBoard';
+import TestPage from './Components/CountdownTimer/testPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
         <Route path="/profile/:id" element />
         <Route path="/game" element={<GamePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </div>
   );

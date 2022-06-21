@@ -14,3 +14,9 @@
     width: 70%;
     margin: 0 auto;
 }
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
