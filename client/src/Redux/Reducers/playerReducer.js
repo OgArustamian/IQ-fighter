@@ -14,12 +14,14 @@ const playerReducer = (state = initState, action) => {
         turn: !state.turn,
         gameID: payload.gameID,
         turnID: payload.turnID,
+        position: 'left',
       };
 
     case SET_GAME:
       return {
         ...state,
         gameID: payload,
+        position: 'right',
       };
 
     default:

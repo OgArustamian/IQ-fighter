@@ -9,10 +9,10 @@ import { messageFind } from '../../Redux/Actions/wsAction';
 import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 import Spinner from '../Spinner/Spinner';
+import { JOIN_ROOM } from '../../Redux/Types/types';
 
 function GamePage() {
   const { spinner } = useSelector((state) => state);
-  console.log('======>WS', spinner);
   const dispatch = useDispatch();
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
@@ -32,7 +32,7 @@ function GamePage() {
 
   return (
     <div>
-      {spinner !== 'joinedRoom'
+      {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
           <div className="game-page-container">
