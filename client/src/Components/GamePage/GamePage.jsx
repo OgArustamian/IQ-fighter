@@ -21,7 +21,9 @@ function GamePage() {
 
   const room = useSelector((state) => state.ws);
   const { player } = useSelector((state) => state);
-  const { ws } = useWsContext();
+  const {
+    ws, firstPlayerHp, secondPlayerHp, hero,
+  } = useWsContext();
 
   useEffect(() => {
     dispatch(messageFind(ws));
@@ -72,9 +74,9 @@ function GamePage() {
         : (
           <div className="game-page-container">
             <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firsPlayer} width={250} imgWidth={865} />
-            <HealthBar mt-3 />
+            <HealthBar p={firstPlayerHp} mt-3 />
             <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-            <HealthBar mt-3 />
+            <HealthBar p={secondPlayerHp} mt-3 />
           </div>
         )}
     </div>

@@ -20,8 +20,8 @@ function Context({ children }) {
   const [firstPlayerHp, setFirstPlayerHp] = useState(null);
   const [secondPlayerHp, setSecondPlayerHp] = useState(null);
   const { player } = useSelector((state) => state);
-  const [hero, setHero] = useState(null);
-  const [enemy, setEnemy] = useState(null);
+  const [hero, setHero] = useState(false);
+  const [enemy, setEnemy] = useState(true);
 
   ws.onopen = function (e) {
 
@@ -30,7 +30,7 @@ function Context({ children }) {
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
     const {
-      room, gameID, turnID, hp,
+      room, gameID, turnID, hp, hpEnemy,
     } = params;
 
     switch (type) {
@@ -42,6 +42,8 @@ function Context({ children }) {
       case CREATE_ROOM:
         dispatch(setRoom(room));
         dispatch(setTurn(gameID, turnID));
+        setHero(true);
+        setEnemy(false);
         break;
 
       case JOIN_ROOM:
@@ -59,13 +61,29 @@ function Context({ children }) {
 
       case 'win':
         console.log('WIN------------------>', JSON.parse(event.data));
-        setSecondPlayerHp(hp);
+        if (!hero) {
+          setFirstPlayerHp(hpEnemy);
+          setSecondPlayerHp(hp);
+        } else {
+          setFirstPlayerHp(hp);
+          setSecondPlayerHp(hpEnemy);
+        }
+
+        console.log('hero->', hero, firstPlayerHp, 'enemy->', enemy, secondPlayerHp);
         dispatch(changeTurn());
         break;
 
       case 'loss':
         console.log('LOSS------------------>', JSON.parse(event.data));
-        firstPlayerHp(hp);
+        if (!hero) {
+          setFirstPlayerHp(hpEnemy);
+          setSecondPlayerHp(hp);
+        } else {
+          setFirstPlayerHp(hp);
+          setSecondPlayerHp(hpEnemy);
+        }
+
+        console.log('hero->', hero, firstPlayerHp, 'enemy->', enemy, secondPlayerHp);
         dispatch(changeTurn());
         break;
 
@@ -76,13 +94,6 @@ function Context({ children }) {
   };
   useEffect(() => {
     setWs(new WebSocket('ws://localhost:3001'));
-    if (player.position === 'left') {
-      setHero(true);
-      setEnemy(false);
-    } else {
-      setEnemy(true);
-      setHero(false);
-    }
   }, [id]);
 
   return (
