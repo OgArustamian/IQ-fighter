@@ -3,6 +3,7 @@ import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
+import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 
 function Player({
@@ -35,6 +36,7 @@ function Player({
         imgWidth={imgWidth}
       />
       {modal ? <QuizModal /> : null }
+      <HealthBar mt-3 />
     </div>
   );
 }
