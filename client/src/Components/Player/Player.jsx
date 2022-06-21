@@ -38,7 +38,6 @@ function Player({
         imgWidth={imgWidth}
       />
       {modal ? <QuizModal /> : null }
-      <HealthBar mt-3 />
     </div>
   );
 }

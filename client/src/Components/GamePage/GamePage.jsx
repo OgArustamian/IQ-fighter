@@ -10,6 +10,7 @@ import Player from '../Player/Player';
 import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 import Spinner from '../Spinner/Spinner';
 import { JOIN_ROOM } from '../../Redux/Types/types';
+import HealthBar from '../HealthBar/HealthBar';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -71,7 +72,9 @@ function GamePage() {
         : (
           <div className="game-page-container">
             <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firsPlayer} width={250} imgWidth={865} />
+            <HealthBar mt-3 />
             <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
+            <HealthBar mt-3 />
           </div>
         )}
     </div>
