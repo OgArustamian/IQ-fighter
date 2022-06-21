@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, useContext, useState,
+  createContext, useContext, useEffect, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
@@ -14,6 +14,7 @@ function Context({ children }) {
   const [ws, setWs] = useState(new WebSocket('ws://localhost:3001'));
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.users);
 
   ws.onmessage = (event) => {
     console.log(event.data);
@@ -41,6 +42,9 @@ function Context({ children }) {
         break;
     }
   };
+  useEffect(() => {
+    setWs(new WebSocket('ws://localhost:3001'));
+  }, [id]);
 
   return (
     <WsContext.Provider value={{ ws, modal, setModal }}>
