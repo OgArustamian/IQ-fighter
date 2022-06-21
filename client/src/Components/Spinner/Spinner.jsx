@@ -57,7 +57,7 @@ export default function Spinner() {
         <div className="particle" />
       </div>
       <div className="mt-5">
-        <h2 Style="color: white; opacity:0.6">Идет поиск противника...</h2>
+        <h2 style={{ color: 'white', opacity: '0.6' }}>Идет поиск противника...</h2>
       </div>
     </div>
   );
