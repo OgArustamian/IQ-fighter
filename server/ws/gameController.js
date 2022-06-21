@@ -9,9 +9,8 @@ const {
 } = require('../db/models');
 
 function generalInformation(infotype, rooms, room, message, userID = 0) {
-  console.log('infotype ------>', infotype, (infotype === 'draw'));
   switch (true) {
-    case infotype === 'attack' || infotype === 'draw':
+    case infotype === 'attack' || infotype === 'draw' || infotype === 'joinedRoom':
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -140,4 +139,4 @@ function gameController(rooms, subtype, params) {
   }
 }
 
-module.exports = gameController;
+module.exports = {gameController, generalInformation};

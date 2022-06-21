@@ -22,11 +22,13 @@ function GamePage() {
   const room = useSelector((state) => state.ws);
   const { player } = useSelector((state) => state);
   const {
-    ws, firstPlayerHp, secondPlayerHp, hero,
+    ws, firstPlayerHp, secondPlayerHp,
   } = useWsContext();
 
   useEffect(() => {
+    // setTimeout(() => {
     dispatch(messageFind(ws));
+    // }, 200);
   }, []);
 
   const [firsPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
@@ -66,6 +68,8 @@ function GamePage() {
   useEffect(() => {
     checkTurn();
   }, [player.turn]);
+
+  console.log(ws);
 
   return (
     <div>

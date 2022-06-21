@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
 /* eslint-disable eqeqeq */
 /* eslint-disable consistent-return */
@@ -5,6 +7,7 @@
 /* eslint-disable no-restricted-syntax */
 
 const { Game, Turn, UserGames } = require('../db/models');
+const { generalInformation } = require('./gameController');
 
 // function generalInformation(ws) {
 //   let obj;
@@ -73,22 +76,22 @@ async function join(rooms, maxClients, ws, userID, room, enemyID) {
   console.log('join', room); // information
 
   rooms[room].forEach((el) => {
-    if (el.userID === usergames.user_id) {
-      el.send(JSON.stringify({
-        type: 'joinedRoom',
-        params: {
-          room, gameID, turnID, hp: usergames.hp,
-        },
-      }));
-    }
-    if (el.userID === enemygames.user_id) {
-      el.send(JSON.stringify({
-        type: 'joinedRoom',
-        params: {
-          room, gameID, turnID, hp: enemygames.hp,
-        },
-      }));
-    }
+    // if (el.userID === usergames.user_id) {
+    el.send(JSON.stringify({
+      type: 'joinedRoom',
+      params: {
+        room, gameID, turnID, hp: usergames.hp,
+      },
+    }));
+    // }
+    // if (el.userID === enemygames.user_id) {
+    //   el.send(JSON.stringify({
+    //     type: 'joinedRoom',
+    //     params: {
+    //       room, gameID, turnID, hp: enemygames.hp,
+    //     },
+    //   }));
+    // }
   });
   console.log('send join true');
 
@@ -111,12 +114,35 @@ function leave(rooms, ws) {
   if (rooms[room].length == 0) { close(rooms, room); }
 }
 
+// function returningInRoom(rooms, ws, userID) {
+//   let status = false;
+//   console.log('returning');
+//   for (let [key, value] of Object.entries(rooms)) {
+//     value = value.map((el, index) => {
+//       if (el.userID === userID) {
+
+//         status = true;
+//         return ws;
+//       }
+//       return el;
+//     });
+//   }
+//   console.log('exit returnint', status);
+//   return status;
+// }
+
 function roomController(rooms, maxClients, ws, userID) {
+  console.log('controller');
+
+  // const status = returningInRoom(rooms, ws, userID);
+  // console.log(status);
+  // if (!status) {
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value}`);
     if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID); }
   }
   create(ws, userID, rooms);
+  // }
 }
 
 module.exports = {
