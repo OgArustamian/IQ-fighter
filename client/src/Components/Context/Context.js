@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
-import { ATTACK, CREATE_ROOM, JOIN_ROOM } from '../../Redux/Types/types';
+import {
+  ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
+} from '../../Redux/Types/types';
 
 const WsContext = createContext();
 
@@ -35,6 +37,19 @@ function Context({ children }) {
         dispatch(setRoom(room));
         dispatch(setTurn(gameID, turnID));
         dispatch(showSpinner(type));
+        break;
+
+      case 'draw':
+        console.log('DRAW------------------>', JSON.parse(event.data));
+        
+        break;
+
+      case 'win':
+        console.log('WIN------------------>', JSON.parse(event.data));
+        break;
+
+      case 'loss':
+        console.log('LOSS------------------>', JSON.parse(event.data));
         break;
 
       default:

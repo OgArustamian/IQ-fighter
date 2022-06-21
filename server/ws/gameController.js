@@ -20,6 +20,7 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
       }
       break;
     case infotype === 'win' || infotype === 'loss':
+      console.log('player id ->>>>>>>>>>>>>', userID);
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -81,11 +82,11 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
         break;
       case trueAnsweredUser.length === 1:
         infotype = 'win';
-        turnWinnerID = trueAnsweredUser[0].id;
+        turnWinnerID = trueAnsweredUser[0].user_id;
         message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
         generalInformation(infotype, rooms, room, message, turnWinnerID);
         infotype = 'loss';
-        turnLoserID = falseAnsweredUser[0].id;
+        turnLoserID = falseAnsweredUser[0].user_id;
         message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
         generalInformation(infotype, rooms, room, message, turnLoserID);
         break;
