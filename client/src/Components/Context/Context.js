@@ -3,7 +3,7 @@ import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGame, setTurn } from '../../Redux/Actions/playerAction';
+import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
@@ -41,15 +41,17 @@ function Context({ children }) {
 
       case 'draw':
         console.log('DRAW------------------>', JSON.parse(event.data));
-        // dispatch(setTurn())
+        dispatch(changeTurn());
         break;
 
       case 'win':
         console.log('WIN------------------>', JSON.parse(event.data));
+        dispatch(changeTurn());
         break;
 
       case 'loss':
         console.log('LOSS------------------>', JSON.parse(event.data));
+        dispatch(changeTurn());
         break;
 
       default:
