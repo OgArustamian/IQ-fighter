@@ -34,8 +34,7 @@ function QuizModal() {
   return (
     <div>
       <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
-        <ModalHeader>
-          Quiz theme
+        <ModalHeader className="modal-header">
           <CountdownTimer />
         </ModalHeader>
         <ModalBody>
