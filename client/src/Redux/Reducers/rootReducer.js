@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   question: questionReducer,
   player: playerReducer,
   spinner: spinnerReducer,
+  rating: ratingReducer,
 });
 
 export default rootReducer;
