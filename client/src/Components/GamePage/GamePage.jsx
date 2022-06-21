@@ -32,7 +32,7 @@ function GamePage() {
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
       setFirstPlayer({
-        cursor: "url('../../img/cursor-default.png), auto",
+        cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
       });
       setSecondPlayer({
@@ -45,16 +45,16 @@ function GamePage() {
         active: true,
       });
       setSecondPlayer({
-        cursor: "url('../../img/cursor-default.png), auto",
+        cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
       });
-    } else if (player.turn === 'false') {
+    } else if (player.turn === false) {
       setFirstPlayer({
-        cursor: "url('../../img/cursor-default.png), auto",
+        cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
       });
       setSecondPlayer({
-        cursor: "url('../../img/cursor-default.png), auto",
+        cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
       });
     }
@@ -70,8 +70,8 @@ function GamePage() {
         ? <Spinner />
         : (
           <div className="game-page-container">
-            <Player url={femaleChar} model={femaleMageModel} cursor={firsPlayer} width={250} imgWidth={865} />
-            <Player url={maleChar} model={maleMageModel} cursor={secondPlayer} width={600} imgWidth={820} />
+            <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firsPlayer} width={250} imgWidth={865} />
+            <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
           </div>
         )}
     </div>
