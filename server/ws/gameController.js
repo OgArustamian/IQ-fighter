@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 /* eslint-disable no-fallthrough */
 /* eslint-disable max-len */
@@ -21,6 +22,7 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
       break;
     case infotype === 'win' || infotype === 'loss':
       console.log('player id ->>>>>>>>>>>>>', userID);
+
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -61,50 +63,48 @@ async function attack(subtype, rooms, params) {
 
 async function responseAnswers(subtype, rooms, room, oldturn) {
   const { game_id, difficulty } = oldturn;
-  let infotype = '';
-  let message = {};
-  let turnWinnerID;
-  let turnLoserID;
   const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
-  const turn = await Turn.create({ where: { game_id } });
-  const turnID = turn.id;
   if (answers.length === 2) {
+    const turn = await Turn.create({ where: { game_id } });
+    const turnID = turn.id;
     const trueAnsweredUser = answers.filter((el) => (el.isTrue));
     const falseAnsweredUser = answers.filter((el) => (!el.isTrue));
-    console.log('true ---->', trueAnsweredUser.length);
-    console.log('false ---->', falseAnsweredUser.length);
+    const damage = difficulty * 10;
+    let infotype = '';
+    let message = {};
+    let winnerID;
+    let loserID;
+    let hp;
+    let hpEnemy;
+    let loserTurn;
+    let winnerTurn;
+
     switch (true) {
       case trueAnsweredUser.length === 2 || falseAnsweredUser.length === 2:
         infotype = 'draw';
         message = { type: infotype, params: { turnID } };
         generalInformation(infotype, rooms, room, message);
         break;
+
       case trueAnsweredUser.length === 1:
-        const damage = difficulty * 10;
-        turnLoserID = falseAnsweredUser[0].user_id;
-        turnWinnerID = trueAnsweredUser[0].user_id;
-        await UserGames.update({ hp: findLoser.hp - damage }, { where: { game_id, user_id: turnLoserID } });
-        const losergames = await UserGames.findOne({ where: { game_id, user_id: turnLoserID } });
-        const winnergames = await UserGames.findOne({ where: { game_id, user_id: turnWinnerID } });
-        console.log(losergames);
+        loserID = falseAnsweredUser[0].user_id;
+        winnerID = trueAnsweredUser[0].user_id;
+        winnerTurn = await UserGames.findOne({ where: { game_id, user_id: winnerID } });
+        loserTurn = await UserGames.decrement({ hp: damage }, { where: { game_id, user_id: loserID }, returning: true, plain: true });
+
         infotype = 'loss';
-        message = {
-          type: infotype,
-          params: {
-            turnID, hp: losergames.hp, hpEnemy: winnergames.hp, damage,
-          },
-        };
-        console.log(message);
-        generalInformation(infotype, rooms, room, message, turnLoserID);
+        hp = loserTurn.flat()[0].hp;
+        hpEnemy = winnerTurn.hp;
+        message = { type: infotype, params: { turnID, hp, hpEnemy, damage } };
+        generalInformation(infotype, rooms, room, message, loserID);
+
         infotype = 'win';
-        message = {
-          type: infotype,
-          params: {
-            turnID, hp: winnergames.hp, hpEnemy: losergames.hp, damage,
-          },
-        };
-        generalInformation(infotype, rooms, room, message, turnWinnerID);
+        hp = winnerTurn.hp;
+        hpEnemy = loserTurn.hp;
+        message = { type: infotype, params: { turnID, hp, hpEnemy, damage } };
+        generalInformation(infotype, rooms, room, message, winnerID);
         break;
+
       default:
         console.log('check answerd error');
         break;

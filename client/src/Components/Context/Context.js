@@ -19,6 +19,10 @@ function Context({ children }) {
   const { id } = useSelector((state) => state.users);
   const [playerHp, setPlayerHp] = useState(null);
 
+  ws.onopen = function (e) {
+
+  };
+
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
     const {
