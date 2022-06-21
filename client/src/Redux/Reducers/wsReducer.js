@@ -1,4 +1,4 @@
-import { SET_ROOM_WS, SHOW_SPINNER_WS } from '../Types/types';
+import { SET_ROOM_WS } from '../Types/types';
 
 // eslint-disable-next-line default-param-last
 const wsReducer = (state = [], action) => {

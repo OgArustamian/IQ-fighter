@@ -4,7 +4,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
-const { Game, Turn } = require('../db/models');
+const { Game, Turn, UserGames } = require('../db/models');
 
 // function generalInformation(ws) {
 //   let obj;
@@ -39,21 +39,17 @@ function genKey(length) {
   return result;
 }
 
-async function create(ws, userID, rooms) {
-  ws.userID = userID;
+function create(ws, userID, rooms) {
   const room = genKey(5);
   console.log('create', room); // information
   rooms[room] = [ws];
-  const game = await Game.create({ winner_id: 1 });
-  const turn = await Turn.create({ game_id: game.id });
   ws.room = room;
-  ws.gameID = game.id;
-  ws.send(JSON.stringify({ type: 'createdRoom', params: { room, gameID: game.id, turnID: turn.id } }));
+  ws.send(JSON.stringify({ type: 'createdRoom', params: { room } }));
 
   // generalInformation(ws);
 }
 
-function join(rooms, maxClients, ws, userID, room) {
+async function join(rooms, maxClients, ws, userID, room, enemyID) {
   if (!Object.keys(rooms).includes(room)) {
     console.warn(`Room ${room} does not exist!`);
     return;
@@ -64,16 +60,36 @@ function join(rooms, maxClients, ws, userID, room) {
     return;
   }
 
+  const game = await Game.create({ winner_id: 1 });
+  const turn = await Turn.create({ game_id: game.id });
+  const usergames = await UserGames.create({ user_id: userID, game_id: game.id });
+  const enemygames = await UserGames.create({ user_id: enemyID, game_id: game.id });
+  const gameID = game.id;
+  const turnID = turn.id;
+
   rooms[room].push(ws);
-  ws.userID = userID;
   ws.room = room;
-  const { gameID } = rooms[room][0];
-  ws.gameID = gameID;
-  console.log('game in ws', ws.gameID);
 
   console.log('join', room); // information
 
-  rooms[room].forEach((el) => el.send(JSON.stringify({ type: 'joinedRoom', params: { room, gameID } })));
+  rooms[room].forEach((el) => {
+    if (el.userID === usergames.user_id) {
+      el.send(JSON.stringify({
+        type: 'joinedRoom',
+        params: {
+          room, gameID, turnID, hp: usergames.hp,
+        },
+      }));
+    }
+    if (el.userID === enemygames.user_id) {
+      el.send(JSON.stringify({
+        type: 'joinedRoom',
+        params: {
+          room, gameID, turnID, hp: enemygames.hp,
+        },
+      }));
+    }
+  });
   console.log('send join true');
 
   // generalInformation(ws);
@@ -90,17 +106,15 @@ function leave(rooms, ws) {
   try {
     rooms[room] = rooms[room].filter((so) => so !== ws);
     ws.room = undefined;
-    ws.game = undefined;
   } catch (err) { console.error(err); }
 
   if (rooms[room].length == 0) { close(rooms, room); }
 }
 
 function roomController(rooms, maxClients, ws, userID) {
-  console.log('controller', rooms);
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value}`);
-    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key); }
+    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID); }
   }
   create(ws, userID, rooms);
 }

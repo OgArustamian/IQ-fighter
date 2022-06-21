@@ -69,11 +69,11 @@ server.on('upgrade', (request, socket, head) => {
   console.log('Parsing session from request...');
 
   sessionParser(request, {}, () => {
-    // if (!request.session.user) {
-    //   socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
-    //   socket.destroy();
-    //   return;
-    // }
+    if (!request.session.user) {
+      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
+      socket.destroy();
+      return;
+    }
 
     console.log('Session is parsed!');
 
@@ -88,8 +88,10 @@ const rooms = {};
 
 // part2
 wss.on('connection', (ws, request) => {
-  const userID = request.session.userid || uuidv4();
-  map.set(userID, ws);
+  const userID = request.session.user?.id;
+  console.log('console request session', request.session.user);
+  console.log(userID);
+  ws.userID = userID;
 
   // коннект и получение месседжа
   ws.on('message', (message) => {

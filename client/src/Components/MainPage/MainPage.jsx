@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './MainPage.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import HealthBar from '../HealthBar/HealthBar';
 
 function MainPage() {
   const body = document.querySelector('body');
@@ -25,7 +24,6 @@ function MainPage() {
             <h1 className="start-title text-disabled">Начать игру</h1>
           </button>
         )}
-      <HealthBar />
     </div>
   );
 }

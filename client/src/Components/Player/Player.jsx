@@ -3,10 +3,11 @@ import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
+import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 
 function Player({
-  url, model, width, imgWidth, active,
+  url, model, width, imgWidth, cursor, position,
 }) {
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
@@ -15,20 +16,22 @@ function Player({
   const { modal, setModal } = useWsContext();
 
   function attackHandler(area) {
-    dispatch(fetchQuestion(
-      area.questionDifficulty,
-      ws,
-      question.answeredQuestions,
-      room,
-      player.turnID,
-    ));
+    if (player.turn && cursor.position !== position) {
+      dispatch(fetchQuestion(
+        area.questionDifficulty,
+        ws,
+        question.answeredQuestions,
+        room,
+        player.turnID,
+      ));
+    }
   }
 
   return (
-    <div>
+    <div className="player-model">
       <ImageMapper
         onClick={(area) => attackHandler(area)}
-        // active={active}
+        active={cursor.active}
         src={url}
         map={model}
         width={width}

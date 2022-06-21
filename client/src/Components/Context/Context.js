@@ -1,12 +1,18 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, useContext, useState,
+  createContext, useContext, useEffect, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
-import { setGame, setTurn } from '../../Redux/Actions/playerAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
+<<<<<<< HEAD
 import { ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER } from '../../Redux/Types/types';
+=======
+import {
+  ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
+} from '../../Redux/Types/types';
+>>>>>>> 6e6a0c10039ea0f1b1d536be56acaba5939389b1
 
 const WsContext = createContext();
 
@@ -14,10 +20,15 @@ function Context({ children }) {
   const [ws, setWs] = useState(new WebSocket('ws://localhost:3001'));
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.users);
+  const [playerHp, setPlayerHp] = useState(null);
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
-    const { room, gameID, turnID } = params;
+    const {
+      room, gameID, turnID, hp,
+    } = params;
+    console.log(hp);
 
     switch (type) {
       case ATTACK:
@@ -32,8 +43,25 @@ function Context({ children }) {
 
       case JOIN_ROOM:
         dispatch(setRoom(room));
-        dispatch(setGame(gameID));
+        dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
+        setPlayerHp(hp);
+        break;
+
+      case 'draw':
+        console.log('DRAW------------------>', JSON.parse(event.data));
+        dispatch(changeTurn());
+        break;
+
+      case 'win':
+        console.log('WIN------------------>', JSON.parse(event.data));
+        dispatch(changeTurn());
+        break;
+
+      case 'loss':
+        console.log('LOSS------------------>', JSON.parse(event.data));
+        setPlayerHp(hp);
+        dispatch(changeTurn());
         break;
 
       default:
@@ -41,9 +69,15 @@ function Context({ children }) {
         break;
     }
   };
+  useEffect(() => {
+    setWs(new WebSocket('ws://localhost:3001'));
+  }, [id]);
 
   return (
-    <WsContext.Provider value={{ ws, modal, setModal }}>
+    <WsContext.Provider value={{
+      ws, modal, setModal, playerHp,
+    }}
+    >
       {children}
     </WsContext.Provider>
   );
