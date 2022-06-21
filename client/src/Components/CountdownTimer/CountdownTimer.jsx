@@ -4,7 +4,7 @@ import { useWsContext } from '../Context/Context';
 
 function CountdownTimer() {
   const { modal, setModal } = useWsContext();
-  let [timer, setTimer] = useState(5);
+  let [timer, setTimer] = useState(30);
   const timerId = useRef(null);
 
   function clear() {
