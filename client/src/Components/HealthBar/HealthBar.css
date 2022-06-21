@@ -1,0 +1,20 @@
+.barOuter{
+    width: 290px;
+    background-color: green;
+    height: 55px;
+    border: 2px solid lightgreen;
+    text-align: start;
+    border-radius: 40px;
+}
+
+.hpValue{
+    position: relative;
+    top: -15px;
+    left: 17px;
+}
+
+.healthBorder {
+    position: relative;
+    top: -12px;
+    left: -75px;
+}
