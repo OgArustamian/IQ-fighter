@@ -80,16 +80,30 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
         generalInformation(infotype, rooms, room, message);
         break;
       case trueAnsweredUser.length === 1:
-        infotype = 'win';
-        turnWinnerID = trueAnsweredUser[0].user_id;
-        const winnergames = await UserGames.findOne({ where: { game_id, user_id: turnWinnerID } });
-        message = { type: infotype, params: { turnID, hp: winnergames.hp } };
-        generalInformation(infotype, rooms, room, message, turnWinnerID);
-        infotype = 'loss';
+        const damage = difficulty * 10;
         turnLoserID = falseAnsweredUser[0].user_id;
+        turnWinnerID = trueAnsweredUser[0].user_id;
+        await UserGames.update({ hp: findLoser.hp - damage }, { where: { game_id, user_id: turnLoserID } });
         const losergames = await UserGames.findOne({ where: { game_id, user_id: turnLoserID } });
-        message = { type: infotype, params: { turnID, hp: losergames.hp - difficulty * 10 } };
+        const winnergames = await UserGames.findOne({ where: { game_id, user_id: turnWinnerID } });
+        console.log(losergames);
+        infotype = 'loss';
+        message = {
+          type: infotype,
+          params: {
+            turnID, hp: losergames.hp, hpEnemy: winnergames.hp, damage,
+          },
+        };
+        console.log(message);
         generalInformation(infotype, rooms, room, message, turnLoserID);
+        infotype = 'win';
+        message = {
+          type: infotype,
+          params: {
+            turnID, hp: winnergames.hp, hpEnemy: losergames.hp, damage,
+          },
+        };
+        generalInformation(infotype, rooms, room, message, turnWinnerID);
         break;
       default:
         console.log('check answerd error');

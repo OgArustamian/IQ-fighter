@@ -17,10 +17,14 @@ function Context({ children }) {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
+  const [playerHp, setPlayerHp] = useState(null);
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
-    const { room, gameID, turnID } = params;
+    const {
+      room, gameID, turnID, hp,
+    } = params;
+    console.log(hp);
 
     switch (type) {
       case ATTACK:
@@ -37,6 +41,7 @@ function Context({ children }) {
         dispatch(setRoom(room));
         dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
+        setPlayerHp(hp);
         break;
 
       case 'draw':
@@ -51,6 +56,7 @@ function Context({ children }) {
 
       case 'loss':
         console.log('LOSS------------------>', JSON.parse(event.data));
+        setPlayerHp(hp);
         dispatch(changeTurn());
         break;
 
@@ -64,7 +70,10 @@ function Context({ children }) {
   }, [id]);
 
   return (
-    <WsContext.Provider value={{ ws, modal, setModal }}>
+    <WsContext.Provider value={{
+      ws, modal, setModal, playerHp,
+    }}
+    >
       {children}
     </WsContext.Provider>
   );
