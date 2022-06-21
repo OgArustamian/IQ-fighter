@@ -6,13 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
-<<<<<<< HEAD
-import { ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER } from '../../Redux/Types/types';
-=======
 import {
   ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
 } from '../../Redux/Types/types';
->>>>>>> 6e6a0c10039ea0f1b1d536be56acaba5939389b1
 
 const WsContext = createContext();
 
@@ -23,9 +19,9 @@ function Context({ children }) {
   const { id } = useSelector((state) => state.users);
   const [playerHp, setPlayerHp] = useState(null);
 
-  ws.onopen = function(e) {
+  ws.onopen = function (e) {
 
-  }
+  };
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
