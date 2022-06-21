@@ -6,6 +6,12 @@ export const setAnswer = (value) => ({
   payload: value,
 });
 
-export const sendAnswer = (ws, userId, answerId, room) => (dispatch) => {
-  ws.send(JSON.stringify({ type: 'game', subtype: 'answer', params: { room, userId, answerId } }));
+export const sendAnswer = (ws, room, userID, answerID, turnID) => (dispatch) => {
+  ws.send(JSON.stringify({
+    type: 'game',
+    subtype: 'answer',
+    params: {
+      room, userID, answerID, turnID,
+    },
+  }));
 };
