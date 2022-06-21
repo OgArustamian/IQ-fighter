@@ -69,11 +69,11 @@ server.on('upgrade', (request, socket, head) => {
   console.log('Parsing session from request...');
 
   sessionParser(request, {}, () => {
-    // if (!request.session.user) {
-    //   socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
-    // socket.destroy();
-    // return;
-    // }
+    if (!request.session.user) {
+      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n'); // ?
+      socket.destroy();
+      return;
+    }
 
     console.log('Session is parsed!');
 
