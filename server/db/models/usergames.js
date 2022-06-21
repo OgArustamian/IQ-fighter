@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   UserGames.init({
     user_id: DataTypes.INTEGER,
     game_id: DataTypes.INTEGER,
+    hp: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'UserGames',

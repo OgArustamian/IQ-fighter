@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-syntax */
 const { Op } = require('sequelize');
 const {
-  Questions, Answers, Turn, UserTurn,
+  Questions, Answers, Turn, UserTurn, UserGames,
 } = require('../db/models');
 
 function generalInformation(infotype, rooms, room, message, userID = 0) {
@@ -74,19 +74,20 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
     console.log('false ---->', falseAnsweredUser.length);
     switch (true) {
       case trueAnsweredUser.length === 2 || falseAnsweredUser.length === 2:
-        console.log('draw ----->');
         infotype = 'draw';
         message = { type: infotype, params: { turnID } };
         generalInformation(infotype, rooms, room, message);
         break;
       case trueAnsweredUser.length === 1:
         infotype = 'win';
-        turnWinnerID = trueAnsweredUser[0].id;
-        message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
+        turnWinnerID = trueAnsweredUser[0].user_id;
+        const winnergames = await UserGames.findOne({ where: { game_id, user_id: turnWinnerID } });
+        message = { type: infotype, params: { turnID, hp: winnergames.hp } };
         generalInformation(infotype, rooms, room, message, turnWinnerID);
         infotype = 'loss';
-        turnLoserID = falseAnsweredUser[0].id;
-        message = { type: infotype, params: { turnID, damage: difficulty * 10 } };
+        turnLoserID = falseAnsweredUser[0].user_id;
+        const losergames = await UserGames.findOne({ where: { game_id, user_id: turnLoserID } });
+        message = { type: infotype, params: { turnID, hp: losergames.hp - difficulty * 10 } };
         generalInformation(infotype, rooms, room, message, turnLoserID);
         break;
       default:
