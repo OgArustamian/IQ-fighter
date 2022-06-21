@@ -7,11 +7,11 @@ function MainPage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = "url('https://img2.goodfon.ru/original/1920x1080/4/a8/muzhchina-zhenschina-mag-magiya-boy.jpg')";
 
-  const { users } = useSelector((state) => state);
+  const { id } = useSelector((state) => state.users);
 
   return (
     <div className="page-container">
-      {users.id
+      {id
         ? (
           <Link to="/game">
             <button className="start-btn" type="button">
