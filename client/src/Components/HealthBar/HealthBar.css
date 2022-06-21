@@ -18,3 +18,34 @@
     top: -12px;
     left: -75px;
 }
+
+progress {
+    border: 0;
+    background-color: green;
+    height: 40px;
+    border-radius: 20px;
+    width: 500px; 
+}
+
+progress:after {
+  position: relative;
+  top: -30px;
+  left: 10px;
+  content: 'Value is ' attr(value);
+}
+
+progress::-webkit-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+progress::-webkit-progress-value {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+progress::-moz-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}

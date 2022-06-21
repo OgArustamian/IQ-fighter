@@ -7,7 +7,7 @@ export const showQuestion = (question) => ({
   payload: question,
 });
 
-export const fetchQuestion = (difficulty, ws, answeredQuestions, room, turnID) => (dispatch) => {
+export const fetchQuestion = (difficulty, ws, answeredQuestions, room, turnID) => {
   ws.send(JSON.stringify({
     type: GAME,
     subtype: ATTACK,

@@ -6,8 +6,12 @@ import { useWsContext } from '../Context/Context';
 import QuizModal from '../QuizModal/QuizModal';
 
 function Player({
-  url, model, width, imgWidth,
+  url, model, width, imgWidth, cursor,
 }) {
+  const bodyPart = document.querySelector('area');
+  console.log(cursor.active);
+  // bodyPart.style.cursor = cursor.cursor;
+
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
   const { question, player } = useSelector((state) => state);
@@ -15,33 +19,22 @@ function Player({
   const { modal, setModal } = useWsContext();
 
   function attackHandler(area) {
-    dispatch(fetchQuestion(
-      area.questionDifficulty,
-      ws,
-      question.answeredQuestions,
-      room,
-      player.turnID,
-    ));
-  }
-
-  const [active, setActive] = useState(true);
-
-  function checkTurn() {
     if (player.turn) {
-      console.log('blaaah');
-      // setActive(false);
-      // const body = document.querySelector('body');
-      // body.style.cursor = 'default';
+      dispatch(fetchQuestion(
+        area.questionDifficulty,
+        ws,
+        question.answeredQuestions,
+        room,
+        player.turnID,
+      ));
     }
   }
-
-  checkTurn();
 
   return (
     <div>
       <ImageMapper
         onClick={(area) => attackHandler(area)}
-        active={active}
+        active={cursor.active}
         src={url}
         map={model}
         width={width}
