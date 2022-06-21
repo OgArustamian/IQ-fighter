@@ -296,7 +296,7 @@ body {
   font-size: 30px;
   color: #fff;
   text-transform: uppercase;
-  animation: flip 4s infinite;
+  animation: flip 3s infinite;
   animation-delay: calc(.2s * var(--i))
 }
 

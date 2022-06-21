@@ -1,5 +1,4 @@
 export const femaleMageModel = {
-  playerId: 1,
   name: 'femaleMage',
   areas: [
     {
@@ -21,7 +20,6 @@ export const femaleMageModel = {
 };
 
 export const maleMageModel = {
-  playerId: 2,
   name: 'maleMage',
   areas: [
     {

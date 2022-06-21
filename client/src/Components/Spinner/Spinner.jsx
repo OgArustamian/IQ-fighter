@@ -56,9 +56,6 @@ export default function Spinner() {
         <div className="particle" />
         <div className="particle" />
       </div>
-      {/* <div className="mt-5">
-        <h2 Style="color: white; opacity:0.6">Идет поиск противника...</h2>
-      </div> */}
       <div className="mt-5 waviy">
         <span>п</span>
         <span>о</span>
