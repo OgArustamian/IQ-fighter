@@ -100,7 +100,7 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
 
         infotype = 'win';
         hp = winnerTurn.hp;
-        hpEnemy = loserTurn.hp;
+        hpEnemy = loserTurn.flat()[0].hp;
         message = { type: infotype, params: { turnID, hp, hpEnemy, damage } };
         generalInformation(infotype, rooms, room, message, winnerID);
         break;

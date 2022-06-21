@@ -3,7 +3,7 @@ import React from 'react';
 import healthBorder from './img/healthborder-modified.png';
 import { useWsContext } from '../Context/Context';
 
-function HealthBar() {
+function HealthBar({ p }) {
   const {
     hero, enemy, firstPlayerHp, secondPlayerHp,
   } = useWsContext();
@@ -11,7 +11,7 @@ function HealthBar() {
 
   return (
     <div>
-      <progress max="100" value={hero ? firstPlayerHp : secondPlayerHp} />
+      <progress max="100" value={p} />
     </div>
   );
 }
