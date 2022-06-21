@@ -16,6 +16,10 @@ function Context({ children }) {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
 
+  ws.onopen = function(e) {
+
+  }
+
   ws.onmessage = (event) => {
     console.log(event.data);
     const { type, params } = JSON.parse(event.data);
