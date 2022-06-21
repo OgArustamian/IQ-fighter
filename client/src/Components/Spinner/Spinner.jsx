@@ -56,8 +56,28 @@ export default function Spinner() {
         <div className="particle" />
         <div className="particle" />
       </div>
-      <div className="mt-5">
+      {/* <div className="mt-5">
         <h2 Style="color: white; opacity:0.6">Идет поиск противника...</h2>
+      </div> */}
+      <div className="mt-5 waviy">
+        <span>п</span>
+        <span>о</span>
+        <span>д</span>
+        <span>б</span>
+        <span>о</span>
+        <span>р</span>
+        &nbsp;
+        &nbsp;
+        <span>с</span>
+        <span>о</span>
+        <span>п</span>
+        <span>е</span>
+        <span>р</span>
+        <span>н</span>
+        <span>и</span>
+        <span>к</span>
+        <span>а</span>
+        <span>...</span>
       </div>
     </div>
   );
