@@ -25,6 +25,10 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      hp: {
+        type: Sequelize.INTEGER,
+        defaultValue: 100,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

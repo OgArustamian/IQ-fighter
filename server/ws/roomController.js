@@ -4,7 +4,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 
-const { Game, Turn } = require('../db/models');
+const { Game, Turn, UserGames } = require('../db/models');
 
 // function generalInformation(ws) {
 //   let obj;
@@ -49,7 +49,7 @@ function create(ws, userID, rooms) {
   // generalInformation(ws);
 }
 
-async function join(rooms, maxClients, ws, userID, room) {
+async function join(rooms, maxClients, ws, userID, room, enemyID) {
   if (!Object.keys(rooms).includes(room)) {
     console.warn(`Room ${room} does not exist!`);
     return;
@@ -62,6 +62,8 @@ async function join(rooms, maxClients, ws, userID, room) {
 
   const game = await Game.create({ winner_id: 1 });
   const turn = await Turn.create({ game_id: game.id });
+  const usergames = await UserGames.create({ user_id: userID, game_id: game.id });
+  const enemygames = await UserGames.create({ user_id: enemyID, game_id: game.id });
   const gameID = game.id;
   const turnID = turn.id;
 
@@ -70,7 +72,24 @@ async function join(rooms, maxClients, ws, userID, room) {
 
   console.log('join', room); // information
 
-  rooms[room].forEach((el) => el.send(JSON.stringify({ type: 'joinedRoom', params: { room, gameID, turnID } })));
+  rooms[room].forEach((el) => {
+    if (el.userID === usergames.user_id) {
+      el.send(JSON.stringify({
+        type: 'joinedRoom',
+        params: {
+          room, gameID, turnID, hp: usergames.hp,
+        },
+      }));
+    }
+    if (el.userID === enemygames.user_id) {
+      el.send(JSON.stringify({
+        type: 'joinedRoom',
+        params: {
+          room, gameID, turnID, hp: enemygames.hp,
+        },
+      }));
+    }
+  });
   console.log('send join true');
 
   // generalInformation(ws);
@@ -95,7 +114,7 @@ function leave(rooms, ws) {
 function roomController(rooms, maxClients, ws, userID) {
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value}`);
-    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key); }
+    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID); }
   }
   create(ws, userID, rooms);
 }
