@@ -8,7 +8,6 @@ import QuizModal from '../QuizModal/QuizModal';
 function Player({
   url, model, width, imgWidth, cursor, position,
 }) {
-  console.log('render player --->');
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
   const question = useSelector((state) => state.question);

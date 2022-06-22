@@ -52,7 +52,7 @@ function create(ws, userID, rooms) {
   // generalInformation(ws);
 }
 
-async function join(rooms, maxClients, ws, userID, room, enemyID) {
+async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
   if (!Object.keys(rooms).includes(room)) {
     console.warn(`Room ${room} does not exist!`);
     return;
@@ -63,6 +63,7 @@ async function join(rooms, maxClients, ws, userID, room, enemyID) {
     return;
   }
 
+  const secondPlayer = ws.username;
   const game = await Game.create({ winner_id: 1 });
   const turn = await Turn.create({ game_id: game.id });
   const usergames = await UserGames.create({ user_id: userID, game_id: game.id });
@@ -80,7 +81,7 @@ async function join(rooms, maxClients, ws, userID, room, enemyID) {
     el.send(JSON.stringify({
       type: 'joinedRoom',
       params: {
-        room, gameID, turnID, hp: usergames.hp,
+        room, gameID, turnID, hp: usergames.hp, rigthUserName: firstPlayer, secondPlayer,
       },
     }));
     // }
@@ -139,7 +140,7 @@ function roomController(rooms, maxClients, ws, userID) {
   // if (!status) {
   for (const [key, value] of Object.entries(rooms)) {
     console.log(`${key}: ${value}`);
-    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID); }
+    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID, value[0].username); }
   }
   create(ws, userID, rooms);
   // }

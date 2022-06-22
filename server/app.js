@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 const createError = require('http-errors');
@@ -88,8 +89,11 @@ const rooms = {};
 
 // part2
 wss.on('connection', (ws, request) => {
-  const userID = request.session.user?.id;
+  const { id, username } = request.session.user;
+  const userID = id;
+
   ws.userID = userID;
+  ws.username = username;
 
   // коннект и получение месседжа
   ws.on('message', (message) => {
@@ -117,7 +121,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
-    console.log('user left <----');
+    console.log('user left <----', rooms);
     map.delete(userID);
   });
 });
