@@ -15,13 +15,13 @@ const WsContext = createContext();
 function Context({ children }) {
   const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
+  const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
   const player = useSelector((state) => state.player);
-
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
       setFirstPlayerHp(hp);
@@ -63,6 +63,7 @@ function Context({ children }) {
 
       case DRAW:
         console.log('DRAW------------------>', JSON.parse(event.data));
+        setIsDraw(true);
         dispatch(changeTurn(turnID));
         break;
 
@@ -116,7 +117,7 @@ function Context({ children }) {
 
   return (
     <WsContext.Provider value={{
-      ws, modal, setModal, firstPlayerHp, secondPlayerHp, readyState,
+      ws, modal, setModal, isDraw, setIsDraw, firstPlayerHp, secondPlayerHp, readyState,
     }}
     >
       {children}
