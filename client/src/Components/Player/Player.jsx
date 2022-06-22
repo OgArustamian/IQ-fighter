@@ -10,7 +10,8 @@ function Player({
 }) {
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
-  const { question, player } = useSelector((state) => state);
+  const question = useSelector((state) => state.question);
+  const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
   const { modal } = useWsContext();
 

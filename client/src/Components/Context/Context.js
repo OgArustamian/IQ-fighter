@@ -19,7 +19,7 @@ function Context({ children }) {
   const { id } = useSelector((state) => state.users);
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
-  const { player, users } = useSelector((state) => state);
+  const player = useSelector((state) => state.player);
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
