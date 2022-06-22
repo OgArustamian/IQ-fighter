@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import React, {
-  useEffect, useState, useRef,
+  useEffect, useState, useRef, useCallback, memo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendAnswer } from '../../Redux/Actions/answersAction';
@@ -13,6 +13,8 @@ function CountdownTimer() {
   const { id } = useSelector((state) => state.users);
   const { turnID } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
+
+  console.log('render timer free');
 
   let [timer, setTimer] = useState(10);
   const timerId = useRef(null);
@@ -29,7 +31,6 @@ function CountdownTimer() {
   }
 
   function clear() {
-    dispatch(sendAnswer(ws, room, id, 0, turnID));
     window.clearInterval(timerId.current);
   }
 
@@ -39,18 +40,16 @@ function CountdownTimer() {
       setTimer((prev) => prev - 1);
       startBlinking();
     }, 1000);
-    // return () => clear();
+    return () => clear();
   }, []);
 
-  // useEffect(() => {
-  //   if (timer === 5) {
-  //     clear();
-
-  //     console.log('render hereeee', timer);
-
-  //   }
-  //   console.log(timer);
-  // }, [timer]);
+  useEffect(() => {
+    if (timer === 0) {
+      clear();
+      setModal(!modal);
+      dispatch(sendAnswer(ws, room, id, 0, turnID));
+    }
+  }, [timer]);
 
   return (
     <div ref={circle} className={styles['base-timer']}>
@@ -66,4 +65,4 @@ function CountdownTimer() {
   );
 }
 
-export default CountdownTimer;
+export default memo(CountdownTimer);
