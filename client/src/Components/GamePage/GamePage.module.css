@@ -32,3 +32,19 @@ body {
 .firstChar {
     margin-bottom: 79px;
 }
+
+.videoBackground {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    filter:opacity(60%);
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 135px;
+}

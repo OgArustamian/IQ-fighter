@@ -46,8 +46,8 @@ function CountdownTimer() {
   useEffect(() => {
     if (timer === 0) {
       clear();
-      setModal(!modal);
-      dispatch(sendAnswer(ws, room, id, 0, turnID));
+    //   setModal(!modal);
+    //   dispatch(sendAnswer(ws, room, id, 0, turnID));
     }
   }, [timer]);
 
