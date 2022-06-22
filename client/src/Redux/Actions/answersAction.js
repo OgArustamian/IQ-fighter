@@ -7,6 +7,7 @@ export const setAnswer = (value) => ({
 });
 
 export const sendAnswer = (ws, room, userID, answerID, turnID) => (dispatch) => {
+  console.log('answerd dispatch', answerID);
   ws.send(JSON.stringify({
     type: 'game',
     subtype: 'answer',

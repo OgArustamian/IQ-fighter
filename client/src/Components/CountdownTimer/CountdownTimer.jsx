@@ -1,11 +1,20 @@
 /* eslint-disable prefer-const */
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect, useState, useRef, useMemo,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import styles from './CountdownTimer.module.css';
 
-function CountdownTimer() {
-  const { modal, setModal } = useWsContext();
-  let [timer, setTimer] = useState(30);
+function CountdownTimer({ userAnswer }) {
+  const { modal, setModal, ws } = useWsContext();
+  const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.users);
+  const { turnID } = useSelector((state) => state.player);
+  const room = useSelector((state) => state.ws);
+
+  let [timer, setTimer] = useState(10);
   const timerId = useRef(null);
   const circle = useRef();
   const circleRing = useRef();
@@ -35,6 +44,12 @@ function CountdownTimer() {
   useEffect(() => {
     if (timer === 0) {
       setModal(!modal);
+      if (userAnswer > 0) {
+        console.log('send answer ---->', userAnswer);
+        dispatch(sendAnswer(ws, room, id, userAnswer, turnID));
+      } else {
+        dispatch(sendAnswer(ws, room, id, 0, turnID));
+      }
       clear();
     }
   }, [timer]);

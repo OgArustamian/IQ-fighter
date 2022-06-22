@@ -41,7 +41,7 @@ function Context({ children }) {
     const {
       room, gameID, turnID, hp, hpEnemy,
     } = params;
-    console.log('turnid', turnID);
+
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
@@ -98,7 +98,7 @@ function Context({ children }) {
   };
 
   useEffect(() => {
-    if (id && ws.readyState === 1) {
+    if (id) {
       setWs(new WebSocket('ws://localhost:3001'));
     }
   }, [id]);
