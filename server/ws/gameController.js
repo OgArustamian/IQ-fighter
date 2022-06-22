@@ -118,6 +118,8 @@ async function checkAnswer(subtype, rooms, params) {
     room, userID, answerID, turnID,
   } = params;
 
+  console.log('answerID ------ >', answerID);
+  console.log('userId ---->', userID);
   const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
