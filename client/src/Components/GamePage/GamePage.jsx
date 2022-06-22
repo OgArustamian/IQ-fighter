@@ -12,6 +12,7 @@ import Spinner from '../Spinner/Spinner';
 import { JOIN_ROOM } from '../../Redux/Types/types';
 import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
+import GameNavbar from '../Navbar/GameNavBar';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -72,13 +73,14 @@ function GamePage() {
 
   return (
     <div>
+      <GameNavbar />
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
           <div className={styles['game-page-container']}>
-            {modal ? <QuizModal /> : null }
             <div className={styles['char-block']}>
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+              <div className={styles.firstChar} />
               <HealthBar p={firstPlayerHp} mt-3 />
             </div>
             <div className={styles['char-block']}>
@@ -87,6 +89,7 @@ function GamePage() {
             </div>
           </div>
         )}
+      {modal ? <QuizModal /> : null }
     </div>
   );
 }

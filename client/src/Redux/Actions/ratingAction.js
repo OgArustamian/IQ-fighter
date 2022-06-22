@@ -6,8 +6,6 @@ export const showRating = (value) => ({
   payload: value,
 });
 
-export const getRatingInfo = () => (dispatch) => {
-  axios.post('/rating/getInfo')
-    .then((response) => dispatch(showRating(response.data)))
-    .catch((err) => dispatch(showRating({})));
+export const getRatingInfo = (ws, id) => (dispatch) => {
+  ws.send(JSON.stringify({ type: 'getRate', params: { id } }));
 };
