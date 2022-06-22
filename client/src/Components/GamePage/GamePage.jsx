@@ -72,20 +72,24 @@ function GamePage() {
   }, [player.turn]);
 
   return (
-    <div>
+    <div className={styles.gameContainer}>
       <GameNavbar />
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
-          <div className={styles['game-page-container']}>
-            <div className={styles['char-block']}>
-              <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
-              <div className={styles.firstChar} />
-              <HealthBar p={firstPlayerHp} mt-3 />
-            </div>
-            <div className={styles['char-block']}>
-              <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-              <HealthBar p={secondPlayerHp} mt-3 />
+          <div>
+            <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
+            <div className={styles['game-page-container']}>
+              {modal ? <QuizModal /> : null }
+              <div className={styles['char-block']}>
+                <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+                <div className={styles.firstChar} />
+                <HealthBar p={firstPlayerHp} mt-3 />
+              </div>
+              <div className={styles['char-block']}>
+                <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
+                <HealthBar p={secondPlayerHp} mt-3 />
+              </div>
             </div>
           </div>
         )}
