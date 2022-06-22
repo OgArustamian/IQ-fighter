@@ -21,7 +21,7 @@ export default function SignIn() {
     setInputs({});
   };
   return (
-    <div className="auth-size-woindow">
+    <div className="auth-size-window">
       <Form inline className="mt-5 login-form" onSubmit={submitHandler}>
         <FormGroup floating>
           <Input
@@ -61,8 +61,8 @@ export default function SignIn() {
           Авторизоваться
         </Button>
         <Link to="/signup">
-          <NavLink className="mt-4">
-            <strong>Пройти регистрацию.</strong>
+          <NavLink className="mt-4 auth-link">
+            Пройти регистрацию.
           </NavLink>
         </Link>
       </Form>
