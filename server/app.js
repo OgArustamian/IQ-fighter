@@ -94,6 +94,7 @@ wss.on('connection', (ws, request) => {
   // коннект и получение месседжа
   ws.on('message', (message) => {
     const obj = JSON.parse(message);
+    console.log(obj);
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;

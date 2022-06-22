@@ -11,6 +11,7 @@ import CountdownTimer from '../CountdownTimer/CountdownTimer';
 import './QuizModal.css';
 
 function QuizModal() {
+  console.log('render modal');
   const { modal, setModal } = useWsContext();
   const toggle = () => setModal(!modal);
 

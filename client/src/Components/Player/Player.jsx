@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
@@ -8,12 +8,12 @@ import QuizModal from '../QuizModal/QuizModal';
 function Player({
   url, model, width, imgWidth, cursor, position,
 }) {
+  console.log('render player --->');
   const { ws } = useWsContext();
   const room = useSelector((state) => state.ws);
   const question = useSelector((state) => state.question);
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
-  const { modal } = useWsContext();
 
   function attackHandler(area) {
     if (player.turn && position !== player.position) {
@@ -37,9 +37,8 @@ function Player({
         width={width}
         imgWidth={imgWidth}
       />
-      {modal ? <QuizModal /> : null }
     </div>
   );
 }
 
-export default Player;
+export default memo(Player);
