@@ -1,9 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
-
-body {
-    font-family: 'Open Sans', sans-serif;
-} */
-
 .game-page-container {
     display: flex;
     justify-content: space-between;
@@ -20,6 +14,7 @@ body {
 .hidden {
     visibility: hidden;
     display: none;
+    opacity: 0;
 }
 
 .char-block {
@@ -43,6 +38,19 @@ body {
     top: 260px;
     left: 655px;
     margin: 0;
-    opacity: 1;
-    transition: 1s opacity;
+    animation: fade-out 1s infinite;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
