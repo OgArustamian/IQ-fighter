@@ -1,6 +1,6 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Form, Modal, ModalBody, ModalFooter, ModalHeader,
@@ -11,16 +11,17 @@ import CountdownTimer from '../CountdownTimer/CountdownTimer';
 import './QuizModal.css';
 
 function QuizModal() {
+  console.log('render modal');
   const { modal, setModal } = useWsContext();
   const toggle = () => setModal(!modal);
 
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
   const { turnID } = useSelector((state) => state.player);
-
   const room = useSelector((state) => state.ws);
 
-  const [userAnswer, setUserAnswer] = useState();
+  const [userAnswer, setUserAnswer] = useState(0);
+
   const dispatch = useDispatch();
   const { ws } = useWsContext();
 
@@ -60,4 +61,4 @@ function QuizModal() {
   );
 }
 
-export default QuizModal;
+export default React.memo(QuizModal);

@@ -11,27 +11,29 @@ import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 import Spinner from '../Spinner/Spinner';
 import { JOIN_ROOM } from '../../Redux/Types/types';
 import HealthBar from '../HealthBar/HealthBar';
-import { userSignIn } from '../../Redux/Actions/userAction';
+import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
+  console.log('render game page ----> !!!');
   const body = document.querySelector('body');
   const users = useSelector((state) => state.users);
   console.log('usersssssssssss', users);
   body.style.backgroundImage = 'none';
-
-  const { spinner } = useSelector((state) => state);
+  const { modal } = useWsContext();
+  const spinner = useSelector((state) => state.spinner);
+  const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
 
-  const { player } = useSelector((state) => state);
   const {
-    ws, firstPlayerHp, secondPlayerHp,
+    ws, firstPlayerHp, secondPlayerHp, readyState,
   } = useWsContext();
 
   useEffect(() => {
-    // setTimeout(() => {
-    if (ws.readyState === 1) { dispatch(messageFind(ws)); }
-    // }, 200);
-  }, []);
+    if (ws.readyState === 1) {
+      dispatch(messageFind(ws));
+      console.log(ws);
+    }
+  }, [readyState]);
 
   const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
   const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false' });
@@ -73,9 +75,6 @@ function GamePage() {
     checkTurn();
   }, [player.turn]);
 
-  // console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
-  // console.log(ws);
-
   return (
     <div>
       {spinner !== JOIN_ROOM
@@ -87,6 +86,7 @@ function GamePage() {
                 ? <h3 style={{ color: 'white' }}>{users.username}</h3>
                 : <h3 style={{ color: 'white' }}>LOH</h3>}
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+              <div className={styles.firstChar} />
               <HealthBar p={firstPlayerHp} mt-3 />
             </div>
             <div className={styles['char-block']}>
@@ -98,6 +98,7 @@ function GamePage() {
             </div>
           </div>
         )}
+      {modal ? <QuizModal /> : null }
     </div>
   );
 }

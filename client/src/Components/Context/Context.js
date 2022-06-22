@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, useContext, useEffect, useState,
+  createContext, memo, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
@@ -13,13 +13,16 @@ import {
 const WsContext = createContext();
 
 function Context({ children }) {
-  const [ws, setWs] = useState(new WebSocket('ws://localhost:3001'));
+  const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
+  const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
-  const { player, users } = useSelector((state) => state);
+  const player = useSelector((state) => state.player);
+
+  console.log('render context');
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
@@ -34,6 +37,7 @@ function Context({ children }) {
 
   ws.onopen = function (e) {
     console.log('ws open context front');
+    setReadyState(ws.readyState);
   };
 
   ws.onmessage = (event) => {
@@ -41,7 +45,7 @@ function Context({ children }) {
     const {
       room, gameID, turnID, hp, hpEnemy,
     } = params;
-    console.log('turnid', turnID);
+
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
@@ -98,14 +102,14 @@ function Context({ children }) {
   };
 
   useEffect(() => {
-    if (id && ws.readyState === 1) {
+    if (id) {
       setWs(new WebSocket('ws://localhost:3001'));
     }
   }, [id]);
 
   return (
     <WsContext.Provider value={{
-      ws, modal, setModal, firstPlayerHp, secondPlayerHp,
+      ws, modal, setModal, firstPlayerHp, secondPlayerHp, readyState,
     }}
     >
       {children}

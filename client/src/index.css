@@ -17,3 +17,7 @@ code {
 area:hover {
   cursor: url('./img/sword-attack-icon.png'), auto;
 }
+
+.GamePage_game-page-container__Pwni8:first-child.progress-container {
+    margin-top: 78px!important;
+}

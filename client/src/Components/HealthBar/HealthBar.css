@@ -13,11 +13,24 @@
     left: 17px;
 }
 
-.health-border {
+.progress-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 370px;
+}
+
+.progress-container img {
+    width: 98px;
     position: relative;
+    top: -55px;
+    left: -6px;
+}
+
+.health-border {
+    /* position: relative;
     top: -30px;
-    left: 51px;
-    width: 110px;
+    left: 77px;
+    width: 92px; */
 }
 
 progress {
@@ -44,7 +57,7 @@ progress:after {
   position: relative;
   top: -32px;
   left: -120px;
-  content: attr(value) ' HP' ;
+  content: attr(value);
 }
 
 /* Firefox styles */

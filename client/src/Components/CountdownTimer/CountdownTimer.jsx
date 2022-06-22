@@ -1,18 +1,25 @@
 /* eslint-disable prefer-const */
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect, useState, useRef, useCallback, memo,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import styles from './CountdownTimer.module.css';
 
 function CountdownTimer() {
-  const { modal, setModal } = useWsContext();
-  let [timer, setTimer] = useState(30);
+  const { modal, setModal, ws } = useWsContext();
+  const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.users);
+  const { turnID } = useSelector((state) => state.player);
+  const room = useSelector((state) => state.ws);
+
+  console.log('render timer free');
+
+  let [timer, setTimer] = useState(10);
   const timerId = useRef(null);
   const circle = useRef();
   const circleRing = useRef();
-
-  function clear() {
-    window.clearInterval(timerId.current);
-  }
 
   function startBlinking() {
     if (timer === 20) {
@@ -23,19 +30,24 @@ function CountdownTimer() {
     }
   }
 
+  function clear() {
+    window.clearInterval(timerId.current);
+  }
+
   useEffect(() => {
+    clear();
     timerId.current = window.setInterval(() => {
-      setTimer(timer -= 1);
+      setTimer((prev) => prev - 1);
       startBlinking();
     }, 1000);
-
     return () => clear();
   }, []);
 
   useEffect(() => {
     if (timer === 0) {
-      setModal(!modal);
       clear();
+      setModal(!modal);
+      dispatch(sendAnswer(ws, room, id, 0, turnID));
     }
   }, [timer]);
 
@@ -53,4 +65,4 @@ function CountdownTimer() {
   );
 }
 
-export default CountdownTimer;
+export default memo(CountdownTimer);
