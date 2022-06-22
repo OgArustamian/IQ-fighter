@@ -4,13 +4,9 @@ import healthBorder from './img/healthborder-modified.png';
 import { useWsContext } from '../Context/Context';
 
 function HealthBar({ p }) {
-  const {
-    hero, enemy, firstPlayerHp, secondPlayerHp,
-  } = useWsContext();
-  console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
-
   return (
     <div>
+      {/* <img className="health-border" src={healthBorder} alt="hp border" /> */}
       <progress max="100" value={p} />
     </div>
   );

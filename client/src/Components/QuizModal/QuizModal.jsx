@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
+import CountdownTimer from '../CountdownTimer/CountdownTimer';
 import './QuizModal.css';
 
 function QuizModal() {
@@ -33,7 +34,9 @@ function QuizModal() {
   return (
     <div>
       <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
-        <ModalHeader>Quiz theme</ModalHeader>
+        <ModalHeader className="modal-header">
+          <CountdownTimer />
+        </ModalHeader>
         <ModalBody>
           <p id={question.questionID} className="quiz-question">
             {question.question}

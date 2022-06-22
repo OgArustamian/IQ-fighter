@@ -16,3 +16,6 @@ export const JOIN_ROOM = 'joinedRoom';
 export const GAME = 'game';
 export const ATTACK = 'attack';
 export const SET_ANSWER = 'SET_ANSWER';
+export const DRAW = 'draw';
+export const WIN = 'win';
+export const LOSS = 'loss';

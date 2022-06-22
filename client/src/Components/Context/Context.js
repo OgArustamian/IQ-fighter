@@ -7,7 +7,7 @@ import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, JOIN_ROOM, SET_ANSWER,
+  ATTACK, CREATE_ROOM, DRAW, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -17,15 +17,20 @@ function Context({ children }) {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
-  const [firstPlayerHp, setFirstPlayerHp] = useState(null);
-  const [secondPlayerHp, setSecondPlayerHp] = useState(null);
+  const [firstPlayerHp, setFirstPlayerHp] = useState(100);
+  const [secondPlayerHp, setSecondPlayerHp] = useState(100);
   const { player } = useSelector((state) => state);
-  const [hero, setHero] = useState(false);
-  const [enemy, setEnemy] = useState(true);
 
-  ws.onopen = function (e) {
-
-  };
+  function checkPosition(hp, hpEnemy) {
+    if (player.position === 'left') {
+      setFirstPlayerHp(hp);
+      setSecondPlayerHp(hpEnemy);
+    }
+    if (player.position === 'right') {
+      setFirstPlayerHp(hpEnemy);
+      setSecondPlayerHp(hp);
+    }
+  }
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
@@ -42,48 +47,28 @@ function Context({ children }) {
       case CREATE_ROOM:
         dispatch(setRoom(room));
         dispatch(setTurn(gameID, turnID));
-        setHero(true);
-        setEnemy(false);
         break;
 
       case JOIN_ROOM:
         dispatch(setRoom(room));
         dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
-        setFirstPlayerHp(hp);
-        setSecondPlayerHp(hp);
         break;
 
-      case 'draw':
+      case DRAW:
         console.log('DRAW------------------>', JSON.parse(event.data));
         dispatch(changeTurn());
         break;
 
-      case 'win':
+      case WIN:
         console.log('WIN------------------>', JSON.parse(event.data));
-        if (!hero) {
-          setFirstPlayerHp(hpEnemy);
-          setSecondPlayerHp(hp);
-        } else {
-          setFirstPlayerHp(hp);
-          setSecondPlayerHp(hpEnemy);
-        }
-
-        console.log('hero->', hero, firstPlayerHp, 'enemy->', enemy, secondPlayerHp);
+        checkPosition(hp, hpEnemy);
         dispatch(changeTurn());
         break;
 
-      case 'loss':
+      case LOSS:
         console.log('LOSS------------------>', JSON.parse(event.data));
-        if (!hero) {
-          setFirstPlayerHp(hpEnemy);
-          setSecondPlayerHp(hp);
-        } else {
-          setFirstPlayerHp(hp);
-          setSecondPlayerHp(hpEnemy);
-        }
-
-        console.log('hero->', hero, firstPlayerHp, 'enemy->', enemy, secondPlayerHp);
+        checkPosition(hp, hpEnemy);
         dispatch(changeTurn());
         break;
 
@@ -92,13 +77,14 @@ function Context({ children }) {
         break;
     }
   };
+
   useEffect(() => {
     setWs(new WebSocket('ws://localhost:3001'));
   }, [id]);
 
   return (
     <WsContext.Provider value={{
-      ws, modal, setModal, hero, enemy, firstPlayerHp, secondPlayerHp,
+      ws, modal, setModal, firstPlayerHp, secondPlayerHp,
     }}
     >
       {children}

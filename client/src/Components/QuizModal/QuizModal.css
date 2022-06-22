@@ -24,3 +24,9 @@
     flex-direction: row;
     justify-content: flex-end;
 }
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

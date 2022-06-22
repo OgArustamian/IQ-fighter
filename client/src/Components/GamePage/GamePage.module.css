@@ -1,0 +1,30 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+} */
+
+.game-page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 50px;
+    width: 100%;
+    margin: 0 100px 0;
+}
+
+.alert-msg {
+    color: white;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.char-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    align-items: center;
+}

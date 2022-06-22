@@ -12,7 +12,7 @@ function Player({
   const room = useSelector((state) => state.ws);
   const { question, player } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { modal, setModal } = useWsContext();
+  const { modal } = useWsContext();
 
   function attackHandler(area) {
     if (player.turn && position !== player.position) {
