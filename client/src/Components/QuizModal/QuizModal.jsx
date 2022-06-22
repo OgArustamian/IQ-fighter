@@ -17,10 +17,9 @@ function QuizModal() {
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
   const { turnID } = useSelector((state) => state.player);
-
   const room = useSelector((state) => state.ws);
 
-  const [userAnswer, setUserAnswer] = useState();
+  const [userAnswer, setUserAnswer] = useState(0);
   const dispatch = useDispatch();
   const { ws } = useWsContext();
 
@@ -35,7 +34,7 @@ function QuizModal() {
     <div>
       <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
         <ModalHeader className="modal-header">
-          <CountdownTimer />
+          <CountdownTimer userAnswer={userAnswer} />
         </ModalHeader>
         <ModalBody>
           <p id={question.questionID} className="quiz-question">

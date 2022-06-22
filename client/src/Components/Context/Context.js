@@ -41,7 +41,7 @@ function Context({ children }) {
     const {
       room, gameID, turnID, hp, hpEnemy,
     } = params;
-    console.log('turnid', turnID);
+
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
