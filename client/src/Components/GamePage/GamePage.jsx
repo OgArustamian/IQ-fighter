@@ -15,12 +15,11 @@ import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
   const body = document.querySelector('body');
-  const users = useSelector((state) => state.users);
-  console.log('usersssssssssss', users);
   body.style.backgroundImage = 'none';
   const { modal } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
+  console.log('PLAYER=====>>>>', player);
   const dispatch = useDispatch();
 
   const {
@@ -36,8 +35,6 @@ function GamePage() {
 
   const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
   const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false' });
-
-  console.log('=======>>>>>>>>>>>>>>>>>>>>', ws);
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
@@ -82,16 +79,16 @@ function GamePage() {
           <div className={styles['game-page-container']}>
             <div className={styles['char-block']}>
               { player.position === 'left'
-                ? <h3 style={{ color: 'white' }}>{users.username}</h3>
-                : <h3 style={{ color: 'white' }}>LOH</h3>}
+                ? <h3 style={{ color: 'white' }}>{player.firstName}</h3>
+                : <h3 style={{ color: 'white' }}>{player.firstName}</h3>}
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
               <div className={styles.firstChar} />
               <HealthBar p={firstPlayerHp} mt-3 />
             </div>
             <div className={styles['char-block']}>
               { player.position === 'right'
-                ? <h3 style={{ color: 'white' }}>{users.username}</h3>
-                : <h3 style={{ color: 'white' }}>LOH</h3>}
+                ? <h3 style={{ color: 'white' }}>{player.secondName}</h3>
+                : <h3 style={{ color: 'white' }}>{player.secondName}</h3>}
               <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
               <HealthBar p={secondPlayerHp} mt-3 />
             </div>

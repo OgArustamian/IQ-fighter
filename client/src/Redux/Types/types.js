@@ -9,6 +9,8 @@ export const SET_TURN = 'SET_TURN';
 export const SHOW_SPINNER_WS = 'SHOW_SPINNER_WS';
 export const SET_GAME = 'SET_GAME';
 export const CHANGE_TURN = 'CHANGE_TURN';
+export const GET_FIRST_NAME = 'GET_FIRST_NAME';
+export const GET_SECOND_NAME = 'GET_SECOND_NAME';
 
 // serser ws types
 export const CREATE_ROOM = 'createdRoom';

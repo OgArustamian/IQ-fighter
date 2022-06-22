@@ -1,4 +1,6 @@
-import { SET_GAME, SET_TURN, CHANGE_TURN } from '../Types/types';
+import {
+  SET_GAME, SET_TURN, CHANGE_TURN, GET_FIRST_NAME, GET_SECOND_NAME,
+} from '../Types/types';
 
 const initState = {
   turn: false,
@@ -28,6 +30,18 @@ const playerReducer = (state = initState, action) => {
         ...state,
         turn: !state.turn,
         turnID: payload.turnID,
+      };
+
+    case GET_FIRST_NAME:
+      return {
+        ...state,
+        firstName: payload.firstName,
+      };
+
+    case GET_SECOND_NAME:
+      return {
+        ...state,
+        secondName: payload.secondName,
       };
 
     default:

@@ -3,7 +3,9 @@ import React, {
   createContext, memo, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
+import {
+  changeTurn, getFirstName, getSecondName, setGame, setTurn,
+} from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
@@ -40,8 +42,9 @@ function Context({ children }) {
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
+    console.log(params);
     const {
-      room, gameID, turnID, hp, hpEnemy,
+      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer,
     } = params;
 
     switch (type) {
@@ -59,6 +62,8 @@ function Context({ children }) {
         dispatch(setRoom(room));
         dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
+        dispatch(getFirstName(firstPlayer));
+        dispatch(getSecondName(secondPlayer));
         break;
 
       case DRAW:
