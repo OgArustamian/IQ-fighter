@@ -3,7 +3,6 @@ import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
-import QuizModal from '../QuizModal/QuizModal';
 
 function Player({
   url, model, width, imgWidth, cursor, position,

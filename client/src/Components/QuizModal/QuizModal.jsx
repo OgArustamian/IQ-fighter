@@ -35,7 +35,7 @@ function QuizModal() {
     <div>
       <Modal fullscreen="lg" centered className="quiz-modal" isOpen={modal}>
         <ModalHeader className="modal-header">
-          <CountdownTimer />
+          <CountdownTimer answerID={userAnswer} />
         </ModalHeader>
         <ModalBody>
           <p id={question.questionID} className="quiz-question">

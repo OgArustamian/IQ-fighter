@@ -7,7 +7,7 @@ import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
+  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -33,7 +33,7 @@ function Context({ children }) {
     }
   }
 
-  ws.onopen = function (e) {
+  ws.onopen = (e) => {
     console.log('ws open context front');
     setReadyState(ws.readyState);
   };
@@ -63,7 +63,6 @@ function Context({ children }) {
 
       case DRAW:
         console.log('DRAW------------------>', JSON.parse(event.data));
-        alert('Ничья');
         dispatch(changeTurn(turnID));
         break;
 
@@ -79,13 +78,23 @@ function Context({ children }) {
         dispatch(changeTurn(turnID));
         break;
 
+      case GAME_WON:
+        console.log('game over, you WON!!!', JSON.parse(event.data));
+        checkPosition(hp, hpEnemy);
+        break;
+
+      case GAME_LOST:
+        console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
+        checkPosition(hp, hpEnemy);
+        break;
+
       default:
         dispatch(setRoom(room));
         break;
     }
   };
 
-  ws.onclose = function (e) {
+  ws.onclose = (e) => {
     if (e.wasClean) {
       console.log(`[close] Соединение закрыто чисто, код=${e.code} причина=${e.reason}`);
     } else {
@@ -95,7 +104,7 @@ function Context({ children }) {
     }
   };
 
-  ws.onerror = function (error) {
+  ws.onerror = (error) => {
     console.log(`[error] ${error.message}`);
   };
 
