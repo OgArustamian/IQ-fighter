@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table } from 'reactstrap';
 import { useSelector } from 'react-redux';
 import './LadderBoard.css';
+import { getRatingInfo } from '../../Redux/Actions/ratingAction';
 
 export default function LadderBoard() {
   const rating = useSelector((state) => state.rating);
+  const users = useSelector((state) => state.users);
+  useEffect(() => {
+    getRatingInfo(users.id);
+  }, []);
   return (
     <div className="ladderBoard-conteiner">
       <h1 className="about-title">🔥 Топ-10 Игроков 🔥</h1>
