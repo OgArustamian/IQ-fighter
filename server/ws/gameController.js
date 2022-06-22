@@ -149,11 +149,16 @@ async function checkAnswer(subtype, rooms, params) {
 
   console.log('answerID ------ >', answerID);
   console.log('userId ---->', userID);
-  const answer = await Answers.findOne({ where: { id: answerID } });
+
   const turn = await Turn.findOne({ where: { id: turnID } });
 
-  if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
-  if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  if (answerID === 0) {
+    await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false });
+  } else {
+    const answer = await Answers.findOne({ where: { id: answerID } });
+    if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
+    if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  }
 
   responseAnswers(subtype, rooms, room, turn);
 }

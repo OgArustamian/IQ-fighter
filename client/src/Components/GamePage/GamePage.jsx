@@ -16,10 +16,10 @@ function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
 
-  const { spinner } = useSelector((state) => state);
+  const spinner = useSelector((state) => state.spinner);
+  const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
 
-  const { player } = useSelector((state) => state);
   const {
     ws, firstPlayerHp, secondPlayerHp,
   } = useWsContext();

@@ -1,13 +1,13 @@
 /* eslint-disable prefer-const */
 import React, {
-  useEffect, useState, useRef, useMemo,
+  useEffect, useState, useRef,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import styles from './CountdownTimer.module.css';
 
-function CountdownTimer({ userAnswer }) {
+function CountdownTimer() {
   const { modal, setModal, ws } = useWsContext();
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
@@ -19,10 +19,6 @@ function CountdownTimer({ userAnswer }) {
   const circle = useRef();
   const circleRing = useRef();
 
-  function clear() {
-    window.clearInterval(timerId.current);
-  }
-
   function startBlinking() {
     if (timer === 20) {
       circleRing.current.style.stroke = '#f8b700';
@@ -32,27 +28,29 @@ function CountdownTimer({ userAnswer }) {
     }
   }
 
+  function clear() {
+    dispatch(sendAnswer(ws, room, id, 0, turnID));
+    window.clearInterval(timerId.current);
+  }
+
   useEffect(() => {
+    clear();
     timerId.current = window.setInterval(() => {
-      setTimer(timer -= 1);
+      setTimer((prev) => prev - 1);
       startBlinking();
     }, 1000);
-
-    return () => clear();
+    // return () => clear();
   }, []);
 
-  useEffect(() => {
-    if (timer === 0) {
-      setModal(!modal);
-      if (userAnswer > 0) {
-        console.log('send answer ---->', userAnswer);
-        dispatch(sendAnswer(ws, room, id, userAnswer, turnID));
-      } else {
-        dispatch(sendAnswer(ws, room, id, 0, turnID));
-      }
-      clear();
-    }
-  }, [timer]);
+  // useEffect(() => {
+  //   if (timer === 5) {
+  //     clear();
+
+  //     console.log('render hereeee', timer);
+
+  //   }
+  //   console.log(timer);
+  // }, [timer]);
 
   return (
     <div ref={circle} className={styles['base-timer']}>
