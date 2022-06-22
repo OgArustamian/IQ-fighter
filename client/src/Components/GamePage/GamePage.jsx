@@ -80,6 +80,7 @@ function GamePage() {
             {modal ? <QuizModal /> : null }
             <div className={styles['char-block']}>
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+              <div className={styles.firstChar} />
               <HealthBar p={firstPlayerHp} mt-3 />
             </div>
             <div className={styles['char-block']}>
