@@ -22,8 +22,6 @@ function Context({ children }) {
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
   const player = useSelector((state) => state.player);
 
-  console.log('render context');
-
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
       setFirstPlayerHp(hp);
