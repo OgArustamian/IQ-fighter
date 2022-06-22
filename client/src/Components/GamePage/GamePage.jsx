@@ -12,9 +12,9 @@ import Spinner from '../Spinner/Spinner';
 import { JOIN_ROOM } from '../../Redux/Types/types';
 import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
+import GameNavbar from '../Navbar/GameNavBar';
 
 function GamePage() {
-  console.log('render game page ----> !!!');
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
   const { modal } = useWsContext();
@@ -73,6 +73,7 @@ function GamePage() {
 
   return (
     <div className={styles.gameContainer}>
+      <GameNavbar />
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
@@ -92,6 +93,7 @@ function GamePage() {
             </div>
           </div>
         )}
+      {modal ? <QuizModal /> : null }
     </div>
   );
 }

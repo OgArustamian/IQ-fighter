@@ -7,14 +7,12 @@ import { sendAnswer } from '../../Redux/Actions/answersAction';
 import { useWsContext } from '../Context/Context';
 import styles from './CountdownTimer.module.css';
 
-function CountdownTimer() {
+function CountdownTimer({ answerID }) {
   const { modal, setModal, ws } = useWsContext();
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
   const { turnID } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
-
-  console.log('render timer free');
 
   let [timer, setTimer] = useState(10);
   const timerId = useRef(null);
@@ -46,8 +44,8 @@ function CountdownTimer() {
   useEffect(() => {
     if (timer === 0) {
       clear();
-    //   setModal(!modal);
-    //   dispatch(sendAnswer(ws, room, id, 0, turnID));
+      setModal(!modal);
+      dispatch(sendAnswer(ws, room, id, answerID, turnID));
     }
   }, [timer]);
 
@@ -65,4 +63,4 @@ function CountdownTimer() {
   );
 }
 
-export default memo(CountdownTimer);
+export default CountdownTimer;
