@@ -3,7 +3,6 @@ import ImageMapper from 'react-image-mapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchQuestion } from '../../Redux/Actions/questionAction';
 import { useWsContext } from '../Context/Context';
-import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 
 function Player({
@@ -13,10 +12,10 @@ function Player({
   const room = useSelector((state) => state.ws);
   const { question, player } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { modal, setModal } = useWsContext();
+  const { modal } = useWsContext();
 
   function attackHandler(area) {
-    if (player.turn && cursor.position !== position) {
+    if (player.turn && position !== player.position) {
       dispatch(fetchQuestion(
         area.questionDifficulty,
         ws,

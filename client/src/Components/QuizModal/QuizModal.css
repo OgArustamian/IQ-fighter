@@ -10,9 +10,19 @@
     margin: 5px 5px 0 32%;
 }
 
+.answer-checkbox:hover {
+    cursor: url('../../img/staff.png'), auto;
+  }
+
 .quiz-question {
     width: 70%;
     margin: 0 auto;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .modal-header {

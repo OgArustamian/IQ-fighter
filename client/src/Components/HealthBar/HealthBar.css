@@ -13,25 +13,20 @@
     left: 17px;
 }
 
-.healthBorder {
+.health-border {
     position: relative;
-    top: -12px;
-    left: -75px;
+    top: -30px;
+    left: 51px;
+    width: 110px;
 }
 
 progress {
     border: 0;
-    background-color: green;
     height: 40px;
     border-radius: 20px;
-    width: 500px; 
-}
-
-progress:after {
-  position: relative;
-  top: -30px;
-  left: 10px;
-  content: 'Value is ' attr(value);
+    background-color: green;
+    width: 350px;
+    -moz-appearence: progressbar;
 }
 
 progress::-webkit-progress-bar {
@@ -44,8 +39,19 @@ progress::-webkit-progress-value {
     height: 40px;
     border-radius: 20px;
 }
+
+progress:after {
+  position: relative;
+  top: -32px;
+  left: -120px;
+  content: attr(value) ' HP' ;
+}
+
+/* Firefox styles */
 progress::-moz-progress-bar {
     border: 0;
     height: 40px;
     border-radius: 20px;
+    background-color: green;
+    width: 300px;
 }

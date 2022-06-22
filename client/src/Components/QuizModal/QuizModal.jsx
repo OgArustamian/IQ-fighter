@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,19 +11,18 @@ import CountdownTimer from '../CountdownTimer/CountdownTimer';
 import './QuizModal.css';
 
 function QuizModal() {
+  const { modal, setModal } = useWsContext();
+  const toggle = () => setModal(!modal);
+
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
   const { turnID } = useSelector((state) => state.player);
+
   const room = useSelector((state) => state.ws);
+
   const [userAnswer, setUserAnswer] = useState();
   const dispatch = useDispatch();
   const { ws } = useWsContext();
-
-  const { modal, setModal } = useWsContext();
-
-  function toggle() {
-    setModal(!modal);
-  }
 
   function answerHandler() {
     if (userAnswer) {

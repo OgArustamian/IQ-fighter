@@ -13,8 +13,6 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: !state.turn,
-        gameID: payload.gameID,
-        turnID: payload.turnID,
         position: 'left',
       };
 
@@ -29,6 +27,7 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: !state.turn,
+        turnID: payload.turnID,
       };
 
     default:

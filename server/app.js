@@ -97,6 +97,7 @@ wss.on('connection', (ws, request) => {
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
+
     switch (type) {
       case 'game':
         gameController(rooms, subtype, params);
@@ -112,6 +113,11 @@ wss.on('connection', (ws, request) => {
         console.warn(`Type: ${type} unknown`);
         break;
     }
+  });
+
+  ws.on('close', () => {
+    console.log('user left <----');
+    map.delete(userID);
   });
 });
 

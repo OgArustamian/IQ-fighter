@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './GamePage.css';
+import styles from './GamePage.module.css';
 import maleChar from '../Player/img/male-mage.png';
 import femaleChar from '../Player/img/female-mage.webp';
 import { useWsContext } from '../Context/Context';
@@ -19,7 +19,6 @@ function GamePage() {
   const { spinner } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const room = useSelector((state) => state.ws);
   const { player } = useSelector((state) => state);
   const {
     ws, firstPlayerHp, secondPlayerHp,
@@ -27,11 +26,11 @@ function GamePage() {
 
   useEffect(() => {
     // setTimeout(() => {
-    dispatch(messageFind(ws));
+    if (ws.readyState === 1) { dispatch(messageFind(ws)); }
     // }, 200);
   }, []);
 
-  const [firsPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
   const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false' });
 
   function checkTurn() {
@@ -69,18 +68,23 @@ function GamePage() {
     checkTurn();
   }, [player.turn]);
 
-  console.log(ws);
+  // console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
+  // console.log(ws);
 
   return (
     <div>
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
-          <div className="game-page-container">
-            <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firsPlayer} width={250} imgWidth={865} />
-            <HealthBar p={firstPlayerHp} mt-3 />
-            <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-            <HealthBar p={secondPlayerHp} mt-3 />
+          <div className={styles['game-page-container']}>
+            <div className={styles['char-block']}>
+              <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+              <HealthBar p={firstPlayerHp} mt-3 />
+            </div>
+            <div className={styles['char-block']}>
+              <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
+              <HealthBar p={secondPlayerHp} mt-3 />
+            </div>
           </div>
         )}
     </div>

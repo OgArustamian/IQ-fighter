@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogOut } from '../../Redux/Actions/userAction';
 
 function MainNavbar() {
-  const { users } = useSelector((state) => state);
+  const users = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(userLogOut());
   };
+
   return (
     <div className="MainNavbar">
       <div className="main-logo">
@@ -42,4 +43,4 @@ function MainNavbar() {
   );
 }
 
-export default MainNavbar;
+export default React.memo(MainNavbar);

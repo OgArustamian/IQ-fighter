@@ -41,7 +41,6 @@ async function attack(subtype, rooms, params) {
   const {
     room, difficulty, answeredQuestions, turnID,
   } = params;
-  console.log(turnID);
 
   const question = await Questions.findOne({ where: { id: { [Op.notIn]: answeredQuestions }, difficulty } });
   const turn = await Turn.update({ question_id: question.id, difficulty }, { where: { id: turnID } });
@@ -63,11 +62,14 @@ async function attack(subtype, rooms, params) {
 async function responseAnswers(subtype, rooms, room, oldturn) {
   const { game_id, difficulty } = oldturn;
   const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
+
   if (answers.length === 2) {
-    const turn = await Turn.create({ where: { game_id } });
+    const turn = await Turn.create({ game_id });
     const turnID = turn.id;
     const trueAnsweredUser = answers.filter((el) => (el.isTrue));
     const falseAnsweredUser = answers.filter((el) => (!el.isTrue));
+    // console.log('true answers user', trueAnsweredUser);
+    // console.log('true answers user', falseAnsweredUser);
     const damage = difficulty * 10;
     let infotype = '';
     let message = {};
@@ -116,8 +118,6 @@ async function checkAnswer(subtype, rooms, params) {
     room, userID, answerID, turnID,
   } = params;
 
-  console.log('params ---------->', params);
-
   const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
@@ -139,4 +139,4 @@ function gameController(rooms, subtype, params) {
   }
 }
 
-module.exports = {gameController, generalInformation};
+module.exports = { gameController, generalInformation };
