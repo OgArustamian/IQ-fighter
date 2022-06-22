@@ -8,28 +8,7 @@
 
 const { Game, Turn, UserGames } = require('../db/models');
 const { generalInformation } = require('./gameController');
-
-// function generalInformation(ws) {
-//   let obj;
-//   if (ws.room === undefined) {
-//     console.log('ws.room ----->', ws.room);
-//     obj = {
-//       type: 'info',
-//       params: {
-//         room: ws.room,
-//         'no-cliets': rooms[ws.room].length,
-//       },
-//     };
-//   } else {
-//     obj = {
-//       type: 'info',
-//       params: {
-//         room: 'no room',
-//       },
-//     };
-//   }
-//   ws.send(JSON.stringify(obj));
-// }
+const { createdRoom, joinedRoom } = require('./types');
 
 function genKey(length) {
   let result = '';
@@ -42,17 +21,22 @@ function genKey(length) {
   return result;
 }
 
-function create(ws, userID, rooms) {
+function create(ws, rooms) {
   const room = genKey(5);
-  console.log('create', room); // information
-  rooms[room] = [ws];
-  ws.room = room;
-  ws.send(JSON.stringify({ type: 'createdRoom', params: { room } }));
+  let message;
+  try {
+    rooms[room] = [ws];
+    ws.room = room;
 
-  // generalInformation(ws);
+    message = { type: createdRoom, params: { room } };
+    generalInformation(createdRoom, rooms, room, message);
+
+    console.log('create', room); // information
+  } catch (err) { console.error('error create room --------->', err); }
 }
 
 async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
+  let message;
   if (!Object.keys(rooms).includes(room)) {
     console.warn(`Room ${room} does not exist!`);
     return;
@@ -63,87 +47,54 @@ async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
     return;
   }
 
-  const secondPlayer = ws.username;
-  const game = await Game.create({ winner_id: 1 });
-  const turn = await Turn.create({ game_id: game.id });
-  const usergames = await UserGames.create({ user_id: userID, game_id: game.id });
-  const enemygames = await UserGames.create({ user_id: enemyID, game_id: game.id });
-  const gameID = game.id;
-  const turnID = turn.id;
+  try {
+    const secondPlayer = ws.username;
+    const game = await Game.create({ winner_id: 1 });
+    const turn = await Turn.create({ game_id: game.id });
+    const usergames = await UserGames.create({ user_id: userID, game_id: game.id });
+    await UserGames.create({ user_id: enemyID, game_id: game.id });
+    const gameID = game.id;
+    const turnID = turn.id;
 
-  rooms[room].push(ws);
-  ws.room = room;
+    rooms[room].push(ws);
+    ws.room = room;
 
-  console.log('join', room); // information
-
-  rooms[room].forEach((el) => {
-    // if (el.userID === usergames.user_id) {
-    el.send(JSON.stringify({
-      type: 'joinedRoom',
+    message = {
+      type: joinedRoom,
       params: {
         room, gameID, turnID, hp: usergames.hp, rigthUserName: firstPlayer, secondPlayer,
       },
-    }));
-    // }
-    // if (el.userID === enemygames.user_id) {
-    //   el.send(JSON.stringify({
-    //     type: 'joinedRoom',
-    //     params: {
-    //       room, gameID, turnID, hp: enemygames.hp,
-    //     },
-    //   }));
-    // }
-  });
-  console.log('send join true');
-
-  // generalInformation(ws);
+    };
+    generalInformation(joinedRoom, rooms, room, message);
+    console.log('join', room); // information
+  } catch (err) { console.error('errr join rooms function -------->', err); }
 }
 
-function close(rooms, room) {
-  try {
-    delete rooms[room];
-  } catch (err) { console.error(err); }
-}
-
+// not activ function
 function leave(rooms, ws) {
+  console.log('leave ------->');
   const { room } = ws;
   try {
-    rooms[room] = rooms[room].filter((so) => so !== ws);
-    ws.room = undefined;
+    console.log('rooms', rooms);
+    delete rooms[room];
+    console.log('rooms', rooms);
+    console.log('rooms', rooms[room]);
+    // rooms[room] = rooms[room].filter((so) => so !== ws);
+    // ws.room = undefined;
+    // generalInformation()
   } catch (err) { console.error(err); }
-
-  if (rooms[room].length == 0) { close(rooms, room); }
 }
 
-// function returningInRoom(rooms, ws, userID) {
-//   let status = false;
-//   console.log('returning');
-//   for (let [key, value] of Object.entries(rooms)) {
-//     value = value.map((el, index) => {
-//       if (el.userID === userID) {
-
-//         status = true;
-//         return ws;
-//       }
-//       return el;
-//     });
-//   }
-//   console.log('exit returnint', status);
-//   return status;
-// }
-
 function roomController(rooms, maxClients, ws, userID) {
-  console.log('controller');
-
-  // const status = returningInRoom(rooms, ws, userID);
-  // console.log(status);
-  // if (!status) {
-  for (const [key, value] of Object.entries(rooms)) {
-    console.log(`${key}: ${value}`);
-    if (value.length < 2) { return join(rooms, maxClients, ws, userID, key, value[0].userID, value[0].username); }
-  }
-  create(ws, userID, rooms);
-  // }
+  try {
+    for (const [key, value] of Object.entries(rooms)) {
+      console.log(`${key}: ${value}`);
+      if (value.length < 2) {
+        return join(rooms, maxClients, ws, userID, key, value[0].userID, value[0].username);
+      }
+    }
+    create(ws, rooms);
+  } catch (err) { console.error('error roomController ----------->', err); }
 }
 
 module.exports = {
