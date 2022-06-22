@@ -19,13 +19,13 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
         }
       }
       break;
-    case infotype === 'win' || infotype === 'loss':
-      console.log('player id ->>>>>>>>>>>>>', userID);
+    case infotype === 'win' || infotype === 'loss' || infotype === 'game-over' || infotype === 'game-win':
+      console.log('win/loss or game-win/game-over player id ->>>>>>>>>>>>>', infotype, userID);
 
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
-            console.log('el,userID ------>', el.userID);
+            console.log('el,userID in "for in" ------>', el.userID);
             if (el.userID === userID) el.send(JSON.stringify(message));
           });
         }
@@ -60,50 +60,79 @@ async function attack(subtype, rooms, params) {
 }
 
 async function responseAnswers(subtype, rooms, room, oldturn) {
-  const { game_id, difficulty } = oldturn;
+  // Checking how many players have already answered on the current turn
   const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
 
+  // If two players answered...
   if (answers.length === 2) {
+    const { game_id, difficulty } = oldturn;
+
+    // Create new TURN
     const turn = await Turn.create({ game_id });
     const turnID = turn.id;
-    const trueAnsweredUser = answers.filter((el) => (el.isTrue));
-    const falseAnsweredUser = answers.filter((el) => (!el.isTrue));
-    // console.log('true answers user', trueAnsweredUser);
-    // console.log('true answers user', falseAnsweredUser);
+
+    // Grouping userID of winners and losers
+    const trueAnsweredUserID = answers.filter((el) => (el.isTrue)).map((el) => el.user_id);
+    const falseAnsweredUserID = answers.filter((el) => (!el.isTrue)).map((el) => el.user_id);
+
+    // DAMAGE variable declaration
     const damage = difficulty * 10;
-    let infotype = '';
+
+    // Type and message for generalinformation variable declaration
+    let infotype;
+    let infotypeLoser;
+    let infotypeWinner;
     let message = {};
+
+    // ID variable declaration
     let winnerID;
     let loserID;
-    let hp;
-    let hpEnemy;
-    let loserTurn;
-    let winnerTurn;
+
+    // HP variable declaration
+    let hpLoser;
+    let hpWinner;
+
+    // State of the players in the current turn
+    let stateLoserInTurn;
+    let stateWinnerInTurn;
 
     switch (true) {
-      case trueAnsweredUser.length === 2 || falseAnsweredUser.length === 2:
+      // If both players answered correctly or both incorrectly
+      case trueAnsweredUserID.length === 2 || falseAnsweredUserID.length === 2:
         infotype = 'draw';
         message = { type: infotype, params: { turnID } };
         generalInformation(infotype, rooms, room, message);
         break;
 
-      case trueAnsweredUser.length === 1:
-        loserID = falseAnsweredUser[0].user_id;
-        winnerID = trueAnsweredUser[0].user_id;
-        winnerTurn = await UserGames.findOne({ where: { game_id, user_id: winnerID } });
-        loserTurn = await UserGames.decrement({ hp: damage }, { where: { game_id, user_id: loserID }, returning: true, plain: true });
+      // If only one player answered correctly
+      case trueAnsweredUserID.length === 1:
+        // Dstructuring Winner and Loser ID
+        [loserID] = falseAnsweredUserID;
+        [winnerID] = trueAnsweredUserID;
+        console.log('loserID winnerID', loserID, winnerID);
 
-        infotype = 'loss';
-        hp = loserTurn.flat()[0].hp;
-        hpEnemy = winnerTurn.hp;
-        message = { type: infotype, params: { turnID, hp, hpEnemy, damage } };
-        generalInformation(infotype, rooms, room, message, loserID);
+        // Winner state and update the loser state in the database
+        stateWinnerInTurn = await UserGames.findOne({ where: { game_id, user_id: winnerID } });
+        stateLoserInTurn = await UserGames.decrement({ hp: damage }, { where: { game_id, user_id: loserID }, returning: true, plain: true });
+        hpLoser = stateLoserInTurn.flat()[0].hp;
+        hpWinner = stateWinnerInTurn.hp;
 
-        infotype = 'win';
-        hp = winnerTurn.hp;
-        hpEnemy = loserTurn.flat()[0].hp;
-        message = { type: infotype, params: { turnID, hp, hpEnemy, damage } };
-        generalInformation(infotype, rooms, room, message, winnerID);
+        if (hpLoser <= 0) {
+          hpLoser = 0;
+          infotypeLoser = 'game-over';
+          infotypeWinner = 'game-win';
+        } else {
+          infotypeLoser = 'loss';
+          infotypeWinner = 'win';
+        }
+
+        message = { type: infotypeLoser, params: { turnID, hp: hpLoser, hpEnemy: hpWinner, damage } };
+        console.log('message loser --->', message, loserID);
+        generalInformation(infotypeLoser, rooms, room, message, loserID);
+
+        message = { type: infotypeWinner, params: { turnID, hp: hpWinner, hpEnemy: hpLoser, damage } };
+        console.log('message winer --->', message, winnerID);
+        generalInformation(infotypeWinner, rooms, room, message, winnerID);
         break;
 
       default:

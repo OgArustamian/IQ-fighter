@@ -98,7 +98,7 @@ function Context({ children }) {
   };
 
   useEffect(() => {
-    if (id && ws.readyState === 1) {
+    if (id) {
       setWs(new WebSocket('ws://localhost:3001'));
     }
   }, [id]);
