@@ -43,8 +43,8 @@ function QuizModal() {
           </p>
           <Form className="mt-3">
             {question.answers.map((answer) => (
-              <div key={answer.id} className="row">
-                <div className="col-md-6 d-flex justify-content-start mt-2">
+              <div key={answer.id}>
+                <div className="col-md-6 d-flex justify-content-start mt-2 xs-2">
                   <input className="answer-checkbox" type="radio" name="answer" value={`${answer.id}`} onChange={(e) => setUserAnswer(e.target.value)} />
                   {answer.answer}
                 </div>

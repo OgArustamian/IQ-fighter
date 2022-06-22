@@ -31,6 +31,9 @@ function Context({ children }) {
       setSecondPlayerHp(hp);
     }
   }
+  ws.onopen = function (e) {
+    console.log('ws open context front');
+  };
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
@@ -76,6 +79,20 @@ function Context({ children }) {
         dispatch(setRoom(room));
         break;
     }
+  };
+
+  ws.onclose = function (e) {
+    if (e.wasClean) {
+      console.log(`[close] Соединение закрыто чисто, код=${e.code} причина=${e.reason}`);
+    } else {
+      // например, сервер убил процесс или сеть недоступна
+      // обычно в этом случае e.code 1006
+      console.log('[close] Соединение прервано');
+    }
+  };
+
+  ws.onerror = function (error) {
+    alert(`[error] ${error.message}`);
   };
 
   useEffect(() => {

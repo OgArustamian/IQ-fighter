@@ -25,7 +25,9 @@ function GamePage() {
   } = useWsContext();
 
   useEffect(() => {
+    // setTimeout(() => {
     dispatch(messageFind(ws));
+    // }, 200);
   }, []);
 
   const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
@@ -67,6 +69,7 @@ function GamePage() {
   }, [player.turn]);
 
   console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
+  console.log(ws);
 
   return (
     <div>

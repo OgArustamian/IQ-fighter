@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require('uuid');
 const { WebSocketServer } = require('ws');
 
 const { roomController, leave } = require('./ws/roomController');
-const gameController = require('./ws/gameController');
+const { gameController } = require('./ws/gameController');
 
 const map = new Map();
 
@@ -89,8 +89,6 @@ const rooms = {};
 // part2
 wss.on('connection', (ws, request) => {
   const userID = request.session.user?.id;
-  console.log('console request session', request.session.user);
-  console.log(userID);
   ws.userID = userID;
 
   // коннект и получение месседжа
@@ -99,7 +97,6 @@ wss.on('connection', (ws, request) => {
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
-    console.log('request====>', obj);
     switch (type) {
       case 'game':
         gameController(rooms, subtype, params);
