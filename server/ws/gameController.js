@@ -128,7 +128,7 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
 
         message = { type: infotypeLoser, params: { turnID, hp: hpLoser, hpEnemy: hpWinner, damage } };
         console.log('message loser --->', message, loserID);
-        generalInformation(infotypeLoser, rooms, room, message, loserID);
+        generalInformation(infotypeWinner, rooms, room, message, loserID);
 
         message = { type: infotypeWinner, params: { turnID, hp: hpWinner, hpEnemy: hpLoser, damage } };
         console.log('message winer --->', message, winnerID);
@@ -147,18 +147,11 @@ async function checkAnswer(subtype, rooms, params) {
     room, userID, answerID, turnID,
   } = params;
 
-  console.log('answerID ------ >', answerID);
-  console.log('userId ---->', userID);
-
+  const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
-  if (answerID === 0) {
-    await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false });
-  } else {
-    const answer = await Answers.findOne({ where: { id: answerID } });
-    if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
-    if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
-  }
+  if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
+  if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 
   responseAnswers(subtype, rooms, room, turn);
 }

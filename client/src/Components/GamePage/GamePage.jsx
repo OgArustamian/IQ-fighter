@@ -14,7 +14,6 @@ import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 
 function GamePage() {
-  console.log('render game page ----> !!!');
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
   const { modal } = useWsContext();
