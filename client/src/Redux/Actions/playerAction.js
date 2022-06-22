@@ -1,8 +1,7 @@
 import { CHANGE_TURN, SET_GAME, SET_TURN } from '../Types/types';
 
-export const setTurn = (gameID, turnID) => ({
+export const setTurn = () => ({
   type: SET_TURN,
-  payload: { gameID, turnID },
 });
 
 export const setGame = (gameID, turnID) => ({
@@ -10,6 +9,7 @@ export const setGame = (gameID, turnID) => ({
   payload: { gameID, turnID },
 });
 
-export const changeTurn = () => ({
+export const changeTurn = (turnID) => ({
   type: CHANGE_TURN,
+  payload: { turnID },
 });

@@ -1,7 +1,6 @@
 import './HealthBar.css';
 import React from 'react';
 import healthBorder from './img/healthborder-modified.png';
-import { useWsContext } from '../Context/Context';
 
 function HealthBar({ p }) {
   return (

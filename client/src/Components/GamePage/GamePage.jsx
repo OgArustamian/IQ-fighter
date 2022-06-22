@@ -26,7 +26,7 @@ function GamePage() {
 
   useEffect(() => {
     // setTimeout(() => {
-    dispatch(messageFind(ws));
+    if (ws.readyState === 1) { dispatch(messageFind(ws)); }
     // }, 200);
   }, []);
 
@@ -68,8 +68,8 @@ function GamePage() {
     checkTurn();
   }, [player.turn]);
 
-  console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
-  console.log(ws);
+  // console.log('healthbar comp ->>>>>>>>>>', firstPlayerHp, secondPlayerHp);
+  // console.log(ws);
 
   return (
     <div>

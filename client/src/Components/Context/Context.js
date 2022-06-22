@@ -19,7 +19,7 @@ function Context({ children }) {
   const { id } = useSelector((state) => state.users);
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
-  const { player } = useSelector((state) => state);
+  const { player, users } = useSelector((state) => state);
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
@@ -31,6 +31,7 @@ function Context({ children }) {
       setSecondPlayerHp(hp);
     }
   }
+
   ws.onopen = function (e) {
     console.log('ws open context front');
   };
@@ -40,7 +41,7 @@ function Context({ children }) {
     const {
       room, gameID, turnID, hp, hpEnemy,
     } = params;
-
+    console.log('turnid', turnID);
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
@@ -49,7 +50,7 @@ function Context({ children }) {
 
       case CREATE_ROOM:
         dispatch(setRoom(room));
-        dispatch(setTurn(gameID, turnID));
+        dispatch(setTurn());
         break;
 
       case JOIN_ROOM:
@@ -60,19 +61,20 @@ function Context({ children }) {
 
       case DRAW:
         console.log('DRAW------------------>', JSON.parse(event.data));
-        dispatch(changeTurn());
+        alert('Ничья');
+        dispatch(changeTurn(turnID));
         break;
 
       case WIN:
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
-        dispatch(changeTurn());
+        dispatch(changeTurn(turnID));
         break;
 
       case LOSS:
         console.log('LOSS------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
-        dispatch(changeTurn());
+        dispatch(changeTurn(turnID));
         break;
 
       default:
@@ -92,11 +94,13 @@ function Context({ children }) {
   };
 
   ws.onerror = function (error) {
-    alert(`[error] ${error.message}`);
+    console.log(`[error] ${error.message}`);
   };
 
   useEffect(() => {
-    setWs(new WebSocket('ws://localhost:3001'));
+    if (id && ws.readyState === 1) {
+      setWs(new WebSocket('ws://localhost:3001'));
+    }
   }, [id]);
 
   return (
