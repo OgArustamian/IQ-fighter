@@ -11,9 +11,12 @@ import { femaleMageModel, maleMageModel } from '../Player/playersModels';
 import Spinner from '../Spinner/Spinner';
 import { JOIN_ROOM } from '../../Redux/Types/types';
 import HealthBar from '../HealthBar/HealthBar';
+import { userSignIn } from '../../Redux/Actions/userAction';
 
 function GamePage() {
   const body = document.querySelector('body');
+  const users = useSelector((state) => state.users);
+  console.log('usersssssssssss', users);
   body.style.backgroundImage = 'none';
 
   const { spinner } = useSelector((state) => state);
@@ -32,6 +35,8 @@ function GamePage() {
 
   const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
   const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false' });
+
+  console.log('=======>>>>>>>>>>>>>>>>>>>>', ws);
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
@@ -78,10 +83,16 @@ function GamePage() {
         : (
           <div className={styles['game-page-container']}>
             <div className={styles['char-block']}>
+              { player.position === 'left'
+                ? <h3 style={{ color: 'white' }}>{users.username}</h3>
+                : <h3 style={{ color: 'white' }}>LOH</h3>}
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
               <HealthBar p={firstPlayerHp} mt-3 />
             </div>
             <div className={styles['char-block']}>
+              { player.position === 'right'
+                ? <h3 style={{ color: 'white' }}>{users.username}</h3>
+                : <h3 style={{ color: 'white' }}>LOH</h3>}
               <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
               <HealthBar p={secondPlayerHp} mt-3 />
             </div>
