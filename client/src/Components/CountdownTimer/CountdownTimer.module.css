@@ -1,0 +1,42 @@
+.blink {
+    animation: blinker 1s linear infinite;
+  }
+  
+@keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+}
+
+.base-timer {
+    position: relative;
+    height: 50px;
+    width: 50px;
+  }
+  
+  /* Removes SVG styling that would hide the time label */
+  .base-timer__circle {
+    fill: none;
+    stroke: none;
+  }
+  
+  /* The SVG path that displays the timer's progress */
+  .base-timer__path-elapsed {
+    stroke-width: 7px;
+    stroke: green;
+  }
+
+  .text {
+    font-size: 40px;
+  }
+
+  .base-timer__label {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }

@@ -1,0 +1,79 @@
+.game-page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 50px;
+    width: 100%;
+    margin: 80px 100px 0;
+}
+
+.alert-msg {
+    color: white;
+}
+
+.char-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    align-items: center;
+}
+
+.firstChar {
+    margin-bottom: 79px;
+}
+
+.nikNameDef {
+  color: rgb(248,183,1);
+}
+
+.nikNameAttack {
+  color: rgb(179, 10, 4);
+}
+  
+.draw-message {
+    position: fixed;
+    color: #f8b700;
+    font-weight: bold;
+    font-size: 20px;
+    z-index: 1;
+    top: 260px;
+    left: 655px;
+    margin: 0;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+    opacity: 0;
+    animation: fade-out 1s infinite;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.videoBackground {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    filter:opacity(60%);
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

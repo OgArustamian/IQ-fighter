@@ -1,0 +1,70 @@
+.barOuter{
+    width: 290px;
+    background-color: green;
+    height: 55px;
+    border: 2px solid lightgreen;
+    text-align: start;
+    border-radius: 40px;
+}
+
+.hpValue{
+    position: relative;
+    top: -15px;
+    left: 17px;
+}
+
+.progress-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 370px;
+}
+
+.progress-container img {
+    width: 98px;
+    position: relative;
+    top: -55px;
+    left: -6px;
+}
+
+.health-border {
+    /* position: relative;
+    top: -30px;
+    left: 77px;
+    width: 92px; */
+}
+
+progress {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+    background-color: green;
+    width: 350px;
+    -moz-appearence: progressbar;
+}
+
+progress::-webkit-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+progress::-webkit-progress-value {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+}
+
+progress:after {
+  position: relative;
+  top: -32px;
+  left: -120px;
+  content: attr(value);
+}
+
+/* Firefox styles */
+progress::-moz-progress-bar {
+    border: 0;
+    height: 40px;
+    border-radius: 20px;
+    background-color: green;
+    width: 300px;
+}

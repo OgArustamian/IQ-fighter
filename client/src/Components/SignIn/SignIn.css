@@ -1,0 +1,41 @@
+.BlizBtn {
+  background-color: rgb(120,39,36)!important;
+  border-radius: 8px;
+  color: rgb(248,183,1);
+  width: 416;
+    margin: 0 auto;
+}
+.BlizBtn:hover {
+  background-color: rgb(179, 10, 4)!important;
+  border-radius: 8px;
+  width: 416px;
+    margin: 0 auto;
+}
+
+.login-form {
+  width: 416px;
+    margin: 0 auto; 
+}
+
+.auth-size-window {
+  width: 1200px;
+  height: 520px;
+    margin: 0 auto;
+}
+
+.auth-link {
+  border: 1px solid rgb(108,117,125);
+  background: rgb(120,39,36);
+  border-radius: 8px;
+  color: rgb(248,183,1);
+  width: 416px;
+    margin: 0 auto;
+}
+.auth-link:hover {
+  border: 1px solid rgb(108,117,125);
+  background: rgb(179, 10, 4);
+  border-radius: 8px;
+  color: white;
+  width: 416px;
+    margin: 0 auto;
+}
