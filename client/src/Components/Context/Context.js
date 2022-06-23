@@ -2,7 +2,10 @@
 import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
+import useSound from 'use-sound';
 import { useDispatch, useSelector } from 'react-redux';
+import soundDamage from '../../now-thats.mp3';
+import soundGameWon from '../../and-his-name-is-john-cena-1.mp3';
 import {
   changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner, enemyLeft,
 } from '../../Redux/Actions/playerAction';
@@ -33,6 +36,13 @@ function Context({ children }) {
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
   const player = useSelector((state) => state.player);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [sound, setSound] = useState(soundDamage);
+
+  const [play] = useSound(sound, {
+    playbackRate,
+    volume: 5,
+  });
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
@@ -90,6 +100,7 @@ function Context({ children }) {
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+        setSound(soundDamage);
 
         if (player.position === 'left') {
           setFireball(true);
@@ -98,6 +109,8 @@ function Context({ children }) {
           setTimeout(() => {
             setFireball(false);
             setrightDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
 
@@ -108,6 +121,8 @@ function Context({ children }) {
           setTimeout(() => {
             setenemeyFireball(false);
             setleftDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
 
@@ -117,6 +132,7 @@ function Context({ children }) {
         console.log('LOSS------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+        setSound(soundDamage);
 
         if (player.position === 'right') {
           setFireball(true);
@@ -125,6 +141,8 @@ function Context({ children }) {
           setTimeout(() => {
             setFireball(false);
             setrightDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
 
@@ -135,6 +153,8 @@ function Context({ children }) {
           setTimeout(() => {
             setenemeyFireball(false);
             setleftDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
         break;
@@ -142,6 +162,8 @@ function Context({ children }) {
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        setSound(soundGameWon);
+
         if (player.position === 'left') {
           setFireball(true);
           setrightDamage(true);
@@ -149,6 +171,8 @@ function Context({ children }) {
           setTimeout(() => {
             setFireball(false);
             setrightDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
 
@@ -159,6 +183,8 @@ function Context({ children }) {
           setTimeout(() => {
             setenemeyFireball(false);
             setleftDamage(false);
+            setPlaybackRate(playbackRate);
+            play();
           }, 1450);
         }
 
@@ -177,6 +203,8 @@ function Context({ children }) {
         dispatch(setLooser());
         setTimeout(() => {
           setgameOverModal(true);
+          setPlaybackRate(playbackRate);
+          play();
         }, 1500);
         break;
 
