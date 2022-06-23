@@ -32,3 +32,11 @@ body {
 .firstChar {
     margin-bottom: 79px;
 }
+
+.nikNameDef {
+  color: rgb(248,183,1);
+}
+
+.nikNameAttack {
+  color: rgb(179, 10, 4);
+}
