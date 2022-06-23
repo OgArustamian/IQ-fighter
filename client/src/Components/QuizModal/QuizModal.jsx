@@ -16,7 +16,7 @@ function QuizModal() {
 
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
-  const { turnID } = useSelector((state) => state.player);
+  const { turnID, turn } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
 
   const [userAnswer, setUserAnswer] = useState(0);
@@ -63,7 +63,7 @@ function QuizModal() {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button className="answer-submit" color="primary" onClick={() => answerHandler()}>Send answer</Button>
+          <Button className="answer-submit" color="primary" onClick={() => answerHandler()}>{turn ? 'АТАКОВАТЬ' : 'ПАРИРОВАТЬ'}</Button>
         </ModalFooter>
       </Modal>
     </div>
