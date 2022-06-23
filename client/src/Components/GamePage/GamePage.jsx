@@ -87,6 +87,7 @@ function GamePage() {
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
+
           <div>
             <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
             <div className={styles['game-page-container']}>
