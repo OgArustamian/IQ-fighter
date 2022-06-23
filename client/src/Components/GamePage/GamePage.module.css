@@ -77,3 +77,33 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+/* HEALTH REDUCE ANIMATION */
+.hpbox {
+    position: relative;
+    margin-right: 22%;
+  }
+  
+  .hp {
+    font-family: Roboto, sans-serif;
+    margin-left: 5%;
+    font-size: 27px;
+    letter-spacing: 2px;
+    color: red;
+      position: absolute;
+      animation: move-right;
+      z-index: 2; 
+      animation: throw-hp 2s infinite  normal ease-out;
+      -webkit-animation: throw-hp 2s infinite  normal ease-out;
+  }
+  
+  @keyframes throw-hp {
+      0% {
+          top: -75px;
+      }
+  
+      100% {
+          top: -275px;
+      }
+  }

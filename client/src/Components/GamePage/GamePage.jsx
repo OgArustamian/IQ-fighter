@@ -24,6 +24,8 @@ function GamePage() {
   console.log('PLAYER=====>>>>', player);
   const dispatch = useDispatch();
 
+  console.log(player);
+
   const {
     ws, firstPlayerHp, secondPlayerHp, readyState,
   } = useWsContext();
@@ -93,14 +95,24 @@ function GamePage() {
               <div className={styles['char-block']}>
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
-                <HealthBar hp={firstPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={firstPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
 
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-                <HealthBar hp={secondPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={secondPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
