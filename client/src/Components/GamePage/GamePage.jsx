@@ -14,6 +14,7 @@ import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 import GameNavbar from '../Navbar/GameNavBar';
 import GameOverModal from '../GameOverModal/GameOverModal';
+import femaleMage from '../Player/img/female-model-new.png';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -111,7 +112,8 @@ function GamePage() {
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
                 {firstPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.firstName}</h3> : <h3 className={styles.nikNameAttack}>{player.firstName}</h3> }
-                <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+                {/* <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={383} imgWidth={865} /> */}
+                <img src={femaleMage} alt="femMage" />
                 <div className={styles.firstChar} />
                 <div>
                   <HealthBar hp={firstPlayerHp} mt-3 />
