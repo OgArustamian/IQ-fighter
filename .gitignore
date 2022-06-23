@@ -44,6 +44,8 @@ node_modules/
 jspm_packages/
 sessions/
 
+sessions/
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
