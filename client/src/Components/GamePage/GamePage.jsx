@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './GamePage.module.css';
 import maleChar from '../Player/img/male-mage.png';
-import femaleChar from '../Player/img/female-mage.webp';
+import femaleMage from '../Player/img/female-model-new.png';
 import { useWsContext } from '../Context/Context';
 import { messageFind } from '../../Redux/Actions/wsAction';
 /* eslint-disable max-len */
@@ -115,7 +115,7 @@ function GamePage() {
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
                 {firstPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.firstName}</h3> : <h3 className={styles.nikNameAttack}>{player.firstName}</h3> }
-                <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+                <Player url={femaleMage} model={femaleMageModel} position="left" cursor={firstPlayer} width={383} imgWidth={574} />
                 <div className={styles.firstChar} />
                 <div>
                   <HealthBar hp={firstPlayerHp} mt-3 />

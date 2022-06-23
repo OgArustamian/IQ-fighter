@@ -26,10 +26,15 @@
 
 .nikNameDef {
     color: rgb(248, 183, 1);
+    font-family: Roboto, sans-serif;
 }
 
 .nikNameAttack {
-    color: rgb(179, 10, 4);
+    color: firebrick;
+    font-size: 34px;
+    text-shadow: #f8b700 5px 5px 5px;
+    font-weight: 600;
+    font-family: Roboto, sans-serif;
 }
 
 .nameColor {

@@ -9,7 +9,9 @@ import MainNavbar from '../Navbar/MainNavbar';
 export default function LadderBoard() {
   const dispatch = useDispatch();
   const { rank } = useSelector((state) => state.rating);
+  console.log('rankkkkk', rank);
   const users = useSelector((state) => state.users);
+  console.log('Uuuuuusers', users);
   const { ws, readyState } = useWsContext();
 
   console.log(rank);
@@ -44,19 +46,36 @@ export default function LadderBoard() {
             </tr>
           </thead>
           <tbody>
-            {rank && rank.map((el) => (
-              <tr>
-                <th scope="row">
-                  {el.rank}
-                </th>
-                <td>
-                  {el.username}
-                </td>
-                <td>
-                  {el.victory_count}
-                </td>
-              </tr>
-            ))}
+            {rank && rank.map((el) => {
+              if (el.userID === users.id) {
+                return (
+                  <tr className="yourRate">
+                    <th scope="row" className="rateTextColor">
+                      <strong>{el.rank}</strong>
+                    </th>
+                    <td className="rateTextColor">
+                      <strong>{el.username}</strong>
+                    </td>
+                    <td className="rateTextColor">
+                      <strong>{el.victory_count}</strong>
+                    </td>
+                  </tr>
+                );
+              }
+              return (
+                <tr>
+                  <th scope="row">
+                    {el.rank}
+                  </th>
+                  <td>
+                    {el.username}
+                  </td>
+                  <td>
+                    {el.victory_count}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </div>
