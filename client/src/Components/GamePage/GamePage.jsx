@@ -18,10 +18,11 @@ import GameOverModal from '../GameOverModal/GameOverModal';
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
-  const { modal, isDraw, setIsDraw } = useWsContext();
+  const {
+    modal, isDraw, setIsDraw, fireball, enemyFireball,
+  } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
-  console.log('PLAYER=====>>>>', player);
   const dispatch = useDispatch();
 
   const {
@@ -100,6 +101,9 @@ function GamePage() {
                 <div className={styles.firstChar} />
                 <HealthBar hp={firstPlayerHp} mt-3 />
               </div>
+
+              {fireball && <div className={styles.flame} />}
+              {enemyFireball && <div className={styles['flame-reverse']} />}
 
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 

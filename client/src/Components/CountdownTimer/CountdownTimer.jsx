@@ -36,12 +36,12 @@ function CountdownTimer({ answerID }) {
     clear();
     timerId.current = window.setInterval(() => {
       setTimer((prev) => prev - 1);
-      startBlinking();
     }, 1000);
     return () => clear();
   }, []);
 
   useEffect(() => {
+    startBlinking();
     if (timer === 0) {
       clear();
       setModal(!modal);
