@@ -21,6 +21,7 @@ function GamePage() {
   const { modal, isDraw, setIsDraw } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
+  console.log('PLAYER=====>>>>', player);
   const dispatch = useDispatch();
 
   const {
@@ -34,8 +35,8 @@ function GamePage() {
     }
   }, [readyState]);
 
-  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false' });
-  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
+  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
@@ -60,10 +61,12 @@ function GamePage() {
       setFirstPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
     }
   }

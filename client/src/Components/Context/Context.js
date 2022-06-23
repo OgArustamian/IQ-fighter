@@ -4,12 +4,13 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  changeTurn, setGame, setLooser, setTurn, setWiner,
+  changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner,
 } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
+import { showRating } from '../../Redux/Actions/ratingAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
+  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, GETRATE, JOIN_ROOM, LOSS, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -44,8 +45,9 @@ function Context({ children }) {
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
+    console.log(params);
     const {
-      room, gameID, turnID, hp, hpEnemy,
+      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer,
     } = params;
 
     switch (type) {
@@ -63,6 +65,8 @@ function Context({ children }) {
         dispatch(setRoom(room));
         dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
+        dispatch(getFirstName(firstPlayer));
+        dispatch(getSecondName(secondPlayer));
         break;
 
       case DRAW:
@@ -95,6 +99,11 @@ function Context({ children }) {
         checkPosition(hp, hpEnemy);
         dispatch(setLooser());
         setgameOverModal(true);
+        break;
+
+      case GETRATE:
+        console.log('Add rate', JSON.parse(event.data));
+        dispatch(showRating(params));
         break;
 
       default:

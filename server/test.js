@@ -17,12 +17,12 @@ async function test() {
   });
 
   rank = rank.map((el, index) => {
-    if (index <= 10) {
+    if (index < 10) {
       return { rank: index + 1, username: el.User.username, victory_count: el.dataValues.victory_count };
     } if (el.dataValues.winner_id === 12) {
       return { rank: index + 1, username: el.User.username, victory_count: el.dataValues.victory_count };
     }
-  });
+  }).filter((el) => el != null);
 
   console.log(rank);
 
