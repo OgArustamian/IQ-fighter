@@ -3,6 +3,7 @@ import './MainPage.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MainNavbar from '../Navbar/MainNavbar';
+import Demo from './CheckBox';
 
 function MainPage() {
   const body = document.querySelector('body');
@@ -13,6 +14,7 @@ function MainPage() {
   return (
     <>
       <MainNavbar />
+      <Demo />
       <div className="page-container">
         {id
           ? (

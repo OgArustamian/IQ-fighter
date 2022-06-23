@@ -3,6 +3,7 @@ import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSound from 'use-sound';
 import {
   changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner,
 } from '../../Redux/Actions/playerAction';
