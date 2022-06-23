@@ -22,9 +22,6 @@ function MainNavbar() {
             <Link to="/about">
               <li className="nav-item">ОБ ИГРЕ</li>
             </Link>
-            <Link to="/ladderboard">
-              <li className="nav-item">РЕЙТИНГ</li>
-            </Link>
             {!users.username
               ? (
                 <Link to="/signin">
@@ -32,9 +29,14 @@ function MainNavbar() {
                 </Link>
               )
               : (
-                <Link to="/" onClick={logOutHandler}>
-                  <li className="nav-item">ВЫЙТИ</li>
-                </Link>
+                <>
+                  <Link to="/ladderboard">
+                    <li className="nav-item">РЕЙТИНГ</li>
+                  </Link>
+                  <Link to="/" onClick={logOutHandler}>
+                    <li className="nav-item">ВЫЙТИ</li>
+                  </Link>
+                </>
               )}
           </ul>
         </nav>

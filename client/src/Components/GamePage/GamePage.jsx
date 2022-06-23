@@ -34,31 +34,53 @@ function GamePage() {
     }
   }, [readyState]);
 
-  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
-  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: false });
+  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: true });
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
+        nameColor: false,
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
-        nameColor: 'nikNameDef',
+        nameColor: true,
+      });
+    } else if (player.position === 'left' && !player.turn) {
+      setFirstPlayer({
+        cursor: "url('../../img/cursor-default.png'), auto",
+        active: false,
+        nameColor: true,
+      });
+      setSecondPlayer({
+        cursor: "url('../../img/sword-attack-icon.png'), auto",
+        active: true,
+        nameColor: false,
+      });
+    } else if (player.position === 'right' && !player.turn) {
+      setFirstPlayer({
+        cursor: "url('../../img/sword-attack-icon.png'), auto",
+        active: true,
+        nameColor: false,
+      });
+      setSecondPlayer({
+        cursor: "url('../../img/cursor-default.png'), auto",
+        active: false,
+        nameColor: true,
       });
     } else if (player.position === 'right' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
-        nameColor: 'nikNameDef',
+        nameColor: true,
       });
       setSecondPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
+        nameColor: false,
       });
     } else if (player.turn === false) {
       setFirstPlayer({
@@ -92,9 +114,7 @@ function GamePage() {
             <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
-                { player.position === 'left'
-                  ? <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>
-                  : <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>}
+                {firstPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.firstName}</h3> : <h3 className={styles.nikNameAttack}>{player.firstName}</h3> }
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
                 <div>
@@ -116,9 +136,7 @@ function GamePage() {
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
-                { player.position !== 'left'
-                  ? <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>
-                  : <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>}
+                {secondPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.secondName}</h3> : <h3 className={styles.nikNameAttack}>{player.secondName}</h3> }
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
                 <div>
                   <HealthBar hp={secondPlayerHp} mt-3 />
