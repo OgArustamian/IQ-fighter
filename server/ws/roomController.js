@@ -63,7 +63,7 @@ async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
     message = {
       type: joinedRoom,
       params: {
-        room, gameID, turnID, hp: usergames.hp, rigthUserName: firstPlayer, secondPlayer,
+        room, gameID, turnID, hp: usergames.hp, firstPlayer, secondPlayer,
       },
     };
     generalInformation(joinedRoom, rooms, room, message);
