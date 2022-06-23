@@ -83,9 +83,9 @@ async function leave(rooms, ws, params) {
   try {
     const game_id = params.gameID;
     [wsWinner] = rooms[room].filter((so) => so !== ws);
-    generalInformation(PERSONAL_SEND, rooms, room, message, winner_id, wsWinner);
     winner_id = wsWinner.userID;
-    await Game.update({ winner_id }, { where: { game_id } });
+    await Game.update({ winner_id }, { where: { id: game_id } });
+    generalInformation(PERSONAL_SEND, null, null, message, winner_id, wsWinner);
   } catch (err) { console.error(err); }
   try {
     ws.room = undefined;
