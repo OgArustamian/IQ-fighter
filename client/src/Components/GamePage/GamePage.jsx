@@ -85,7 +85,7 @@ function GamePage() {
         ? <Spinner />
         : (
           <div>
-            <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
+            {/* <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" /> */}
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
