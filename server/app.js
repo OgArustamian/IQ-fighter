@@ -13,7 +13,7 @@ const FileStore = require('session-file-store')(session);
 const http = require('http');
 const { WebSocketServer } = require('ws');
 
-const { roomController, leave } = require('./ws/roomController');
+const { roomController, leave, deleteRoom } = require('./ws/roomController');
 const { gameController } = require('./ws/gameController');
 
 // routing
@@ -21,7 +21,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const {
-  game, find, leaveType, GETRATE,
+  game, find, leaveType, GETRATE, DELETE_ROOM,
 } = require('./ws/types');
 const ladderboard = require('./ws/rankController');
 
@@ -103,6 +103,7 @@ wss.on('connection', (ws, request) => {
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
+    const { room } = ws;
     console.log(obj);
 
     switch (type) {
@@ -118,6 +119,9 @@ wss.on('connection', (ws, request) => {
       case GETRATE:
         ladderboard(ws, params);
         break;
+      case DELETE_ROOM:
+        deleteRoom(rooms, room);
+        break;
       default:
         console.log('default case');
         console.warn(`Type: ${type} unknown`);
@@ -126,7 +130,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
-    console.log('player left <----');
+    console.log('onclose functiont <----');
     leave(rooms, ws);
   });
 });

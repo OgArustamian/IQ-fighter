@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 const {
   Questions, Answers, Turn, UserTurn, UserGames, Game,
 } = require('../db/models');
-const { createdRoom, joinedRoom, ATTACK, ANSWER, DRAW, LOSS, WIN, GAMEOVER, closeType, GAMEWIN, PERSONAL_SEND } = require('./types');
+const { createdRoom, joinedRoom, ATTACK, ANSWER, DRAW, LOSS, WIN, GAMEOVER, closeType, GAMEWIN, PERSONAL_SEND, DELETE_ROOM } = require('./types');
 
 function generalInformation(infotype, rooms, room, message, userID = 0, ws = null) {
   console.log('generalInformation', message);

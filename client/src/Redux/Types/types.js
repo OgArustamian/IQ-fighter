@@ -27,3 +27,4 @@ export const GAME_LOST = 'game-over';
 export const GAME_WON = 'game-win';
 export const ENEMY_LEFT = 'close';
 export const GETRATE = 'getRate';
+export const DELETE_ROOM = 'DELETE_ROOM';

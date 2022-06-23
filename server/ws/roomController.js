@@ -83,17 +83,26 @@ async function leave(rooms, ws, params) {
   let winner_id;
   console.log('web socket obj --->', ws);
 
-  try {
-    const { gameID } = ws;
-    [wsWinner] = rooms[room].filter((so) => so !== ws);
-    winner_id = wsWinner.userID;
-    await Game.update({ winner_id }, { where: { id: gameID } });
-    generalInformation(PERSONAL_SEND, null, null, message, winner_id, wsWinner);
-  } catch (err) { console.error(err); }
+  if (rooms[room]?.length > 1) {
+    try {
+      const { gameID } = ws;
+      [wsWinner] = rooms[room].filter((so) => so !== ws);
+      winner_id = wsWinner?.userID;
+      await Game.update({ winner_id }, { where: { id: gameID } });
+      generalInformation(PERSONAL_SEND, null, null, message, winner_id, wsWinner);
+    } catch (err) { console.error(err); }
+  }
   try {
     ws.room = undefined;
+    console.log('rooms[room]', rooms[room]);
     delete rooms[room];
   } catch (err) { console.error('error ws close ------------->', err); }
+}
+
+function deleteRoom(rooms, room) {
+  console.log('rooms[room]', rooms, rooms[room]);
+  delete rooms[room];
+  console.log('rooms', rooms);
 }
 
 function roomController(rooms, maxClients, ws, userID) {
@@ -109,5 +118,5 @@ function roomController(rooms, maxClients, ws, userID) {
 }
 
 module.exports = {
-  create, join, roomController, leave,
+  create, join, roomController, leave, deleteRoom,
 };

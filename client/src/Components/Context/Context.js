@@ -8,10 +8,11 @@ import {
 } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { showRating } from '../../Redux/Actions/ratingAction';
-import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
+import { deleteRoom, setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
   ATTACK, CREATE_ROOM, DRAW, ENEMY_LEFT, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
   GETRATE,
+  DELETE_ROOM,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -55,6 +56,8 @@ function Context({ children }) {
       room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer, damage,
     } = params;
 
+    console.log('ws onMessage DATA', JSON.parse(event.data));
+
     setplayerDamage(damage);
 
     switch (type) {
@@ -72,6 +75,7 @@ function Context({ children }) {
         dispatch(setRoom(room));
         dispatch(setGame(gameID, turnID));
         dispatch(showSpinner(type));
+        checkPosition(hp, hp);
         dispatch(getFirstName(firstPlayer));
         dispatch(getSecondName(secondPlayer));
         break;
@@ -159,6 +163,7 @@ function Context({ children }) {
         }
 
         dispatch(setWiner());
+        dispatch(deleteRoom(ws));
 
         setTimeout(() => {
           setgameOverModal(true);

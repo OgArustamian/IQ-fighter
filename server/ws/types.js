@@ -13,6 +13,7 @@ const GAMEOVER = 'game-over';
 const GAMEWIN = 'game-win';
 const GETRATE = 'getRate';
 const PERSONAL_SEND = 'personal-send';
+const DELETE_ROOM = 'DELETE_ROOM';
 
 module.exports = {
   game,
@@ -30,4 +31,5 @@ module.exports = {
   GAMEWIN,
   GETRATE,
   PERSONAL_SEND,
+  DELETE_ROOM,
 };
