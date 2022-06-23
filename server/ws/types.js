@@ -11,6 +11,7 @@ const LOSS = 'loss';
 const WIN = 'win';
 const GAMEOVER = 'game-over';
 const GAMEWIN = 'gamegame-win';
+const GETRATE = 'getRate';
 
 module.exports = {
   game,
@@ -26,4 +27,5 @@ module.exports = {
   WIN,
   GAMEOVER,
   GAMEWIN,
+  GETRATE,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-plusplus */
@@ -8,7 +9,7 @@
 
 const { Game, Turn, UserGames } = require('../db/models');
 const { generalInformation } = require('./gameController');
-const { createdRoom, joinedRoom } = require('./types');
+const { createdRoom, joinedRoom, closeType } = require('./types');
 
 function genKey(length) {
   let result = '';
@@ -71,17 +72,22 @@ async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
 }
 
 // not activ function
-function leave(rooms, ws) {
-  console.log('leave ------->');
+async function leave(rooms, ws, params) {
+  const message = { type: closeType, params: {} };
   const { room } = ws;
+  let wsWinner;
+  let winner_id;
+  generalInformation(closeType, rooms, room, message);
+
   try {
-    console.log('rooms', rooms);
+    ws.room = undefined;
     delete rooms[room];
-    console.log('rooms', rooms);
-    console.log('rooms', rooms[room]);
-    // rooms[room] = rooms[room].filter((so) => so !== ws);
-    // ws.room = undefined;
-    // generalInformation()
+  } catch (err) { console.error('error ws close ------------->', err); }
+  try {
+    const game_id = params.gameID;
+    wsWinner = rooms[room].filter((so) => so !== ws);
+    winner_id = wsWinner.userID;
+    await Game.update({ winner_id }, { where: { game_id } });
   } catch (err) { console.error(err); }
 }
 
@@ -89,7 +95,7 @@ function roomController(rooms, maxClients, ws, userID) {
   try {
     for (const [key, value] of Object.entries(rooms)) {
       console.log(`${key}: ${value}`);
-      if (value.length < 2) {
+      if (value.length < 2 && value[0]?.userID !== userID) {
         return join(rooms, maxClients, ws, userID, key, value[0].userID, value[0].username);
       }
     }

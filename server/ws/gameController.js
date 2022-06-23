@@ -5,7 +5,7 @@
 /* eslint-disable no-restricted-syntax */
 const { Op } = require('sequelize');
 const {
-  Questions, Answers, Turn, UserTurn, UserGames,
+  Questions, Answers, Turn, UserTurn, UserGames, Game,
 } = require('../db/models');
 const { createdRoom, joinedRoom, ATTACK, ANSWER, DRAW, LOSS, WIN, GAMEOVER, closeType, GAMEWIN } = require('./types');
 
@@ -61,7 +61,7 @@ async function attack(subtype, rooms, params) {
   generalInformation(subtype, rooms, room, message);
 }
 
-async function responseAnswers(subtype, rooms, room, oldturn) {
+async function responseAnswers(rooms, room, oldturn) {
   // Checking how many players have already answered on the current turn
   const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
 
@@ -121,6 +121,7 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
           hpLoser = 0;
           infotypeLoser = GAMEOVER;
           infotypeWinner = GAMEWIN;
+          try { await Game.update({ winner_id: winnerID }, { where: { id: game_id } }); } catch (err) { console.error('error game update winner ---->', err); }
         } else {
           infotypeLoser = LOSS;
           infotypeWinner = WIN;
@@ -142,18 +143,20 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
   }
 }
 
-async function checkAnswer(subtype, rooms, params) {
+async function checkAnswer(rooms, params) {
   const {
     room, userID, answerID, turnID,
   } = params;
-
-  const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
-  if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
-  if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  if (answerID > 0) {
+    const answer = await Answers.findOne({ where: { id: answerID } });
 
-  responseAnswers(subtype, rooms, room, turn);
+    if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
+    if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  } else { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+
+  responseAnswers(rooms, room, turn);
 }
 
 function gameController(rooms, subtype, params) {
@@ -162,7 +165,7 @@ function gameController(rooms, subtype, params) {
       attack(subtype, rooms, params);
       break;
     case ANSWER:
-      checkAnswer(subtype, rooms, params);
+      checkAnswer(rooms, params);
     default:
       console.log('no subtype');
   }
