@@ -9,20 +9,21 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 // ws
+// const { v4: uuidv4 } = require('uuid');
 const http = require('http');
-const { v4: uuidv4 } = require('uuid');
 const { WebSocketServer } = require('ws');
 
 const { roomController, leave } = require('./ws/roomController');
-const { gameController, generalInformation } = require('./ws/gameController');
+const { gameController } = require('./ws/gameController');
 
 // routing
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const {
-  game, find, leaveType, closeType,
+  game, find, leaveType, GETRATE,
 } = require('./ws/types');
+const ladderboard = require('./ws/rankController');
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -111,7 +112,10 @@ wss.on('connection', (ws, request) => {
         roomController(rooms, maxClients, ws, userID);
         break;
       case leaveType:
-        leave(rooms, ws);
+        leave(rooms, ws, params);
+        break;
+      case GETRATE:
+        ladderboard(ws);
         break;
       default:
         console.log('default case');
@@ -121,13 +125,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
-    const { room } = ws;
-    const message = { type: closeType, params: {} };
-
-    generalInformation(closeType, rooms, room, message);
-    try {
-      delete rooms[room];
-    } catch (err) { console.error('error ws close ------------->', err); }
+    leave(rooms, ws);
   });
 });
 
