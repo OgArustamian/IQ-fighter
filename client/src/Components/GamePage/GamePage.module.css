@@ -23,6 +23,7 @@
     margin-bottom: 79px;
 }
 
+<<<<<<< HEAD
 .draw-message {
     position: fixed;
     color: #f8b700;
@@ -54,3 +55,20 @@
         opacity: 0;
     }
 }
+=======
+.videoBackground {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    filter:opacity(60%);
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 135px;
+}
+>>>>>>> ee1afade737bd41ea57d3192b52dd1aaab6176aa

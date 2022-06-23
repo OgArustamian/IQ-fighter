@@ -7,10 +7,12 @@ const { Op } = require('sequelize');
 const {
   Questions, Answers, Turn, UserTurn, UserGames,
 } = require('../db/models');
+const { createdRoom, joinedRoom, ATTACK, ANSWER, DRAW, LOSS, WIN, GAMEOVER, closeType, GAMEWIN } = require('./types');
 
 function generalInformation(infotype, rooms, room, message, userID = 0) {
+  console.log('generalInformation', message);
   switch (true) {
-    case infotype === 'attack' || infotype === 'draw' || infotype === 'joinedRoom':
+    case infotype === ATTACK || infotype === DRAW || infotype === joinedRoom || infotype === closeType || infotype === createdRoom:
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -19,7 +21,7 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
         }
       }
       break;
-    case infotype === 'win' || infotype === 'loss' || infotype === 'game-over' || infotype === 'game-win':
+    case infotype === WIN || infotype === LOSS || infotype === GAMEOVER || infotype === GAMEWIN:
       console.log('win/loss or game-win/game-over player id ->>>>>>>>>>>>>', infotype, userID);
 
       for (const [key, value] of Object.entries(rooms)) {
@@ -79,7 +81,6 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
     const damage = difficulty * 10;
 
     // Type and message for generalinformation variable declaration
-    let infotype;
     let infotypeLoser;
     let infotypeWinner;
     let message = {};
@@ -99,9 +100,8 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
     switch (true) {
       // If both players answered correctly or both incorrectly
       case trueAnsweredUserID.length === 2 || falseAnsweredUserID.length === 2:
-        infotype = 'draw';
-        message = { type: infotype, params: { turnID } };
-        generalInformation(infotype, rooms, room, message);
+        message = { type: DRAW, params: { turnID } };
+        generalInformation(DRAW, rooms, room, message);
         break;
 
       // If only one player answered correctly
@@ -119,16 +119,16 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
 
         if (hpLoser <= 0) {
           hpLoser = 0;
-          infotypeLoser = 'game-over';
-          infotypeWinner = 'game-win';
+          infotypeLoser = GAMEOVER;
+          infotypeWinner = GAMEWIN;
         } else {
-          infotypeLoser = 'loss';
-          infotypeWinner = 'win';
+          infotypeLoser = LOSS;
+          infotypeWinner = WIN;
         }
 
         message = { type: infotypeLoser, params: { turnID, hp: hpLoser, hpEnemy: hpWinner, damage } };
         console.log('message loser --->', message, loserID);
-        generalInformation(infotypeLoser, rooms, room, message, loserID);
+        generalInformation(infotypeWinner, rooms, room, message, loserID);
 
         message = { type: infotypeWinner, params: { turnID, hp: hpWinner, hpEnemy: hpLoser, damage } };
         console.log('message winer --->', message, winnerID);
@@ -147,28 +147,21 @@ async function checkAnswer(subtype, rooms, params) {
     room, userID, answerID, turnID,
   } = params;
 
-  console.log('answerID ------ >', answerID);
-  console.log('userId ---->', userID);
-
+  const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
-  if (answerID === 0) {
-    await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false });
-  } else {
-    const answer = await Answers.findOne({ where: { id: answerID } });
-    if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
-    if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
-  }
+  if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
+  if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
 
   responseAnswers(subtype, rooms, room, turn);
 }
 
 function gameController(rooms, subtype, params) {
   switch (subtype) {
-    case 'attack':
+    case ATTACK:
       attack(subtype, rooms, params);
       break;
-    case 'answer':
+    case ANSWER:
       checkAnswer(subtype, rooms, params);
     default:
       console.log('no subtype');
