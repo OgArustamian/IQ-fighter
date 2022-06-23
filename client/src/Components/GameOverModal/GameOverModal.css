@@ -12,3 +12,12 @@
 .game-over {
     width: 30%;
 }
+
+.winner-logo {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.looser-logo {
+    width: 200px;
+}
