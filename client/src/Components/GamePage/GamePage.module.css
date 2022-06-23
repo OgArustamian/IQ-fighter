@@ -10,7 +10,7 @@ body {
     align-items: center;
     padding-top: 50px;
     width: 100%;
-    margin: 0 100px 0;
+    margin: 80px 100px 0;
 }
 
 .alert-msg {
@@ -46,5 +46,5 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 135px;
+    /* margin-top: 135px; */
 }
