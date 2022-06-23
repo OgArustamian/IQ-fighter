@@ -126,6 +126,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
+    console.log('in close');
     leave(rooms, ws);
   });
 });
