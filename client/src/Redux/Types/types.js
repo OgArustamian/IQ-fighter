@@ -23,3 +23,4 @@ export const WIN = 'win';
 export const LOSS = 'loss';
 export const GAME_LOST = 'game-over';
 export const GAME_WON = 'game-win';
+export const GETRATE = 'getRate';
