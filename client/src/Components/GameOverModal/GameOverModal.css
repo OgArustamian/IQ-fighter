@@ -1,0 +1,23 @@
+.gameover-msg {
+    color: white;
+    font-size: 30px;
+    margin: 0 auto;
+}
+
+.game-over_modal {
+    background-color: #15181f;
+    text-align: center;
+}
+
+.game-over {
+    width: 30%;
+}
+
+.winner-logo {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.looser-logo {
+    width: 200px;
+}

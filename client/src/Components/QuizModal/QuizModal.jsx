@@ -16,13 +16,21 @@ function QuizModal() {
 
   const question = useSelector((state) => state.question);
   const { id } = useSelector((state) => state.users);
-  const { turnID } = useSelector((state) => state.player);
+  const { turnID, turn } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
 
   const [userAnswer, setUserAnswer] = useState(0);
 
   const dispatch = useDispatch();
   const { ws } = useWsContext();
+
+  function changeHandler(e) {
+    const data = e.target.value;
+    const elems = document.querySelectorAll('.answer-active');
+    [].forEach.call(elems, (el) => el.classList.remove('answer-active'));
+    e.target.closest('label').classList.toggle('answer-active');
+    setUserAnswer(data);
+  }
 
   function answerHandler() {
     if (userAnswer) {
@@ -42,18 +50,20 @@ function QuizModal() {
             {question.question}
           </p>
           <Form className="mt-3">
-            {question.answers.map((answer) => (
-              <div key={answer.id}>
-                <div className="col-md-6 d-flex justify-content-start mt-2 xs-2">
-                  <input className="answer-checkbox" type="radio" name="answer" value={`${answer.id}`} onChange={(e) => setUserAnswer(e.target.value)} />
-                  {answer.answer}
+            <div className="row">
+              {question.answers.map((answer) => (
+                <div key={answer.id} className="col-md-6 d-flex justify-content-center mt-2 xs-2">
+                  <label className="answer-label">
+                    <input className="answer-checkbox" type="radio" name="answer" id="rad" value={`${answer.id}`} onChange={(e) => changeHandler(e)} />
+                    {answer.answer}
+                  </label>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => answerHandler()}>Send answer</Button>
+          <Button className="answer-submit" color="primary" onClick={() => answerHandler()}>{turn ? 'АТАКОВАТЬ' : 'ПАРИРОВАТЬ'}</Button>
         </ModalFooter>
       </Modal>
     </div>

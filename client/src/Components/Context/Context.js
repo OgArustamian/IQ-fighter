@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, memo, useContext, useEffect, useState,
+  createContext, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
+import {
+  changeTurn, setGame, setLooser, setTurn, setWiner,
+} from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { showRating } from '../../Redux/Actions/ratingAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, GETRATE, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
+  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, GETRATE, JOIN_ROOM, LOSS, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -16,6 +18,8 @@ const WsContext = createContext();
 function Context({ children }) {
   const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
+  const [gameOverModal, setgameOverModal] = useState(false);
+  const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.users);
@@ -45,7 +49,6 @@ function Context({ children }) {
       room, gameID, turnID, hp, hpEnemy,
     } = params;
 
-    console.log(type, params);
     switch (type) {
       case ATTACK:
         dispatch(showQuestion(params));
@@ -65,6 +68,7 @@ function Context({ children }) {
 
       case DRAW:
         console.log('DRAW------------------>', JSON.parse(event.data));
+        setIsDraw(true);
         dispatch(changeTurn(turnID));
         break;
 
@@ -83,11 +87,15 @@ function Context({ children }) {
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        dispatch(setWiner());
+        setgameOverModal(true);
         break;
 
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        dispatch(setLooser());
+        setgameOverModal(true);
         break;
 
       case GETRATE:
@@ -123,7 +131,16 @@ function Context({ children }) {
 
   return (
     <WsContext.Provider value={{
-      ws, modal, setModal, firstPlayerHp, secondPlayerHp, readyState,
+      ws,
+      modal,
+      setModal,
+      gameOverModal,
+      setgameOverModal,
+      isDraw,
+      setIsDraw,
+      firstPlayerHp,
+      secondPlayerHp,
+      readyState,
     }}
     >
       {children}

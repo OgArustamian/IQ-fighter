@@ -13,11 +13,12 @@ import { JOIN_ROOM } from '../../Redux/Types/types';
 import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 import GameNavbar from '../Navbar/GameNavBar';
+import GameOverModal from '../GameOverModal/GameOverModal';
 
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
-  const { modal } = useWsContext();
+  const { modal, isDraw, setIsDraw } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
@@ -71,8 +72,14 @@ function GamePage() {
     checkTurn();
   }, [player.turn]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsDraw(false);
+    }, 3000);
+  }, [isDraw]);
+
   return (
-    <div>
+    <div className={styles.gameContainer}>
       <GameNavbar />
       {spinner !== JOIN_ROOM
         ? <Spinner />
@@ -81,15 +88,19 @@ function GamePage() {
             <div className={styles['char-block']}>
               <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
               <div className={styles.firstChar} />
-              <HealthBar p={firstPlayerHp} mt-3 />
+              <HealthBar hp={firstPlayerHp} mt-3 />
             </div>
+
+            <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
+
             <div className={styles['char-block']}>
               <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-              <HealthBar p={secondPlayerHp} mt-3 />
+              <HealthBar hp={secondPlayerHp} mt-3 />
             </div>
           </div>
         )}
       {modal ? <QuizModal /> : null }
+      <GameOverModal />
     </div>
   );
 }
