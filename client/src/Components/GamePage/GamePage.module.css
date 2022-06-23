@@ -37,14 +37,15 @@
 }
 
 .draw-message {
-    position: fixed;
-    color: #f8b700;
-    font-weight: bold;
-    font-size: 30px;
-    z-index: 1;
-    top: 290px;
-    left: 655px;
-    margin: 0;
+  position: absolute;
+  color: #00ff0a;
+  font-weight: bold;
+  font-size: 30px;
+  z-index: 1;
+  left: 360px;
+  top: 120px;
+  text-align: center;
+  margin: 0;
 }
 
 .hidden {

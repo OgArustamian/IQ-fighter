@@ -2,36 +2,52 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, ModalBody } from 'reactstrap';
 import './GameOverModal.css';
+import { useNavigate } from 'react-router-dom';
 import winnerLogo from './img/WINNER.png';
 import looserLogo from './img/LOOSER_img.png';
+import forceGameover from './img/force-gameover-pic.png';
 import { useWsContext } from '../Context/Context';
 
 function GameOverModal() {
-  const { isWinner } = useSelector((state) => state.player);
+  const { isWinner, forceGameOver } = useSelector((state) => state.player);
   const { gameOverModal, setgameOverModal } = useWsContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      setgameOverModal(false);
-    }, 5000);
+    if (gameOverModal) {
+      setTimeout(() => {
+        setgameOverModal(false);
+        navigate('/');
+      }, 5000);
+    }
   }, [gameOverModal]);
 
   return (
     <div>
       <Modal fullscreen="lg" centered className="quiz-modal game-over" isOpen={gameOverModal}>
         <ModalBody className="game-over_modal">
-          {isWinner ? (
+          {forceGameOver && isWinner
+            ? (
+              <>
+                <p className="gameover-msg">ПРОТИВНИК ПОКИНУЛ ИГРУ. ЛЁГКАЯ ПОБЕДА.</p>
+                <img className="looser-logo" src={forceGameover} alt="game over img" />
+              </>
+            ) : null}
+
+          {isWinner && !forceGameOver ? (
             <>
               <p className="gameover-msg">ВЫ ВЫИГРАЛИ</p>
               <img className="winner-logo" src={winnerLogo} alt="game over img" />
             </>
-          )
-            : (
+          ) : null}
+
+          {!isWinner
+            ? (
               <>
                 <p className="gameover-msg">ВЫ ПРОИГРАЛИ</p>
                 <img className="looser-logo" src={looserLogo} alt="game over img" />
               </>
-            )}
+            ) : null}
         </ModalBody>
       </Modal>
     </div>

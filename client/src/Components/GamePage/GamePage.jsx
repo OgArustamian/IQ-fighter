@@ -46,25 +46,29 @@ function GamePage() {
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
-        active: false,
+        active: true,
         nameColor: true,
       });
     } else if (player.position === 'left' && !player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
+        active: false,
         nameColor: true,
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
+        active: false,
         nameColor: false,
       });
     } else if (player.position === 'right' && !player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
+        active: false,
         nameColor: false,
       });
       setSecondPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
+        active: false,
         nameColor: true,
       });
     } else if (player.position === 'right' && player.turn) {

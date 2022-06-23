@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner,
+  changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner, enemyLeft,
 } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { showRating } from '../../Redux/Actions/ratingAction';
@@ -177,6 +177,8 @@ function Context({ children }) {
 
       case ENEMY_LEFT:
         console.log('enemy left', JSON.parse(event.data));
+        dispatch(enemyLeft(id));
+        setgameOverModal(true);
         break;
 
       case GETRATE:
