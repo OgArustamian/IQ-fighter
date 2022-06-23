@@ -9,7 +9,9 @@
 
 const { Game, Turn, UserGames } = require('../db/models');
 const { generalInformation } = require('./gameController');
-const { createdRoom, joinedRoom, closeType } = require('./types');
+const {
+  createdRoom, joinedRoom, closeType, PERSONAL_SEND,
+} = require('./types');
 
 function genKey(length) {
   let result = '';
@@ -77,18 +79,18 @@ async function leave(rooms, ws, params) {
   const { room } = ws;
   let wsWinner;
   let winner_id;
-  generalInformation(closeType, rooms, room, message);
 
+  try {
+    const game_id = params.gameID;
+    [wsWinner] = rooms[room].filter((so) => so !== ws);
+    winner_id = wsWinner.userID;
+    await Game.update({ winner_id }, { where: { id: game_id } });
+    generalInformation(PERSONAL_SEND, null, null, message, winner_id, wsWinner);
+  } catch (err) { console.error(err); }
   try {
     ws.room = undefined;
     delete rooms[room];
   } catch (err) { console.error('error ws close ------------->', err); }
-  try {
-    const game_id = params.gameID;
-    wsWinner = rooms[room].filter((so) => so !== ws);
-    winner_id = wsWinner.userID;
-    await Game.update({ winner_id }, { where: { game_id } });
-  } catch (err) { console.error(err); }
 }
 
 function roomController(rooms, maxClients, ws, userID) {

@@ -18,10 +18,14 @@ import GameOverModal from '../GameOverModal/GameOverModal';
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
-  const { modal, isDraw, setIsDraw } = useWsContext();
+  const {
+    modal, isDraw, setIsDraw, fireball, enemyFireball,
+  } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
+
+  console.log(player);
 
   const {
     ws, firstPlayerHp, secondPlayerHp, readyState,
@@ -117,15 +121,28 @@ function GamePage() {
                 {firstPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.firstName}</h3> : <h3 className={styles.nikNameAttack}>{player.firstName}</h3> }
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
-                <HealthBar hp={firstPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={firstPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
+
+              {fireball && <div className={styles.flame} />}
+              {enemyFireball && <div className={styles['flame-reverse']} />}
 
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
                 {secondPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.secondName}</h3> : <h3 className={styles.nikNameAttack}>{player.secondName}</h3> }
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-                <HealthBar hp={secondPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={secondPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
