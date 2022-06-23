@@ -84,34 +84,21 @@ function GamePage() {
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
-<<<<<<< HEAD
-          <div className={styles['game-page-container']}>
-            <div className={styles['char-block']}>
-              <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
-              <div className={styles.firstChar} />
-              <HealthBar hp={firstPlayerHp} mt-3 />
-            </div>
-
-            <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
-
-            <div className={styles['char-block']}>
-              <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-              <HealthBar hp={secondPlayerHp} mt-3 />
-=======
           <div>
             <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
             <div className={styles['game-page-container']}>
-              {modal ? <QuizModal /> : null }
               <div className={styles['char-block']}>
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
                 <HealthBar p={firstPlayerHp} mt-3 />
               </div>
+
+              <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
+
               <div className={styles['char-block']}>
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
                 <HealthBar p={secondPlayerHp} mt-3 />
               </div>
->>>>>>> ee1afade737bd41ea57d3192b52dd1aaab6176aa
             </div>
           </div>
         )}
