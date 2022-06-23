@@ -10,8 +10,9 @@ const DRAW = 'draw';
 const LOSS = 'loss';
 const WIN = 'win';
 const GAMEOVER = 'game-over';
-const GAMEWIN = 'gamegame-win';
+const GAMEWIN = 'game-win';
 const GETRATE = 'getRate';
+const PERSONAL_SEND = 'personal-send';
 
 module.exports = {
   game,
@@ -28,4 +29,5 @@ module.exports = {
   GAMEOVER,
   GAMEWIN,
   GETRATE,
+  PERSONAL_SEND,
 };

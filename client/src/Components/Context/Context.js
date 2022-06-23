@@ -5,9 +5,10 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux';
 import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
+import { showRating } from '../../Redux/Actions/ratingAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
+  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, GETRATE, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -87,6 +88,11 @@ function Context({ children }) {
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        break;
+
+      case GETRATE:
+        console.log('Add rate', JSON.parse(event.data));
+        dispatch(showRating(params));
         break;
 
       default:

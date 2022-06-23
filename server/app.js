@@ -103,6 +103,7 @@ wss.on('connection', (ws, request) => {
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
+    console.log(obj);
 
     switch (type) {
       case game:
@@ -115,7 +116,7 @@ wss.on('connection', (ws, request) => {
         leave(rooms, ws, params);
         break;
       case GETRATE:
-        ladderboard(ws);
+        ladderboard(ws, params);
         break;
       default:
         console.log('default case');
