@@ -34,7 +34,7 @@ async function ladderboard(ws, params) {
 
     message = { type: GETRATE, params: { rank } };
     console.log(userID);
-    console.log(message);
+    console.log(rank);
 
     generalInformation(PERSONAL_SEND, null, null, message, userID, ws);
   } catch (err) { console.error('error rank query to DB ------->', err); }
