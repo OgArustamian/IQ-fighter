@@ -29,7 +29,9 @@
 }
 
 .nikNameAttack {
-    color: rgb(179, 10, 4);
+    color: firebrick;
+    font-size: 34px;
+    text-shadow: green 5px 5px 5px;
 }
 
 .nameColor {
