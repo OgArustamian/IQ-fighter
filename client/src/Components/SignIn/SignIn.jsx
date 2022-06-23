@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { userSignIn } from '../../Redux/Actions/userAction';
 import './SignIn.css';
+import MainNavbar from '../Navbar/MainNavbar';
 
 export default function SignIn() {
   const [inputs, setInputs] = useState({});
@@ -21,51 +22,54 @@ export default function SignIn() {
     setInputs({});
   };
   return (
-    <div className="auth-size-window">
-      <Form inline className="mt-5 login-form" onSubmit={submitHandler}>
-        <FormGroup floating>
-          <Input
-            id="exampleUserName"
-            name="username"
-            placeholder="Email"
-            type="text"
-            value={inputs.username || ''}
-            onChange={inputHandler}
-          />
-          <Label for="exampleEmail">
-            Ник-нейм
-          </Label>
-        </FormGroup>
-        {' '}
-        <FormGroup floating>
-          <Input
-            id="examplePassword"
-            name="password"
-            placeholder="Password"
-            type="password"
-            value={inputs.password || ''}
-            onChange={inputHandler}
-          />
-          <Label for="examplePassword">
-            Пароль
-          </Label>
-        </FormGroup>
-        {' '}
-        {users.message
+    <>
+      <MainNavbar />
+      <div className="auth-size-window">
+        <Form inline className="mt-5 login-form" onSubmit={submitHandler}>
+          <FormGroup floating>
+            <Input
+              id="exampleUserName"
+              name="username"
+              placeholder="Email"
+              type="text"
+              value={inputs.username || ''}
+              onChange={inputHandler}
+            />
+            <Label for="exampleEmail">
+              Ник-нейм
+            </Label>
+          </FormGroup>
+          {' '}
+          <FormGroup floating>
+            <Input
+              id="examplePassword"
+              name="password"
+              placeholder="Password"
+              type="password"
+              value={inputs.password || ''}
+              onChange={inputHandler}
+            />
+            <Label for="examplePassword">
+              Пароль
+            </Label>
+          </FormGroup>
+          {' '}
+          {users.message
               && (
                 <Alert color="danger">
                   Не верный ник-нейм или пароль
                 </Alert>
               )}
-        <Button className="BlizBtn mt-4" type="submit">
-          Авторизоваться
-        </Button>
-        <Link to="/signup">
-          <NavLink className="mt-4 auth-link">
-            Пройти регистрацию.
-          </NavLink>
-        </Link>
-      </Form>
-    </div>
+          <Button className="BlizBtn mt-4" type="submit">
+            Авторизоваться
+          </Button>
+          <Link to="/signup">
+            <NavLink className="mt-4 auth-link">
+              Пройти регистрацию.
+            </NavLink>
+          </Link>
+        </Form>
+      </div>
+    </>
   );
 }

@@ -11,6 +11,8 @@ export const SET_GAME = 'SET_GAME';
 export const CHANGE_TURN = 'CHANGE_TURN';
 export const GET_FIRST_NAME = 'GET_FIRST_NAME';
 export const GET_SECOND_NAME = 'GET_SECOND_NAME';
+export const SET_WINNER = 'SET_WINNER';
+export const SET_LOOSER = 'SET_LOOSER';
 
 // serser ws types
 export const CREATE_ROOM = 'createdRoom';
@@ -21,3 +23,5 @@ export const SET_ANSWER = 'SET_ANSWER';
 export const DRAW = 'draw';
 export const WIN = 'win';
 export const LOSS = 'loss';
+export const GAME_LOST = 'game-over';
+export const GAME_WON = 'game-win';

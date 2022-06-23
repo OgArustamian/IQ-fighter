@@ -9,19 +9,21 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
 // ws
+// const { v4: uuidv4 } = require('uuid');
 const http = require('http');
-const { v4: uuidv4 } = require('uuid');
 const { WebSocketServer } = require('ws');
 
 const { roomController, leave } = require('./ws/roomController');
 const { gameController } = require('./ws/gameController');
 
-const map = new Map();
-
 // routing
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const {
+  game, find, leaveType, GETRATE,
+} = require('./ws/types');
+const ladderboard = require('./ws/rankController');
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -98,20 +100,22 @@ wss.on('connection', (ws, request) => {
   // коннект и получение месседжа
   ws.on('message', (message) => {
     const obj = JSON.parse(message);
-    console.log(obj);
     const { type } = obj;
     const { subtype } = obj;
     const { params } = obj;
 
     switch (type) {
-      case 'game':
+      case game:
         gameController(rooms, subtype, params);
         break;
-      case 'find':
+      case find:
         roomController(rooms, maxClients, ws, userID);
         break;
-      case 'leave':
-        leave(rooms, ws);
+      case leaveType:
+        leave(rooms, ws, params);
+        break;
+      case GETRATE:
+        ladderboard(ws);
         break;
       default:
         console.log('default case');
@@ -121,8 +125,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
-    console.log('user left <----', rooms);
-    map.delete(userID);
+    leave(rooms, ws);
   });
 });
 

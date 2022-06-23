@@ -2,10 +2,10 @@ import './HealthBar.css';
 import React from 'react';
 import healthBorder from './img/healthborder-modified.png';
 
-function HealthBar({ p }) {
+function HealthBar({ hp }) {
   return (
     <div className="progress-container">
-      <progress max="100" value={p} />
+      <progress max="100" value={hp} />
       <img className="health-border" src={healthBorder} alt="hp border" />
     </div>
   );

@@ -5,12 +5,14 @@
 /* eslint-disable no-restricted-syntax */
 const { Op } = require('sequelize');
 const {
-  Questions, Answers, Turn, UserTurn, UserGames,
+  Questions, Answers, Turn, UserTurn, UserGames, Game,
 } = require('../db/models');
+const { createdRoom, joinedRoom, ATTACK, ANSWER, DRAW, LOSS, WIN, GAMEOVER, closeType, GAMEWIN } = require('./types');
 
 function generalInformation(infotype, rooms, room, message, userID = 0) {
+  console.log('generalInformation', message);
   switch (true) {
-    case infotype === 'attack' || infotype === 'draw' || infotype === 'joinedRoom':
+    case infotype === ATTACK || infotype === DRAW || infotype === joinedRoom || infotype === closeType || infotype === createdRoom:
       for (const [key, value] of Object.entries(rooms)) {
         if (key === room) {
           value.forEach((el) => {
@@ -19,7 +21,7 @@ function generalInformation(infotype, rooms, room, message, userID = 0) {
         }
       }
       break;
-    case infotype === 'win' || infotype === 'loss' || infotype === 'game-over' || infotype === 'game-win':
+    case infotype === WIN || infotype === LOSS || infotype === GAMEOVER || infotype === GAMEWIN:
       console.log('win/loss or game-win/game-over player id ->>>>>>>>>>>>>', infotype, userID);
 
       for (const [key, value] of Object.entries(rooms)) {
@@ -59,7 +61,7 @@ async function attack(subtype, rooms, params) {
   generalInformation(subtype, rooms, room, message);
 }
 
-async function responseAnswers(subtype, rooms, room, oldturn) {
+async function responseAnswers(rooms, room, oldturn) {
   // Checking how many players have already answered on the current turn
   const answers = await UserTurn.findAll({ where: { turn_id: oldturn.id } });
 
@@ -79,7 +81,6 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
     const damage = difficulty * 10;
 
     // Type and message for generalinformation variable declaration
-    let infotype;
     let infotypeLoser;
     let infotypeWinner;
     let message = {};
@@ -99,9 +100,8 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
     switch (true) {
       // If both players answered correctly or both incorrectly
       case trueAnsweredUserID.length === 2 || falseAnsweredUserID.length === 2:
-        infotype = 'draw';
-        message = { type: infotype, params: { turnID } };
-        generalInformation(infotype, rooms, room, message);
+        message = { type: DRAW, params: { turnID } };
+        generalInformation(DRAW, rooms, room, message);
         break;
 
       // If only one player answered correctly
@@ -119,11 +119,12 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
 
         if (hpLoser <= 0) {
           hpLoser = 0;
-          infotypeLoser = 'game-over';
-          infotypeWinner = 'game-win';
+          infotypeLoser = GAMEOVER;
+          infotypeWinner = GAMEWIN;
+          try { await Game.update({ winner_id: winnerID }, { where: { id: game_id } }); } catch (err) { console.error('error game update winner ---->', err); }
         } else {
-          infotypeLoser = 'loss';
-          infotypeWinner = 'win';
+          infotypeLoser = LOSS;
+          infotypeWinner = WIN;
         }
 
         message = { type: infotypeLoser, params: { turnID, hp: hpLoser, hpEnemy: hpWinner, damage } };
@@ -142,27 +143,29 @@ async function responseAnswers(subtype, rooms, room, oldturn) {
   }
 }
 
-async function checkAnswer(subtype, rooms, params) {
+async function checkAnswer(rooms, params) {
   const {
     room, userID, answerID, turnID,
   } = params;
-
-  const answer = await Answers.findOne({ where: { id: answerID } });
   const turn = await Turn.findOne({ where: { id: turnID } });
 
-  if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
-  if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  if (answerID > 0) {
+    const answer = await Answers.findOne({ where: { id: answerID } });
 
-  responseAnswers(subtype, rooms, room, turn);
+    if (answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: true }); }
+    if (!answer.isTrue) { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+  } else { await UserTurn.create({ user_id: userID, turn_id: turnID, isTrue: false }); }
+
+  responseAnswers(rooms, room, turn);
 }
 
 function gameController(rooms, subtype, params) {
   switch (subtype) {
-    case 'attack':
+    case ATTACK:
       attack(subtype, rooms, params);
       break;
-    case 'answer':
-      checkAnswer(subtype, rooms, params);
+    case ANSWER:
+      checkAnswer(rooms, params);
     default:
       console.log('no subtype');
   }
