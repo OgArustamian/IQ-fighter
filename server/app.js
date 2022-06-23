@@ -126,6 +126,7 @@ wss.on('connection', (ws, request) => {
   });
 
   ws.on('close', () => {
+    console.log('player left <----');
     leave(rooms, ws);
   });
 });

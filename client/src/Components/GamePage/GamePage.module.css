@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     padding-top: 50px;
     width: 100%;
     margin: 80px 100px 0;
@@ -24,20 +25,24 @@
 }
 
 .nikNameDef {
-  color: rgb(248,183,1);
+    color: rgb(248, 183, 1);
 }
 
 .nikNameAttack {
-  color: rgb(179, 10, 4);
+    color: rgb(179, 10, 4);
 }
-  
+
+.nameColor {
+    color: #f8b700;
+}
+
 .draw-message {
     position: fixed;
     color: #f8b700;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 30px;
     z-index: 1;
-    top: 260px;
+    top: 290px;
     left: 655px;
     margin: 0;
 }
@@ -69,7 +74,7 @@
     z-index: -1;
     top: 0;
     left: 0;
-    filter:opacity(60%);
+    filter: opacity(60%);
 }
 
 .gameContainer {
@@ -78,32 +83,211 @@
     justify-content: space-between;
 }
 
+.flame {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(-45deg, #98c2ec, #FFF);
+    border-radius: 150px 150px 0px 150px;
+    transform: rotate(-210deg);
+    -webkit-animation: 0.1s flame infinite;
+            animation: 0.1s flame infinite;
+    filter: blur(10px);
+    position: relative;
+    box-shadow: 17px 20px 90px rgb(255, 255, 255);
+    /* border: 45px solid #e16207; */
+    border-left-width: 25px;
+    border-top-width: 25px;
+  }
+
+  .flame:after, .flame:before {
+    content: "";
+    width: 100px;
+    height: 100px;
+    display: block;
+    position: absolute;
+    background: linear-gradient(-45deg, #98c2ec, rgb(11, 59, 181));
+    -webkit-animation: 0.2s flame infinite;
+            animation: 0.2s flame infinite;
+    transform: scale(0.8) rotate(20deg);
+    border-radius: 100px 100px 0px 100px;
+    top: 20px;
+  }
+  .flame:before {
+    top: 0;
+    -webkit-animation-duration: 0.09s;
+            animation-duration: 0.09s;
+    transform: scale(0.9) rotate(-15deg) translate(10px, 0px);
+  }
+  
+  @-webkit-keyframes flame {
+    0% {
+      height: 150px;
+      width: 150px;
+    }
+    50% {
+      height: 140px;
+      width: 140px;
+    }
+    100% {
+      height: 150px;
+      width: 150px;
+    }
+  }
+  
+  @keyframes flame {
+    0% {
+      height: 150px;
+      width: 150px;
+    }
+    50% {
+      height: 140px;
+      width: 140px;
+    }
+    100% {
+      height: 150px;
+      width: 150px;
+    }
+  }
+  .flame {
+    position: absolute;
+    -webkit-animation: move-right;
+            animation: move-right;
+    z-index: 2;
+    animation: throw-fireball 1.5s normal ease-out;
+    -webkit-animation: throw-fireball 1.5s normal ease-out;
+  }
+  
+  @-webkit-keyframes throw-fireball {
+    0% {
+      right: 1000px;
+    }
+    100% {
+      right: 215px;
+    }
+  }
+  
+  @keyframes throw-fireball {
+    0% {
+      right: 1000px;
+    }
+    100% {
+      right: 215px;
+    }
+  }
+
+/* Обратный фаерболл */
+.flame-reverse {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(-45deg, red, orange);
+    border-radius: 150px 150px 0px 150px;
+    transform: rotate(-60deg);
+    -webkit-animation: 0.1s flame-reverse infinite;
+            animation: 0.1s flame-reverse infinite;
+    filter: blur(10px);
+    position: relative;
+    box-shadow: 17px 20px 90px #700;
+    border: 45px solid #4b0202;
+    border-left-width: 25px;
+    border-top-width: 25px;
+  }
+  .flame-reverse:after, .flame-reverse:before {
+    content: “”;
+    width: 100px;
+    height: 100px;
+    display: block;
+    position: absolute;
+    background: linear-gradient(-45deg, red, orange);
+    -webkit-animation: 0.2s flame-reverse infinite;
+            animation: 0.2s flame-reverse infinite;
+    transform: scale(0.8) rotate(20deg);
+    border-radius: 100px 100px 0px 100px;
+    top: 20px;
+  }
+  .flame-reverse:before {
+    top: 0;
+    -webkit-animation-duration: 0.09s;
+            animation-duration: 0.09s;
+    transform: scale(0.9) rotate(-15deg) translate(10px, 0px);
+  }
+
+  @-webkit-keyframes flame-reverse {
+    0% {
+      height: 150px;
+      width: 150px;
+    }
+    50% {
+      height: 140px;
+      width: 140px;
+    }
+    100% {
+      height: 150px;
+      width: 150px;
+    }
+  }
+  @keyframes flame-reverse {
+    0% {
+      height: 150px;
+      width: 150px;
+    }
+    50% {
+      height: 140px;
+      width: 140px;
+    }
+    100% {
+      height: 150px;
+      width: 150px;
+    }
+  }
+  .flame-reverse {
+    position: absolute;
+    -webkit-animation: move-right;
+            animation: move-right;
+    z-index: 2;
+    animation: throw-fireball-reverse 2s infinite normal ease-out;
+    -webkit-animation: throw-fireball-reverse 2s infinite normal ease-out;
+  }
+  @-webkit-keyframes throw-fireball-reverse {
+    0% {
+      right: 215px;
+    }
+    100% {
+      right: 1200px;
+    }
+  }
+  @keyframes throw-fireball-reverse {
+    0% {
+      right: 215px;
+    }
+    100% {
+      right: 1200px;
+    }
+  }
 
 /* HEALTH REDUCE ANIMATION */
 .hpbox {
-    position: relative;
-    margin-right: 22%;
-  }
-  
-  .hp {
-    font-family: Roboto, sans-serif;
-    margin-left: 5%;
-    font-size: 27px;
-    letter-spacing: 2px;
-    color: red;
-      position: absolute;
-      animation: move-right;
-      z-index: 2; 
-      animation: throw-hp 2s infinite  normal ease-out;
-      -webkit-animation: throw-hp 2s infinite  normal ease-out;
-  }
-  
-  @keyframes throw-hp {
-      0% {
-          top: -75px;
-      }
-  
-      100% {
-          top: -275px;
-      }
+  position: relative;
+  margin-right: 22%;
+}
+
+.hp {
+  font-family: Roboto, sans-serif;
+  margin-left: 5%;
+  font-size: 27px;
+  letter-spacing: 2px;
+  color: red;
+    position: absolute;
+    animation: move-right;
+    z-index: 2; 
+    animation: throw-hp 2s infinite  normal ease-out;
+    -webkit-animation: throw-hp 2s infinite  normal ease-out;
+}
+
+@keyframes throw-hp {
+    0% {
+        top: -75px;
+    }
+
+    100% {
+        top: -275px;
   }

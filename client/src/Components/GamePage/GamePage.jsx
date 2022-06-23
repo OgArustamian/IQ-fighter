@@ -18,10 +18,11 @@ import GameOverModal from '../GameOverModal/GameOverModal';
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
-  const { modal, isDraw, setIsDraw } = useWsContext();
+  const {
+    modal, isDraw, setIsDraw, fireball, enemyFireball,
+  } = useWsContext();
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
-  console.log('PLAYER=====>>>>', player);
   const dispatch = useDispatch();
 
   console.log(player);
@@ -37,38 +38,40 @@ function GamePage() {
     }
   }, [readyState]);
 
-  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
-  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
+  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
+        nameColor: 'nikNameDef',
       });
     } else if (player.position === 'right' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
+        nameColor: 'nikNameDef',
       });
       setSecondPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
     } else if (player.turn === false) {
       setFirstPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
     }
   }
@@ -93,6 +96,9 @@ function GamePage() {
             <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
+                { player.position === 'left'
+                  ? <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>
+                  : <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>}
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
                 <div>
@@ -103,9 +109,15 @@ function GamePage() {
                 </div>
               </div>
 
+              {fireball && <div className={styles.flame} />}
+              {enemyFireball && <div className={styles['flame-reverse']} />}
+
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
+                { player.position !== 'left'
+                  ? <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>
+                  : <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>}
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
                 <div>
                   <HealthBar hp={secondPlayerHp} mt-3 />
