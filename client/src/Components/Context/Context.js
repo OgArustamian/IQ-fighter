@@ -2,7 +2,7 @@
 import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
-import useSound from 'use-sound';
+// import useSound from 'use-sound';
 import { useDispatch, useSelector } from 'react-redux';
 import soundDamage from '../../now-thats.mp3';
 import soundGameWon from '../../and-his-name-is-john-cena-1.mp3';
@@ -15,7 +15,6 @@ import { deleteRoom, setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
   ATTACK, CREATE_ROOM, DRAW, ENEMY_LEFT, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
   GETRATE,
-  DELETE_ROOM,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -39,10 +38,10 @@ function Context({ children }) {
   const [playbackRate, setPlaybackRate] = useState(1);
   const [sound, setSound] = useState(soundDamage);
 
-  const [play] = useSound(sound, {
-    playbackRate,
-    volume: 5,
-  });
+  // const [play] = useSound(sound, {
+  //   playbackRate,
+  //   volume: 5,
+  // });
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
@@ -110,7 +109,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
 
@@ -122,7 +121,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
 
@@ -142,7 +141,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
 
@@ -154,7 +153,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
         break;
@@ -172,7 +171,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
 
@@ -184,7 +183,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            play();
+            // play();
           }, 1450);
         }
 
@@ -204,7 +203,7 @@ function Context({ children }) {
         setTimeout(() => {
           setgameOverModal(true);
           setPlaybackRate(playbackRate);
-          play();
+          // play();
         }, 1500);
         break;
 
