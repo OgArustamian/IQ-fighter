@@ -83,8 +83,6 @@
     justify-content: space-between;
 }
 
-/* файербол персонажа слева */
-
 .flame {
     width: 150px;
     height: 150px;
@@ -264,4 +262,32 @@
     100% {
       right: 1200px;
     }
+  }
+
+/* HEALTH REDUCE ANIMATION */
+.hpbox {
+  position: relative;
+  margin-right: 22%;
+}
+
+.hp {
+  font-family: Roboto, sans-serif;
+  margin-left: 5%;
+  font-size: 27px;
+  letter-spacing: 2px;
+  color: red;
+    position: absolute;
+    animation: move-right;
+    z-index: 2; 
+    animation: throw-hp 2s infinite  normal ease-out;
+    -webkit-animation: throw-hp 2s infinite  normal ease-out;
+}
+
+@keyframes throw-hp {
+    0% {
+        top: -75px;
+    }
+
+    100% {
+        top: -275px;
   }

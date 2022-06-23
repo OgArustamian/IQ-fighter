@@ -25,6 +25,8 @@ function GamePage() {
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
 
+  console.log(player);
+
   const {
     ws, firstPlayerHp, secondPlayerHp, readyState,
   } = useWsContext();
@@ -99,7 +101,12 @@ function GamePage() {
                   : <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>}
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
-                <HealthBar hp={firstPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={firstPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
 
               {fireball && <div className={styles.flame} />}
@@ -112,7 +119,12 @@ function GamePage() {
                   ? <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>
                   : <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>}
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-                <HealthBar hp={secondPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={secondPlayerHp} mt-3 />
+                  <div className={styles.hpbox}>
+                    <span className={styles.hp}>-40hp</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
