@@ -74,7 +74,7 @@ function Context({ children }) {
       case WIN:
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
-        dispatch(changeTurn(turnID)) ;
+        dispatch(changeTurn(turnID));
         break;
 
       case LOSS:
