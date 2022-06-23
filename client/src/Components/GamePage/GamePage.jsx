@@ -14,6 +14,7 @@ import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 import GameNavbar from '../Navbar/GameNavBar';
 import GameOverModal from '../GameOverModal/GameOverModal';
+import fireBall from '../../img/fireball.png';
 
 function GamePage() {
   const body = document.querySelector('body');
@@ -92,7 +93,7 @@ function GamePage() {
                 <div className={styles.firstChar} />
                 <HealthBar hp={firstPlayerHp} mt-3 />
               </div>
-
+              <img src={fireBall} alt="fire ball" />
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>

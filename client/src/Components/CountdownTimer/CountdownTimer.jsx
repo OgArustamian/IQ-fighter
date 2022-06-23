@@ -14,7 +14,7 @@ function CountdownTimer({ answerID }) {
   const { turnID } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
 
-  let [timer, setTimer] = useState(10);
+  let [timer, setTimer] = useState(30);
   const timerId = useRef(null);
   const circle = useRef();
   const circleRing = useRef();
@@ -36,12 +36,12 @@ function CountdownTimer({ answerID }) {
     clear();
     timerId.current = window.setInterval(() => {
       setTimer((prev) => prev - 1);
-      startBlinking();
     }, 1000);
     return () => clear();
   }, []);
 
   useEffect(() => {
+    startBlinking();
     if (timer === 0) {
       clear();
       setModal(!modal);

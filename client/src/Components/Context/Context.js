@@ -9,7 +9,7 @@ import {
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
+  ATTACK, CREATE_ROOM, DRAW, ENEMY_LEFT, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -95,6 +95,10 @@ function Context({ children }) {
         checkPosition(hp, hpEnemy);
         dispatch(setLooser());
         setgameOverModal(true);
+        break;
+
+      case ENEMY_LEFT:
+        console.log('enemy left', JSON.parse(event.data));
         break;
 
       default:
