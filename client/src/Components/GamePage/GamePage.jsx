@@ -18,18 +18,14 @@ import GameOverModal from '../GameOverModal/GameOverModal';
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
+
   const {
-    modal, isDraw, setIsDraw, fireball, enemyFireball,
+    modal, isDraw, setIsDraw, fireball, enemyFireball, leftDamage, rightDamage, ws, firstPlayerHp, secondPlayerHp, readyState, playerDamage,
   } = useWsContext();
+
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
-
-  console.log(player);
-
-  const {
-    ws, firstPlayerHp, secondPlayerHp, readyState,
-  } = useWsContext();
 
   useEffect(() => {
     if (ws.readyState === 1) {
@@ -123,9 +119,14 @@ function GamePage() {
                 <div className={styles.firstChar} />
                 <div>
                   <HealthBar hp={firstPlayerHp} mt-3 />
-                  <div className={styles.hpbox}>
-                    <span className={styles.hp}>-40hp</span>
-                  </div>
+                  {leftDamage && (
+                    <div className={styles.hpbox}>
+                      <span className={styles.hp}>
+                        -
+                        {playerDamage}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -139,9 +140,14 @@ function GamePage() {
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
                 <div>
                   <HealthBar hp={secondPlayerHp} mt-3 />
-                  <div className={styles.hpbox}>
-                    <span className={styles.hp}>-40hp</span>
-                  </div>
+                  {rightDamage && (
+                    <div className={styles.hpbox}>
+                      <span className={styles.hp}>
+                        -
+                        {playerDamage}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

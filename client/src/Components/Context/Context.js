@@ -22,6 +22,9 @@ function Context({ children }) {
   const [gameOverModal, setgameOverModal] = useState(false);
   const [fireball, setFireball] = useState(false);
   const [enemyFireball, setenemeyFireball] = useState(false);
+  const [leftDamage, setleftDamage] = useState(false);
+  const [rightDamage, setrightDamage] = useState(false);
+  const [playerDamage, setplayerDamage] = useState(0);
   const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
@@ -49,8 +52,10 @@ function Context({ children }) {
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
     const {
-      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer,
+      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer, damage,
     } = params;
+
+    setplayerDamage(damage);
 
     switch (type) {
       case ATTACK:
@@ -84,17 +89,21 @@ function Context({ children }) {
 
         if (player.position === 'left') {
           setFireball(true);
+          setrightDamage(true);
 
           setTimeout(() => {
             setFireball(false);
+            setrightDamage(false);
           }, 1450);
         }
 
         if (player.position === 'right') {
           setenemeyFireball(true);
+          setleftDamage(true);
 
           setTimeout(() => {
             setenemeyFireball(false);
+            setleftDamage(false);
           }, 1450);
         }
 
@@ -107,17 +116,21 @@ function Context({ children }) {
 
         if (player.position === 'right') {
           setFireball(true);
+          setrightDamage(true);
 
           setTimeout(() => {
             setFireball(false);
+            setrightDamage(false);
           }, 1450);
         }
 
         if (player.position === 'left') {
           setenemeyFireball(true);
+          setleftDamage(true);
 
           setTimeout(() => {
             setenemeyFireball(false);
+            setleftDamage(false);
           }, 1450);
         }
         break;
@@ -127,17 +140,21 @@ function Context({ children }) {
         checkPosition(hp, hpEnemy);
         if (player.position === 'left') {
           setFireball(true);
+          setrightDamage(true);
 
           setTimeout(() => {
             setFireball(false);
+            setrightDamage(false);
           }, 1450);
         }
 
         if (player.position === 'right') {
           setenemeyFireball(true);
+          setleftDamage(true);
 
           setTimeout(() => {
             setenemeyFireball(false);
+            setleftDamage(false);
           }, 1450);
         }
 
@@ -202,6 +219,9 @@ function Context({ children }) {
       setgameOverModal,
       fireball,
       enemyFireball,
+      playerDamage,
+      leftDamage,
+      rightDamage,
       isDraw,
       setIsDraw,
       firstPlayerHp,
