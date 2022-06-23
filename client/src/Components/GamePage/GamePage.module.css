@@ -23,7 +23,6 @@
     margin-bottom: 79px;
 }
 
-<<<<<<< HEAD
 .draw-message {
     position: fixed;
     color: #f8b700;
@@ -55,7 +54,6 @@
         opacity: 0;
     }
 }
-=======
 .videoBackground {
     position: absolute;
     width: 100%;
@@ -69,6 +67,4 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 135px;
 }
->>>>>>> ee1afade737bd41ea57d3192b52dd1aaab6176aa

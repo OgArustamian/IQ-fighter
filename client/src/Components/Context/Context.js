@@ -17,6 +17,7 @@ const WsContext = createContext();
 function Context({ children }) {
   const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
+  const [gameOverModal, setgameOverModal] = useState(false);
   const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
@@ -87,12 +88,14 @@ function Context({ children }) {
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(setWiner());
+        setgameOverModal(true);
         break;
 
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(setLooser());
+        setgameOverModal(true);
         break;
 
       default:
@@ -123,7 +126,16 @@ function Context({ children }) {
 
   return (
     <WsContext.Provider value={{
-      ws, modal, setModal, isDraw, setIsDraw, firstPlayerHp, secondPlayerHp, readyState,
+      ws,
+      modal,
+      setModal,
+      gameOverModal,
+      setgameOverModal,
+      isDraw,
+      setIsDraw,
+      firstPlayerHp,
+      secondPlayerHp,
+      readyState,
     }}
     >
       {children}

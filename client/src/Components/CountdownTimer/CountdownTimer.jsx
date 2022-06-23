@@ -14,7 +14,7 @@ function CountdownTimer({ answerID }) {
   const { turnID } = useSelector((state) => state.player);
   const room = useSelector((state) => state.ws);
 
-  let [timer, setTimer] = useState(10);
+  let [timer, setTimer] = useState(30);
   const timerId = useRef(null);
   const circle = useRef();
   const circleRing = useRef();
