@@ -1,61 +1,65 @@
 import React, { useEffect } from 'react';
 import { Table } from 'reactstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './LadderBoard.css';
 import { getRatingInfo } from '../../Redux/Actions/ratingAction';
+import { useWsContext } from '../Context/Context';
+import MainNavbar from '../Navbar/MainNavbar';
 
 export default function LadderBoard() {
-  const rating = useSelector((state) => state.rating);
+  const dispatch = useDispatch();
+  const { rank } = useSelector((state) => state.rating);
   const users = useSelector((state) => state.users);
+  const { ws, readyState } = useWsContext();
+
+  console.log(rank);
+
   useEffect(() => {
-    getRatingInfo(users.id);
-  }, []);
+    if (ws.readyState === 1) {
+      dispatch(getRatingInfo(ws, users.id));
+      console.log(ws);
+    }
+  }, [readyState]);
   return (
-    <div className="ladderBoard-conteiner">
-      <h1 className="about-title">🔥 Топ-10 Игроков 🔥</h1>
-      <Table
-        size="sm"
-        striped
-        className="table-form"
-      >
-        <thead>
-          <tr>
-            <th>
-              🧠
-            </th>
-            <th>
-              Ник-нейм
-            </th>
-            <th>
-              Кол-во побед
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              1
-            </th>
-            <td>
-              Garegin
-            </td>
-            <td>
-              3278
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">
-              ТЫ
-            </th>
-            <td>
-              ТВОЙ НИК
-            </td>
-            <td>
-              1
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-    </div>
+    <>
+      <MainNavbar />
+      <div className="ladderBoard-conteiner">
+        <h1 className="about-title">🔥 Топ-10 Игроков 🔥</h1>
+        <Table
+          size="sm"
+          striped
+          className="table-form"
+        >
+          <thead>
+            <tr>
+              <th>
+                🧠
+              </th>
+              <th>
+                Ник-нейм
+              </th>
+              <th>
+                Кол-во побед
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rank && rank.map((el) => (
+              <tr>
+                <th scope="row">
+                  {el.rank}
+                </th>
+                <td>
+                  {el.username}
+                </td>
+                <td>
+                  {el.victory_count}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+    </>
   );
 }

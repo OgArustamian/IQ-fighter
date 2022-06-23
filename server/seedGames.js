@@ -1324,10 +1324,6 @@ const seedWin = [
     createdAt: new Date(),
     updatedAt: new Date(),
   }, {
-    winner_id: 12,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }, {
     winner_id: 5,
     createdAt: new Date(),
     updatedAt: new Date(),
