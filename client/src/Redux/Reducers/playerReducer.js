@@ -1,4 +1,6 @@
-import { SET_GAME, SET_TURN, CHANGE_TURN } from '../Types/types';
+import {
+  SET_GAME, SET_TURN, CHANGE_TURN, SET_WINNER, SET_LOOSER,
+} from '../Types/types';
 
 const initState = {
   turn: false,
@@ -28,6 +30,20 @@ const playerReducer = (state = initState, action) => {
         ...state,
         turn: !state.turn,
         turnID: payload.turnID,
+      };
+
+    case SET_WINNER:
+      return {
+        ...state,
+        turn: false,
+        isWinner: true,
+      };
+
+    case SET_LOOSER:
+      return {
+        ...state,
+        turn: false,
+        isWinner: false,
       };
 
     default:

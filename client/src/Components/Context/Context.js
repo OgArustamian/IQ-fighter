@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, memo, useContext, useEffect, useState,
+  createContext, useContext, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTurn, setGame, setTurn } from '../../Redux/Actions/playerAction';
+import {
+  changeTurn, setGame, setLooser, setTurn, setWiner,
+} from '../../Redux/Actions/playerAction';
 import { showQuestion } from '../../Redux/Actions/questionAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, SET_ANSWER, WIN,
+  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -22,6 +24,7 @@ function Context({ children }) {
   const [firstPlayerHp, setFirstPlayerHp] = useState(100);
   const [secondPlayerHp, setSecondPlayerHp] = useState(100);
   const player = useSelector((state) => state.player);
+
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
       setFirstPlayerHp(hp);
@@ -70,7 +73,7 @@ function Context({ children }) {
       case WIN:
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
-        dispatch(changeTurn(turnID));
+        dispatch(changeTurn(turnID)) ;
         break;
 
       case LOSS:
@@ -82,11 +85,13 @@ function Context({ children }) {
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        dispatch(setWiner());
         break;
 
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        dispatch(setLooser());
         break;
 
       default:

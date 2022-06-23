@@ -15,6 +15,6 @@ export const messageFind = (ws) => (dispatch) => {
   ws.send(JSON.stringify({ type: 'find', params: { } }));
 };
 
-export const leaveRoom = (ws) => (dispatch) => {
-  ws.send(JSON.stringify({ type: 'leave', params: { } }));
+export const leaveRoom = (ws, gameID) => (dispatch) => {
+  ws.send(JSON.stringify({ type: 'leave', params: { gameID } }));
 };
