@@ -14,7 +14,7 @@ function GameNavbar() {
       <div className="main-logo">
         <nav className="main-navigation">
           <ul className="navigation">
-            <Link onClick={() => dispatch(leaveRoom(ws, gameID))} to="/">
+            <Link onClick={() => dispatch(leaveRoom())} to="/">
               <li className="nav-item">ПОКИНУТЬ ИГРУ</li>
             </Link>
           </ul>

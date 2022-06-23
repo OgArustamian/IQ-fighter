@@ -20,6 +20,8 @@ function Context({ children }) {
   const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
   const [gameOverModal, setgameOverModal] = useState(false);
+  const [fireball, setFireball] = useState(false);
+  const [enemyFireball, setenemeyFireball] = useState(false);
   const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
@@ -79,26 +81,81 @@ function Context({ children }) {
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+
+        if (player.position === 'left') {
+          setFireball(true);
+
+          setTimeout(() => {
+            setFireball(false);
+          }, 1450);
+        }
+
+        if (player.position === 'right') {
+          setenemeyFireball(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+          }, 1450);
+        }
+
         break;
 
       case LOSS:
         console.log('LOSS------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+
+        if (player.position === 'right') {
+          setFireball(true);
+
+          setTimeout(() => {
+            setFireball(false);
+          }, 1450);
+        }
+
+        if (player.position === 'left') {
+          setenemeyFireball(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+          }, 1450);
+        }
         break;
 
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        if (player.position === 'left') {
+          setFireball(true);
+
+          setTimeout(() => {
+            setFireball(false);
+          }, 1450);
+        }
+
+        if (player.position === 'right') {
+          setenemeyFireball(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+          }, 1450);
+        }
+
         dispatch(setWiner());
-        setgameOverModal(true);
+
+        setTimeout(() => {
+          setgameOverModal(true);
+        }, 1500);
+
         break;
 
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(setLooser());
-        setgameOverModal(true);
+        setTimeout(() => {
+          setgameOverModal(true);
+        }, 1500);
         break;
 
       case ENEMY_LEFT:
@@ -143,6 +200,8 @@ function Context({ children }) {
       setModal,
       gameOverModal,
       setgameOverModal,
+      fireball,
+      enemyFireball,
       isDraw,
       setIsDraw,
       firstPlayerHp,
