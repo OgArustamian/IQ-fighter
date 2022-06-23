@@ -35,38 +35,40 @@ function GamePage() {
     }
   }, [readyState]);
 
-  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
-  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
+  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: '' });
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
+        nameColor: 'nikNameDef',
       });
     } else if (player.position === 'right' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
+        nameColor: 'nikNameDef',
       });
       setSecondPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: 'nikNameAttack',
       });
     } else if (player.turn === false) {
       setFirstPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
     }
   }
@@ -94,7 +96,7 @@ function GamePage() {
               <div className={styles['char-block']}>
                 { player.position === 'left'
                   ? <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>
-                  : null}
+                  : <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>}
                 <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
                 <div className={styles.firstChar} />
                 <HealthBar hp={firstPlayerHp} mt-3 />
@@ -103,9 +105,9 @@ function GamePage() {
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
-                { player.position === 'right'
+                { player.position !== 'left'
                   ? <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>
-                  : null}
+                  : <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>}
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
                 <HealthBar hp={secondPlayerHp} mt-3 />
               </div>

@@ -30,7 +30,11 @@
 .nikNameAttack {
   color: rgb(179, 10, 4);
 }
-  
+
+.nameColor {
+  color: #f8b700;
+}
+
 .draw-message {
     position: fixed;
     color: #f8b700;
