@@ -14,19 +14,19 @@ import HealthBar from '../HealthBar/HealthBar';
 import QuizModal from '../QuizModal/QuizModal';
 import GameNavbar from '../Navbar/GameNavBar';
 import GameOverModal from '../GameOverModal/GameOverModal';
+import femaleMage from '../Player/img/female-model-new.png';
 
 function GamePage() {
   const body = document.querySelector('body');
   body.style.backgroundImage = 'none';
-  const { modal, isDraw, setIsDraw } = useWsContext();
-  const spinner = useSelector((state) => state.spinner);
-  const player = useSelector((state) => state.player);
-  console.log('PLAYER=====>>>>', player);
-  const dispatch = useDispatch();
 
   const {
-    ws, firstPlayerHp, secondPlayerHp, readyState,
+    modal, isDraw, setIsDraw, fireball, enemyFireball, leftDamage, rightDamage, ws, firstPlayerHp, secondPlayerHp, readyState, playerDamage,
   } = useWsContext();
+
+  const spinner = useSelector((state) => state.spinner);
+  const player = useSelector((state) => state.player);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (ws.readyState === 1) {
@@ -35,38 +35,58 @@ function GamePage() {
     }
   }, [readyState]);
 
-  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
-  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: 'nikNameDef' });
+  const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: false });
+  const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: true });
 
   function checkTurn() {
     if (player.position === 'left' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: false,
       });
       setSecondPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
-        active: true,
+        active: false,
+        nameColor: true,
+      });
+    } else if (player.position === 'left' && !player.turn) {
+      setFirstPlayer({
+        cursor: "url('../../img/cursor-default.png'), auto",
+        nameColor: true,
+      });
+      setSecondPlayer({
+        cursor: "url('../../img/sword-attack-icon.png'), auto",
+        nameColor: false,
+      });
+    } else if (player.position === 'right' && !player.turn) {
+      setFirstPlayer({
+        cursor: "url('../../img/sword-attack-icon.png'), auto",
+        nameColor: false,
+      });
+      setSecondPlayer({
+        cursor: "url('../../img/cursor-default.png'), auto",
+        nameColor: true,
       });
     } else if (player.position === 'right' && player.turn) {
       setFirstPlayer({
         cursor: "url('../../img/sword-attack-icon.png'), auto",
         active: true,
+        nameColor: true,
       });
       setSecondPlayer({
         cursor: "url('../../img/cursor-default.png'), auto",
         active: false,
+        nameColor: false,
       });
     } else if (player.turn === false) {
       setFirstPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
       setSecondPlayer({
         cursor: "url('../../img/stop-cursor.svg'), auto",
         active: false,
-        nameColor: 'nikNameAttack',
       });
     }
   }
@@ -87,27 +107,46 @@ function GamePage() {
       {spinner !== JOIN_ROOM
         ? <Spinner />
         : (
-
           <div>
             <video className={styles.videoBackground} autoPlay loop muted src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/4TBVITQDP0AW1650382032717.mp4" />
             <div className={styles['game-page-container']}>
               <div className={styles['char-block']}>
-                { player.position === 'left'
-                  ? <h3 className={styles[firstPlayer.nameColor]}>{player.firstName}</h3>
-                  : null}
-                <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={250} imgWidth={865} />
+                {firstPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.firstName}</h3> : <h3 className={styles.nikNameAttack}>{player.firstName}</h3> }
+                {/* <Player url={femaleChar} model={femaleMageModel} position="left" cursor={firstPlayer} width={383} imgWidth={865} /> */}
+                <img src={femaleMage} alt="femMage" />
                 <div className={styles.firstChar} />
-                <HealthBar hp={firstPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={firstPlayerHp} mt-3 />
+                  {leftDamage && (
+                    <div className={styles.hpbox}>
+                      <span className={styles.hp}>
+                        -
+                        {playerDamage}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
+
+              {fireball && <div className={styles.flame} />}
+              {enemyFireball && <div className={styles['flame-reverse']} />}
 
               <p className={isDraw ? styles['draw-message'] : styles.hidden}>АТАКА ПАРИРОВАНА</p>
 
               <div className={styles['char-block']}>
-                { player.position === 'right'
-                  ? <h3 className={styles[secondPlayer.nameColor]}>{player.secondName}</h3>
-                  : null}
+                {secondPlayer?.nameColor ? <h3 className={styles.nikNameDef}>{player.secondName}</h3> : <h3 className={styles.nikNameAttack}>{player.secondName}</h3> }
                 <Player url={maleChar} model={maleMageModel} position="right" cursor={secondPlayer} width={600} imgWidth={820} />
-                <HealthBar hp={secondPlayerHp} mt-3 />
+                <div>
+                  <HealthBar hp={secondPlayerHp} mt-3 />
+                  {rightDamage && (
+                    <div className={styles.hpbox}>
+                      <span className={styles.hp}>
+                        -
+                        {playerDamage}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

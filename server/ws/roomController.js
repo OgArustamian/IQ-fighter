@@ -58,9 +58,11 @@ async function join(rooms, maxClients, ws, userID, room, enemyID, firstPlayer) {
     await UserGames.create({ user_id: enemyID, game_id: game.id });
     const gameID = game.id;
     const turnID = turn.id;
+    rooms[room][0].gameID = game.id;
 
     rooms[room].push(ws);
     ws.room = room;
+    ws.gameID = game.id;
 
     message = {
       type: joinedRoom,
@@ -79,12 +81,13 @@ async function leave(rooms, ws, params) {
   const { room } = ws;
   let wsWinner;
   let winner_id;
+  console.log('web socket obj --->', ws);
 
   try {
-    const game_id = params.gameID;
+    const { gameID } = ws;
     [wsWinner] = rooms[room].filter((so) => so !== ws);
     winner_id = wsWinner.userID;
-    await Game.update({ winner_id }, { where: { game_id } });
+    await Game.update({ winner_id }, { where: { id: gameID } });
     generalInformation(PERSONAL_SEND, null, null, message, winner_id, wsWinner);
   } catch (err) { console.error(err); }
   try {

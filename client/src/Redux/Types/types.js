@@ -25,4 +25,5 @@ export const WIN = 'win';
 export const LOSS = 'loss';
 export const GAME_LOST = 'game-over';
 export const GAME_WON = 'game-win';
+export const ENEMY_LEFT = 'close';
 export const GETRATE = 'getRate';

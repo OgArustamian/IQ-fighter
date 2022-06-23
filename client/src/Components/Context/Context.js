@@ -11,7 +11,8 @@ import { showQuestion } from '../../Redux/Actions/questionAction';
 import { showRating } from '../../Redux/Actions/ratingAction';
 import { setRoom, showSpinner } from '../../Redux/Actions/wsAction';
 import {
-  ATTACK, CREATE_ROOM, DRAW, GAME_LOST, GAME_WON, GETRATE, JOIN_ROOM, LOSS, WIN,
+  ATTACK, CREATE_ROOM, DRAW, ENEMY_LEFT, GAME_LOST, GAME_WON, JOIN_ROOM, LOSS, WIN,
+  GETRATE,
 } from '../../Redux/Types/types';
 
 const WsContext = createContext();
@@ -20,6 +21,11 @@ function Context({ children }) {
   const [ws, setWs] = useState({});
   const [modal, setModal] = useState(false);
   const [gameOverModal, setgameOverModal] = useState(false);
+  const [fireball, setFireball] = useState(false);
+  const [enemyFireball, setenemeyFireball] = useState(false);
+  const [leftDamage, setleftDamage] = useState(false);
+  const [rightDamage, setrightDamage] = useState(false);
+  const [playerDamage, setplayerDamage] = useState(0);
   const [isDraw, setIsDraw] = useState(false);
   const [readyState, setReadyState] = useState({});
   const dispatch = useDispatch();
@@ -46,10 +52,11 @@ function Context({ children }) {
 
   ws.onmessage = (event) => {
     const { type, params } = JSON.parse(event.data);
-    console.log(params);
     const {
-      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer,
+      room, gameID, turnID, hp, hpEnemy, firstPlayer, secondPlayer, damage,
     } = params;
+
+    setplayerDamage(damage);
 
     switch (type) {
       case ATTACK:
@@ -80,26 +87,97 @@ function Context({ children }) {
         console.log('WIN------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+
+        if (player.position === 'left') {
+          setFireball(true);
+          setrightDamage(true);
+
+          setTimeout(() => {
+            setFireball(false);
+            setrightDamage(false);
+          }, 1450);
+        }
+
+        if (player.position === 'right') {
+          setenemeyFireball(true);
+          setleftDamage(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+            setleftDamage(false);
+          }, 1450);
+        }
+
         break;
 
       case LOSS:
         console.log('LOSS------------------>', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(changeTurn(turnID));
+
+        if (player.position === 'right') {
+          setFireball(true);
+          setrightDamage(true);
+
+          setTimeout(() => {
+            setFireball(false);
+            setrightDamage(false);
+          }, 1450);
+        }
+
+        if (player.position === 'left') {
+          setenemeyFireball(true);
+          setleftDamage(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+            setleftDamage(false);
+          }, 1450);
+        }
         break;
 
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+        if (player.position === 'left') {
+          setFireball(true);
+          setrightDamage(true);
+
+          setTimeout(() => {
+            setFireball(false);
+            setrightDamage(false);
+          }, 1450);
+        }
+
+        if (player.position === 'right') {
+          setenemeyFireball(true);
+          setleftDamage(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+            setleftDamage(false);
+          }, 1450);
+        }
+
         dispatch(setWiner());
-        setgameOverModal(true);
+
+        setTimeout(() => {
+          setgameOverModal(true);
+        }, 1500);
+
         break;
 
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
         dispatch(setLooser());
-        setgameOverModal(true);
+        setTimeout(() => {
+          setgameOverModal(true);
+        }, 1500);
+        break;
+
+      case ENEMY_LEFT:
+        console.log('enemy left', JSON.parse(event.data));
         break;
 
       case GETRATE:
@@ -140,6 +218,11 @@ function Context({ children }) {
       setModal,
       gameOverModal,
       setgameOverModal,
+      fireball,
+      enemyFireball,
+      playerDamage,
+      leftDamage,
+      rightDamage,
       isDraw,
       setIsDraw,
       firstPlayerHp,
