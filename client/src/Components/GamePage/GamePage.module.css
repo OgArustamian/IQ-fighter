@@ -5,7 +5,7 @@
     position: relative;
     padding-top: 50px;
     width: 100%;
-    margin: 80px 100px 0;
+    margin: 80px 78px 0;
 }
 
 .alert-msg {
@@ -273,7 +273,7 @@
 .hp {
   font-family: Roboto, sans-serif;
   margin-left: 5%;
-  font-size: 27px;
+  font-size: 30px;
   letter-spacing: 2px;
   color: red;
     position: absolute;
@@ -290,4 +290,5 @@
 
     100% {
         top: -275px;
-  }
+    }
+}
