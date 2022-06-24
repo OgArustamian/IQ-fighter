@@ -199,7 +199,33 @@ function Context({ children }) {
       case GAME_LOST:
         console.log('game over, you LOOOOOST!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
+
+        if (player.position === 'left') {
+          setenemeyFireball(true);
+          setleftDamage(true);
+
+          setTimeout(() => {
+            setFireball(false);
+            setleftDamage(false);
+            setPlaybackRate(playbackRate);
+            // play();
+          }, 1450);
+        }
+
+        if (player.position === 'right') {
+          setFireball(true);
+          setrightDamage(true);
+
+          setTimeout(() => {
+            setenemeyFireball(false);
+            setrightDamage(false);
+            setPlaybackRate(playbackRate);
+            // play();
+          }, 1450);
+        }
+
         dispatch(setLooser());
+
         setTimeout(() => {
           setgameOverModal(true);
           setPlaybackRate(playbackRate);
