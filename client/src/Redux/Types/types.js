@@ -13,6 +13,8 @@ export const GET_FIRST_NAME = 'GET_FIRST_NAME';
 export const GET_SECOND_NAME = 'GET_SECOND_NAME';
 export const SET_WINNER = 'SET_WINNER';
 export const SET_LOOSER = 'SET_LOOSER';
+export const CLEAR_QUESTIONS = 'CLEAR_QUESTIONS';
+export const LEAVE_GAME = 'LEAVE_GAME';
 
 // serser ws types
 export const CREATE_ROOM = 'createdRoom';

@@ -22,10 +22,16 @@ async function ladderboard(ws, params) {
 
     rank = rank.map((el, index) => {
       if (index < 10) {
+        if (el.dataValues.winner_id === userID) {
+          return {
+            rank: index + 1, username: el.User.username, victory_count: el.dataValues.victory_count, userID,
+          };
+        }
         return {
           rank: index + 1, username: el.User.username, victory_count: el.dataValues.victory_count,
         };
-      } if (el.dataValues.winner_id === userID) {
+      }
+      if (el.dataValues.winner_id === userID) {
         return {
           rank: index + 1, username: el.User.username, victory_count: el.dataValues.victory_count, userID,
         };

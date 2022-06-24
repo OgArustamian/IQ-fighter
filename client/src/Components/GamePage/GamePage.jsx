@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSound from 'use-sound';
 import styles from './GamePage.module.css';
 import maleChar from '../Player/img/male-mage.png';
 import femaleMage from '../Player/img/female-model-new.png';
@@ -26,13 +27,6 @@ function GamePage() {
   const spinner = useSelector((state) => state.spinner);
   const player = useSelector((state) => state.player);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (ws.readyState === 1) {
-      dispatch(messageFind(ws));
-      console.log(ws);
-    }
-  }, [readyState]);
 
   const [firstPlayer, setFirstPlayer] = useState({ cursor: '', active: 'false', nameColor: false });
   const [secondPlayer, setSecondPlayer] = useState({ cursor: '', active: 'false', nameColor: true });
@@ -93,6 +87,13 @@ function GamePage() {
       });
     }
   }
+
+  useEffect(() => {
+    if (ws.readyState === 1) {
+      dispatch(messageFind(ws));
+      console.log(ws);
+    }
+  }, [readyState]);
 
   useEffect(() => {
     checkTurn();

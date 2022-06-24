@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalBody } from 'reactstrap';
 import './GameOverModal.css';
 import { useNavigate } from 'react-router-dom';
@@ -7,17 +7,22 @@ import winnerLogo from './img/WINNER.png';
 import looserLogo from './img/LOOSER_img.png';
 import forceGameover from './img/force-gameover-pic.png';
 import { useWsContext } from '../Context/Context';
+import { showSpinner } from '../../Redux/Actions/wsAction';
+import { clearAnsweredQuestions } from '../../Redux/Actions/questionAction';
 
 function GameOverModal() {
   const { isWinner, forceGameOver } = useSelector((state) => state.player);
   const { gameOverModal, setgameOverModal } = useWsContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (gameOverModal) {
       setTimeout(() => {
         setgameOverModal(false);
         navigate('/');
+        dispatch(showSpinner(false));
+        dispatch(clearAnsweredQuestions());
       }, 5000);
     }
   }, [gameOverModal]);

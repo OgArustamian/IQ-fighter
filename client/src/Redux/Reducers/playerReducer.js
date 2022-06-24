@@ -1,6 +1,6 @@
 import {
   SET_GAME, SET_TURN, CHANGE_TURN, GET_FIRST_NAME, GET_SECOND_NAME,
-  SET_WINNER, SET_LOOSER, ENEMY_LEFT,
+  SET_WINNER, SET_LOOSER, ENEMY_LEFT, LEAVE_GAME,
 } from '../Types/types';
 
 const initState = {
@@ -65,6 +65,13 @@ const playerReducer = (state = initState, action) => {
         turn: false,
         isWinner: true,
         forceGameOver: true,
+      };
+
+    case LEAVE_GAME:
+      return {
+        ...state,
+        turn: false,
+        isWinner: false,
       };
 
     default:

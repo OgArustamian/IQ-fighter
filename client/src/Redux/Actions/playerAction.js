@@ -1,6 +1,6 @@
 import {
   CHANGE_TURN, SET_GAME, SET_TURN, GET_FIRST_NAME, GET_SECOND_NAME,
-  SET_LOOSER, SET_WINNER, ENEMY_LEFT,
+  SET_LOOSER, SET_WINNER, ENEMY_LEFT, LEAVE_GAME,
 } from '../Types/types';
 
 export const setTurn = () => ({
@@ -35,6 +35,10 @@ export const setLooser = () => ({
   type: SET_LOOSER,
 });
 
-export const enemyLeft = (userId) => ({
+export const enemyLeft = () => ({
   type: ENEMY_LEFT,
+});
+
+export const leaveGame = () => ({
+  type: LEAVE_GAME,
 });

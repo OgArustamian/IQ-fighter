@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
-  createContext, useContext, useEffect, useState,
+  createContext, useContext, useEffect, useRef, useState,
 } from 'react';
-// import useSound from 'use-sound';
+import useSound from 'use-sound';
 import { useDispatch, useSelector } from 'react-redux';
-import soundDamage from '../../now-thats.mp3';
-import soundGameWon from '../../and-his-name-is-john-cena-1.mp3';
+import soundDamage from '../../sounds/now-thats.mp3';
+import soundGameWon from '../../sounds/and-his-name-is-john-cena-1.mp3';
+import drawSoundAlert from '../../sounds/GareginVseHorosho.mp3';
 import {
   changeTurn, getFirstName, getSecondName, setGame, setTurn, setLooser, setWiner, enemyLeft,
 } from '../../Redux/Actions/playerAction';
@@ -37,11 +38,23 @@ function Context({ children }) {
   const player = useSelector((state) => state.player);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [sound, setSound] = useState(soundDamage);
+  const [winSound, setWinSound] = useState(soundGameWon);
+  const [drawSound, setDrawSound] = useState(drawSoundAlert);
 
-  // const [play] = useSound(sound, {
-  //   playbackRate,
-  //   volume: 5,
-  // });
+  const [play] = useSound(sound, {
+    playbackRate,
+    volume: 5,
+  });
+
+  const [playWin] = useSound(winSound, {
+    playbackRate,
+    volume: 7,
+  });
+
+  const [playDraw] = useSound(drawSound, {
+    playbackRate,
+    volume: 7,
+  });
 
   function checkPosition(hp, hpEnemy) {
     if (player.position === 'left') {
@@ -93,6 +106,8 @@ function Context({ children }) {
         console.log('DRAW------------------>', JSON.parse(event.data));
         setIsDraw(true);
         dispatch(changeTurn(turnID));
+        setPlaybackRate(playbackRate);
+        playDraw();
         break;
 
       case WIN:
@@ -109,7 +124,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            play();
           }, 1450);
         }
 
@@ -121,7 +136,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            play();
           }, 1450);
         }
 
@@ -141,7 +156,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            play();
           }, 1450);
         }
 
@@ -153,7 +168,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            play();
           }, 1450);
         }
         break;
@@ -161,7 +176,6 @@ function Context({ children }) {
       case GAME_WON:
         console.log('game over, you WON!!!', JSON.parse(event.data));
         checkPosition(hp, hpEnemy);
-        setSound(soundGameWon);
 
         if (player.position === 'left') {
           setFireball(true);
@@ -171,7 +185,7 @@ function Context({ children }) {
             setFireball(false);
             setrightDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            playWin();
           }, 1450);
         }
 
@@ -183,7 +197,7 @@ function Context({ children }) {
             setenemeyFireball(false);
             setleftDamage(false);
             setPlaybackRate(playbackRate);
-            // play();
+            playWin();
           }, 1450);
         }
 
@@ -205,10 +219,8 @@ function Context({ children }) {
           setleftDamage(true);
 
           setTimeout(() => {
-            setFireball(false);
+            setenemeyFireball(false);
             setleftDamage(false);
-            setPlaybackRate(playbackRate);
-            // play();
           }, 1450);
         }
 
@@ -217,10 +229,8 @@ function Context({ children }) {
           setrightDamage(true);
 
           setTimeout(() => {
-            setenemeyFireball(false);
+            setFireball(false);
             setrightDamage(false);
-            setPlaybackRate(playbackRate);
-            // play();
           }, 1450);
         }
 
@@ -228,14 +238,12 @@ function Context({ children }) {
 
         setTimeout(() => {
           setgameOverModal(true);
-          setPlaybackRate(playbackRate);
-          // play();
         }, 1500);
         break;
 
       case ENEMY_LEFT:
         console.log('enemy left', JSON.parse(event.data));
-        dispatch(enemyLeft(id));
+        dispatch(enemyLeft());
         setgameOverModal(true);
         break;
 
