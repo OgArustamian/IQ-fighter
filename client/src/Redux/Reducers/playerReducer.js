@@ -63,6 +63,7 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: false,
+        position: 'right',
         isWinner: true,
         forceGameOver: true,
       };
@@ -71,6 +72,7 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: false,
+        position: 'right',
         isWinner: false,
       };
 
