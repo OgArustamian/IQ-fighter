@@ -274,7 +274,7 @@ function Context({ children }) {
 
   useEffect(() => {
     if (id) {
-      setWs(new WebSocket('ws://localhost:3001'));
+      setWs(new WebSocket(process.env.REACT_APP_URL_WS));
     }
   }, [id]);
 
