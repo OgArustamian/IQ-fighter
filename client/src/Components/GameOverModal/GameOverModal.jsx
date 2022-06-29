@@ -15,7 +15,7 @@ function GameOverModal() {
   const { gameOverModal, setgameOverModal } = useWsContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  console.log(forceGameOver);
   useEffect(() => {
     if (gameOverModal) {
       setTimeout(() => {

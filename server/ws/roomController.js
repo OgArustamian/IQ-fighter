@@ -100,13 +100,9 @@ async function leave(rooms, ws, params) {
 }
 
 function deleteRoom(rooms, room) {
-  try {
-    console.log('rooms[room]', rooms, rooms[room]);
-    delete rooms[room];
-    console.log('rooms', rooms);
-  } catch (err) {
-    console.error('delete room ERROR', err);
-  }
+  console.log('rooms[room]', rooms, rooms[room]);
+  delete rooms[room];
+  console.log('rooms', rooms);
 }
 
 function roomController(rooms, maxClients, ws, userID) {

@@ -6,6 +6,8 @@ import {
 const initState = {
   turn: false,
   position: 'right',
+  isWinner: false,
+  forceGameOver: false,
 };
 
 const playerReducer = (state = initState, action) => {
@@ -49,16 +51,26 @@ const playerReducer = (state = initState, action) => {
       return {
         ...state,
         turn: false,
-        position: 'right',
         isWinner: true,
+        forceGameOver: false,
+        position: 'right',
+        gameID: null,
+        turnID: null,
+        firstName: '',
+        secondName: '',
       };
 
     case SET_LOOSER:
       return {
         ...state,
         turn: false,
-        position: 'right',
         isWinner: false,
+        forceGameOver: false,
+        position: 'right',
+        gameID: null,
+        turnID: null,
+        firstName: '',
+        secondName: '',
       };
 
     case ENEMY_LEFT:
@@ -68,6 +80,10 @@ const playerReducer = (state = initState, action) => {
         position: 'right',
         isWinner: true,
         forceGameOver: true,
+        gameID: null,
+        turnID: null,
+        firstName: '',
+        secondName: '',
       };
 
     case LEAVE_GAME:
@@ -76,6 +92,11 @@ const playerReducer = (state = initState, action) => {
         turn: false,
         position: 'right',
         isWinner: false,
+        forceGameOver: false,
+        gameID: null,
+        turnID: null,
+        firstName: '',
+        secondName: '',
       };
 
     default:
