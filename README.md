@@ -42,7 +42,7 @@ IQ-Fighter - многопользовательская онлайн-викто�
 
 ### Разработчики:
 
-<p><a href='https://github.com/VictorKarvatsky'>Fullstack, Виктор Карвацкий </a></p>
-<p><a href='https://github.com/OgArustamian'>Fullstack, Оганнес Арустамян </a></p>
-<p><a href='https://github.com/JackieSav'>Fullstack, Евгений Савин </a></p>
-<p><a href='https://github.com/EugeneShepel'>Fullstack, Евгений Шепель </a></p>
+<p><a href='https://github.com/VictorKarvatsky'>Backend, Виктор Карвацкий </a></p>
+<p><a href='https://github.com/OgArustamian'>Frontend, Оганнес Арустамян </a></p>
+<p><a href='https://github.com/JackieSav'>Frontend, Евгений Савин </a></p>
+<p><a href='https://github.com/EugeneShepel'>Frontend, Евгений Шепель </a></p>
